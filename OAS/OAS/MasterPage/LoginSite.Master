@@ -1,0 +1,151 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="LoginSite.master.cs" Inherits="OAS.MasterPage.LoginSite" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>OAS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link runat="server" rel="icon" type="image/ico" href="~/Content/images/icons_logos/oas.ico">
+    <link runat="server" rel="stylesheet" href="~/Content/css/style.css">
+    <style>
+        #logo-name {
+            /* display: inline-block + vertical-align: middle can align the text beside an image */
+            margin-top: -23px;
+            display: inline-block;
+            vertical-align: middle;
+            font-family: font-freestyle;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 1s;
+        }
+
+        h2 {
+            margin-bottom: 0;
+            font-size: 20px;
+            color: #5f5d5d;
+            font-weight: 500;
+            font-family: "Segoe UI","Helvetica Neue","Lucida Grande","Roboto","Ebrima","Nirmala UI","Gadugi","Segoe Xbox Symbol","Segoe UI Symbol","Meiryo UI","Khmer UI","Tunga","Lao UI","Raavi","Iskoola Pota","Latha","Leelawadee","Microsoft YaHei UI","Microsoft JhengHei UI","Malgun Gothic","Estrangelo Edessa","Microsoft Himalaya","Microsoft New Tai Lue","Microsoft PhagsPa","Microsoft Tai Le","Microsoft Yi Baiti","Mongolian Baiti","MV Boli","Myanmar Text","Cambria Math";
+        }
+
+        input[type=text], input[type=password] {
+            border-width: 1px;
+            border-color: #666;
+            border-color: rgba(0,0,0,.3);
+            height: 35px;
+            outline: none;
+            border-radius: 0;
+            -webkit-border-radius: 0;
+            /*width:96%;*/
+            width: 100%;
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+            font-size: 13px;
+            font-weight: 100;
+            margin-top: 10px;
+            -webkit-transition: all 1s linear;
+            transition: all 1s linear;
+        }
+
+            input[type=text]:focus, input[type=password]:focus {
+                width: 100%;
+                border-color: rgb(102,102,255);
+            }
+
+        #loginBox_invalidCredentialsMessage, #loginBox_invalidDetailsMessage {
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-top: 30px;
+            max-width: 235px;
+        }
+
+        #loginBox_invalidDetailsMessage {
+            margin-top: 34px;
+        }
+
+        input[type=submit], button {
+            border-color: #0067b8;
+            background-color: #0067b8;
+            color: #fff;
+            padding: 4px 12px 4px 12px;
+            height: 32px;
+            border-width: 1px;
+            border-style: solid;
+            cursor: pointer;
+            text-overflow: ellipsis;
+            touch-action: manipulation;
+            position: absolute;
+            display: inline-block;
+            -webkit-appearance: button;
+            bottom: 0;
+            right: 0;
+        }
+
+        a {
+            margin-left: -5px;
+            color: #5f5d5d;
+        }
+
+        .background-image {
+            background-size: cover;
+            background-position: center;
+            color: #5f5d5d;
+        }
+
+        .box-wrapper {
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            bottom: 0;
+            left: 50%;
+            width: 440px;
+            height: 360px;
+            transform: translate(-50%, -50%);
+            user-select: none;
+        }
+
+        .box {
+            background-color: #fff;
+            width: 75%;
+            height: 75%;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+
+        <!-- background -->
+        <div class="background">
+            <div class="background-image">
+                <asp:ContentPlaceHolder ID="loginBox" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <script>
+            var path = window.location.protocol + "//" + window.location.host;
+            document.getElementsByClassName("background-image")[0].style.backgroundImage = "url('" + path + "/Content/images/background_images/login_signup_bg.jpg')";
+
+            var css = '',
+                style = document.getElementsByTagName('style'),
+                fontFace = "@font-face{font-family:font-freestyle;src:url('" + path + "/Content/fonts/Freestyle_Script.TTF')}" +
+                    "@font-face{font-family:font-bradley;src:url('" + path + "/Content/fonts/Bradley_Hand_ITC.TTF')}";
+            style[0].appendChild(document.createTextNode(fontFace));
+        </script>
+    </form>
+</body>
+</html>

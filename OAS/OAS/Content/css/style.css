@@ -1,0 +1,163 @@
+html {-webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */}
+
+body{margin:0;color:white;background-color:#fff;}
+body::-webkit-scrollbar {width: 5px;height:5px;}
+body::-webkit-scrollbar-track {-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0);background-color:white;}
+body::-webkit-scrollbar-thumb {background-color:rgba(100,100,100,1);outline: 1px solid slategrey;}
+
+a{text-decoration:none;color:#fff;}
+
+/* background image & video */
+.background-video{position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;}
+.background-video video{width:100vw!important;height:100vh!important;object-fit: cover;}
+.background-video.centered{top:auto;bottom:auto}
+.background{position:fixed;margin-top:100vh;width:100%;background-color:#fff;}
+.background-image{position:fixed;width:100vw;height:100vh;top:0;left:0;background-color:#d7d7d7;color:#fff;z-index:-10;}
+
+/* background text */
+#sloganDiv{max-width:1200px;margin:auto;height:190px;text-align:right;transition:all 1s ease-in-out}
+#slogan{font-family:Lato,sans-serif;font-weight:600;font-size:50px;transition:all 1s ease-in-out}
+#sub-slogan-text{font-family:Lato,sans-serif;font-weight:600;font-size: 15px;display:block;line-height:40px;margin-right:50px;transition:all 1s ease-in-out}
+#gif1{width:40px;height:40px;transition:all 1s ease-in-out}
+
+/*content start*/
+
+/*slideshow start*/
+.slide-bg-container{position:absolute;width:100%;background-color:#f5f5f5;overflow: hidden;}
+.slideshow{width: 100%;height: 100%;left: -5%;top: -5%;position:relative;transition:opacity 0.65s ease-in-out}
+
+.slideshow p{font-size:15px;text-align: justify;}
+.slideshow a{background-color:red;padding:15px;display:inline-block;opacity:0.7;font-family:"Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;font-size:small}
+.slideshow a:hover{opacity:1;transition:all 1s}
+
+.slidetext{width:90%;height:100%;position:absolute;z-index:1;left: 5%}
+
+.slide-bg {width: 100%;height: 100%;background-size:cover;background-position:center;filter: brightness(65%);animation: matrix 40000ms ease 0s normal infinite;}
+
+article{max-width: 300px;height:100%;background-color:rgba(255,255,255,0.1);left: 5%;top: 0;padding:50px;font-family:Cambria, Cochin, Georgia, Times, "Times New Roman", serif}
+
+article h1{font-size:30px}article h4{font-size:18px}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;z-index:1;
+}
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+@keyframes matrix {
+    0% {
+        -webkit-transform: matrix(1.1, 0, 0, 1.1, 0, 0)
+    }
+    10% {
+        -webkit-transform: matrix(1.1, 0, 0, 1.1, 8.5, 5.3)
+    }
+    30% {
+        -webkit-transform: matrix(1.1, 0, 0, 1.1, 34, -23)
+    }
+    60% {
+        -webkit-transform: matrix(1.1, 0, 0, 1.1, -4.5, 22.3)
+    }
+    80% {
+        -webkit-transform: matrix(1.1, 0, 0, 1.1, -10.38, -24.13)
+    }
+    100% {
+        -webkit-transform: matrix(1.1, 0, 0, 1.1, 0, 0)
+    }
+}
+/*slideshow end*/
+/* each subcontent used 325px in height */
+#bodyContent{position:absolute;width:100%;color:#5f5d5d;}
+.content{margin:auto;text-align:center;height:100%;width:100%}
+.content a{color:white;background-color:rgba(125,155,125,0.5);padding:15px;}/**/
+.content a:hover{background-color:rgba(125,155,125,1);transition:all 1.5s}
+
+.subContent{margin:auto;width:100%;font-family: Proxima Nova,sans-serif;}
+.subContent table{width:70%;height:100%;table-layout: fixed;margin:auto}
+.subContent tr{height:33.33%;}
+.subContent td{vertical-align: middle}
+.subContent h4{font-weight:300;font-size:30px;color:#01CBE1;margin:0;}
+.subContent h3{font-weight:400;font-size:16px;color:#5f5d5d;margin:0;}
+.color1{
+    background-color:rgba(255,255,255,1);
+}
+.color2{
+    background-color:rgba(245,245,245,1);	  	
+}
+/*content end*/
+
+/*footer start*/
+#footerDiv {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+    z-index: 1;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 100px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 100px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 30px 100px;
+}
+}
+/*footer end*/
+
+/* Desktops and laptops (when the browser window is 1224px wide or more)*/
+@media only screen and (min-width : 1224px) {
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover, .next:hover {
+        background-color: rgba(255,255,255,0.5);
+    }
+}
+/* (when the browser window is 500px high or less) and (when the browser window and device size is 959px wide or more) */
+@media only screen and (max-height: 500px) and (min-device-width:959px) and (min-width:959px) {
+    #sloganDiv{display: none;}
+}
+/* (when the browser window is 250px high or less) and (when the browser window is 959px wide or less) */
+@media only screen and (max-height: 250px) and (max-width:959px) {
+    #slogan,#gif1,#sub-slogan-text{display: none;}
+}
+/* (when the browser window is 959px wide or less) */
+@media only screen and (max-width:959px) {
+    .background-image{background-size:cover;background-position:center;}
+    .bgvid{display:none!important}	
+    #sloganDiv{text-align:center;height:120px;transition:all 1s ease-in-out}
+    #slogan{font-size:40px;transition:all 1s ease-in-out}
+    #sub-slogan-text{font-size:13px;margin-right:0;transition:all 1s ease-in-out}
+    #gif1{width:35px;height:35px;transition:all 1s ease-in-out}
+
+    /*Content start*/
+    .slidetext article{max-width:1200px!important;margin:auto}
+    
+    .subContent h4{font-size:20px;}
+    .subContent h3{font-size:12.5px;}
+    .content a{padding:10px;font-size:12px}    
+}
+/* (when the browser window is 599px wide or less) */
+@media only screen and (max-width:599px) {
+    .bgvid{display:none!important}
+    #sloganDiv{min-width:325px}
+    #slogan{font-size:25px;}
+    #sub-slogan-text{font-size:8px;font-weight:900}
+    #gif1{width:25px;height:25px;}
+    .background-video video{object-fit: fill;}
+
+    /*Content start*/
+    article h1{font-size:20px}article h4{font-size:13px}article p{font-size:10px!important}
+}
+/* (when the browser window is 959px wide or less) */
+@media only screen and (max-device-width:959px){
+    article h1{font-size:15px}article h4{font-size:12px}article p{font-size:11px!important}
+}
+/* (when the browser window is 599px wide or less) */
+@media only screen and (max-device-width:599px){
+    .bgvid{display:block!important}
+}

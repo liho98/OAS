@@ -1,0 +1,289 @@
+﻿#navigation::-webkit-scrollbar{
+    width:0;
+}
+.sideBar::-webkit-scrollbar{
+    width:3px;
+}
+.sideBar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0);
+    background-color: white;
+}
+.sideBar::-webkit-scrollbar-thumb {
+    background-color: rgba(100,100,100,1);
+    outline: 1px solid slategrey;
+}
+.block{
+    display:none;
+}
+.function1 a{
+    color:#5f5d5d;
+    z-index:100!important;
+}
+#top-header{
+    background-color:transparent;
+    height:47px;
+    margin:auto;
+    padding:10px;
+    max-width:1200px;    
+    min-width:310px;
+    max-height:100%;
+    z-index:100!important;
+}
+#icon{
+    width:35px;    
+    margin-top:6px;
+}
+#logo-name{
+    /* display: inline-block + vertical-align: middle can align the text beside an image */
+    margin-top: -23px;
+    display: inline-block;
+    vertical-align: middle;
+    font-family:font-freestyle;
+    font-weight:bold; 
+    font-size:25px;
+    transition:all 1s;
+}
+#side-tag{
+    float:right;
+    margin-top:14px;
+}
+.side-tag{
+    font-family:"Proxima Nova",sans-serif;
+    margin-left:0;
+    margin-right:55px;
+    font-size:12px;
+}
+.side-icon{
+    float:right;
+    font-size:20px;
+    margin-left:15px;
+    margin-right:15px;
+    margin-top:12px;
+}
+.side-tag:hover,.sub-sub-air-tag:hover{
+    opacity:.65;
+}
+.shake:hover .fa-envelope-o{
+    animation:shake .82s cubic-bezier(.36,.07,.19,.97) both;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    perspective:1000px;
+}
+.triangle-body{
+    position:absolute;
+    top:67px;
+    width:230px;
+    height:500px;
+    background-color:white;
+    border: 1px solid rgb(220, 220, 220);
+    border-radius: 5px;
+    z-index: 25;
+    display:none;
+}
+.triangle-body:after, 
+.triangle-body:before {
+    position: absolute;    
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+}
+.triangle-body:after {
+    left: 205px;    
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: #fff;
+    border-width: 15px;
+    margin-left: -15px;
+}
+.triangle-body:before {
+    left: 205px;    
+    border-color: rgba(255, 255, 255,0);
+    border-bottom-color: rgb(220, 220, 220);
+    border-width: 16px;
+    margin-left: -16px;
+}
+.sideBar{
+    overflow-y:scroll;width: 100%;height:100%;
+}
+.sideBar table{
+    width:100%;height:100%;text-align: center;color:#5f5d5d;
+}
+.userAvatar {
+    width: 95%;
+    height: 100%;
+    margin:auto;
+    margin-top: 5px;
+}
+.userAvatar img{
+    width:130px;height:130px;margin: auto;margin-top: 10px;border-radius: 50%;
+}
+.userAvatar div{
+    height:40px;line-height: 40px;width: 100%;display:inline-block;vertical-align: middle;color:#5f5d5d;
+}
+.userAvatar span{
+    width:60%;text-align: center;
+}
+.sideBarContent{
+    border-top:1px solid rgb(205,205,205);
+}
+.sideBarContent a{
+    margin-top:5px;text-align: left;;height:40px;line-height: 40px;width: 100%;display:inline-block;vertical-align: middle;color:#5f5d5d;font-size: 13px;font-weight: 400;font-family: 'Roboto', 'Noto', sans-serif;
+}
+.sideBarContent span{
+    text-align: center
+}
+.sideBarIcon{
+    width:35%;
+}
+.sideBarText{
+    width:65%;
+}
+.userAvatar:hover {
+    background-color: rgb(220,220,220);
+}
+.sideBarContent a:hover{
+    background-color: rgb(220,220,220);
+}
+#separator {
+    margin:0;
+    border: 0;
+    clear: both;
+    display: none;
+    width: 100%;
+    background-color: rgb(204,204,204);
+    height: 0.99px;
+}
+#navigation{
+    position:fixed;    
+    height:100%;
+    width:100%;
+    left:0;
+    overflow:hidden;
+    z-index:-1;
+}
+.menu{
+    font-family:"Gotham A","Gotham B",sans-serif;
+    font-weight:bolder;
+    font-size:20px!important;
+    padding-bottom:20px;    
+    border-bottom:1px white solid;
+}
+.submenu{
+    font-family:"Gotham A","Gotham B",sans-serif;
+    font-weight:900;
+    font-size:10px!important; 
+    margin-top:20px;    
+    cursor:pointer;
+}
+.add{
+    font-size:15px;
+    float:right;
+}
+.sub-sub-menu{
+    font-weight:900;    
+    font-size:10px!important;
+    word-wrap:break-word;
+    margin-top:15px;
+    margin-bottom:25px;
+    margin-left:10px;
+    overflow:hidden;
+    max-height:0;
+}
+.sub-sub-menu a{
+    line-height:20px;
+}
+.sub-sub-air-tag{
+    display:block;
+    margin-left:10px;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+td{
+    vertical-align:top;
+}
+@keyframes shake{
+    10%,90%{
+        transform:translate3d(-1px,0,0)
+    }
+    20%,80%{
+        transform:translate3d(2px,0,0)
+    }
+    30%,50%,70%{
+        transform:translate3d(-4px,0,0)
+    }
+    40%,60%{
+        transform:translate3d(4px,0,0)
+    }
+}
+@media only screen and (max-width:959px){
+    #navigation td{
+        display:block;
+    }
+    .block{
+        display:block;
+        width:100%;
+        height:28px;
+        opacity:0;
+        cursor:default;
+    }
+    .submenu{
+        margin-bottom:20px;
+    }
+    .side-icon{
+        margin-left:20px;
+        margin-right:20px;
+    }
+    .side-tag{
+        display:none;
+    }
+    #top-header{
+        height:50px;
+    }
+    .side-icon{
+        margin-top:5px;
+    }
+    .side-icon{
+        margin-top:15px;
+        transition:all 1s;
+    }
+    .triangle-body{
+        right:16px;
+    }    
+}
+@media only screen and (max-width:599px){
+    .side-icon{
+        margin-left:10px;
+        margin-right:10px;
+    }
+    #top-header{
+        height:55px;
+    }
+    .side-icon{
+        margin-top:18px;
+        transition:1s;
+    }
+    #icon{
+        margin-top:11px;
+    }
+    #logo-name{
+        font-size:20px;
+        transition:1s;
+    }
+    .triangle-body{ 
+        right:5px;
+    }       
+}
+/* portrait */
+@media screen and (orientation:portrait) {
+    .triangle-body{
+        height:500px;
+    }
+}
+/* landscape */
+@media screen and (orientation:landscape) and (max-device-width:599px) {
+    .triangle-body{
+        height:300px;
+    }
+}

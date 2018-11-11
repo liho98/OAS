@@ -1,0 +1,452 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainSite.master.cs" Inherits="OAS.MasterPage.MainSite" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>OAS</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- IE Specific to remove tap highlight -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link runat="server" rel="icon" type="image/ico" href="~/Content/images/icons_logos/oas.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link runat="server" rel="stylesheet" href="~/Content/css/header.css">
+    <link runat="server" rel="stylesheet" href="~/Content/css/style.css">
+    <link runat="server" rel="stylesheet" href="~/Content/css/footer.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script defer id="jqueryDeviceDetector"></script>
+    <script defer id="dynamicSetHeight"></script>
+
+    <script>
+        var path = window.location.protocol + "//" + window.location.host;
+        document.getElementById("jqueryDeviceDetector").src = path + "/Scripts/js/jquery.device.detector.js";
+        document.getElementById("dynamicSetHeight").src = path + "/Scripts/js/dynamicSetHeight.js";
+    </script>
+
+    <style></style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+        <!-- background -->
+        <div class="background">
+            <div class="background-image">
+                <div class="background-video">
+                    <video style="filter: opacity(80%) brightness(30%);" autoplay="autoplay" class="bgvid" loop="loop" preload="metadata" webkit-playsinline playsinline muted>
+                        <asp:ContentPlaceHolder ID="videoSource" runat="server"></asp:ContentPlaceHolder>
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- header start -->
+        <nav style="position: fixed; width: 100%; z-index: 10; user-select: none;">
+            <div id="header">
+                <div id="top-header">
+                    <div>
+                        <div id="rotate">
+                            <span title="Menu" id="spin" style="cursor: pointer;" onclick="clickMenu()" class="fa material-icons fa-fw side-icon dot">&#xE5D4;</span>
+
+
+                            <asp:LoginView ID="LoginViewSideMenu" runat="server">
+                                <LoggedInTemplate>
+                                </LoggedInTemplate>
+                                <AnonymousTemplate>
+                                    <div id="triangle-div" class="triangle-body" style="height: 350px;">
+                                        <div class="sideBar">
+                                            <table>
+
+                                                <tr style="height: 40%">
+                                                    <td>
+                                                        <a runat="server" href="~/Login.aspx">
+                                                            <div class="userAvatar">
+                                                                <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                <div>
+                                                                    <span>Hi, There</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: 15%">
+                                                    <td class="sideBarContent">
+                                                        <a runat="server" href="~/Login.aspx">
+                                                            <span class="fa fa-sign-in sideBarIcon"></span>
+                                                            <span class="sideBarText">Log in</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr style="height: 15%">
+                                                    <td class="sideBarContent">
+                                                        <a href="#">
+                                                            <span class="fa fa-question-circle sideBarIcon"></span>
+                                                            <span class="sideBarText">Help</span>
+                                                        </a>
+                                                        <a href="#">
+                                                            <span class="fa fa-info-circle sideBarIcon"></span>
+                                                            <span class="sideBarText">Send feedback</span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </AnonymousTemplate>
+
+                                <RoleGroups>
+
+                                    <asp:RoleGroup Roles="Administrators">
+                                        <ContentTemplate>
+                                            <div id="triangle-div" class="triangle-body" style="height: 450px;">
+                                                <div class="sideBar">
+                                                    <table>
+
+                                                        <tr style="height: 40%">
+                                                            <td>
+                                                                <a runat="server" href="">
+                                                                    <div class="userAvatar">
+                                                                        <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                        <div>
+                                                                            <span>Hi, 
+                                                                                <asp:LoginName ID="LoginName1" Style="text-transform: uppercase" runat="server" />
+                                                                                Admin
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 25%">
+                                                            <td class="sideBarContent">
+                                                                <a href="#">
+                                                                    <span class="fa fa-dashboard sideBarIcon"></span>
+                                                                    <span class="sideBarText">Dashboard</span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="fa fa-users sideBarIcon"></span>
+                                                                    <span class="sideBarText">Manage user</span>
+                                                                </a>
+
+                                                                <a href="#">
+                                                                    <span class="fa fa-cog sideBarIcon"></span>
+                                                                    <span class="sideBarText">Setting</span>
+                                                                </a>
+
+
+
+                                                                <asp:LinkButton ID="SignOutLink1" runat="server" OnClick="SignOut_OnClick">
+                                                                <span class="fa fa-sign-out sideBarIcon"></span>
+                                                                <span class="sideBarText">Sign out</span>
+                                                                </asp:LinkButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 15%">
+                                                            <td class="sideBarContent">
+                                                                <a href="#">
+                                                                    <span class="fa fa-question-circle sideBarIcon"></span>
+                                                                    <span class="sideBarText">Help</span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="fa fa-info-circle sideBarIcon"></span>
+                                                                    <span class="sideBarText">Send feedback</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:RoleGroup>
+
+                                    <asp:RoleGroup Roles="Lecturers">
+                                        <ContentTemplate>
+                                            <div id="triangle-div" class="triangle-body" style="height: 450px;">
+                                                <div class="sideBar">
+                                                    <table>
+                                                        <tr style="height: 40%">
+                                                            <td>
+                                                                <a runat="server" href="">
+                                                                    <div class="userAvatar">
+                                                                        <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                        <div>
+                                                                            <span>Hi, <%= HttpContext.Current.User.Identity.Name.ToUpper() %> Lecturer</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 25%">
+                                                            <td class="sideBarContent">
+                                                                <a href="#">
+                                                                    <span class="fa fa-dashboard sideBarIcon"></span>
+                                                                    <span class="sideBarText">Dashboard</span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="fa fa-cog sideBarIcon"></span>
+                                                                    <span class="sideBarText">Setting</span>
+                                                                </a>
+                                                                <asp:LinkButton ID="SignOutLink2" runat="server" OnClick="SignOut_OnClick">
+                                                                <span class="fa fa-sign-out sideBarIcon"></span>
+                                                                <span class="sideBarText">Sign out</span>
+                                                                </asp:LinkButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 15%">
+                                                            <td class="sideBarContent">
+                                                                <a href="#">
+                                                                    <span class="fa fa-question-circle sideBarIcon"></span>
+                                                                    <span class="sideBarText">Help</span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="fa fa-info-circle sideBarIcon"></span>
+                                                                    <span class="sideBarText">Send feedback</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:RoleGroup>
+                                    <asp:RoleGroup Roles="Students">
+                                        <ContentTemplate>
+                                            <div id="triangle-div" class="triangle-body" style="height: 450px;">
+                                                <div class="sideBar">
+                                                    <table>
+                                                        <tr style="height: 40%">
+                                                            <td>
+                                                                <a runat="server" href="">
+                                                                    <div class="userAvatar">
+                                                                        <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                        <div>
+                                                                            <span>Hi, <%= HttpContext.Current.User.Identity.Name.ToUpper() %> Student</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 25%">
+                                                            <td class="sideBarContent">
+                                                                <a href="#">
+                                                                    <span class="fa fa-dashboard sideBarIcon"></span>
+                                                                    <span class="sideBarText">Dashboard</span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="fa fa-cog sideBarIcon"></span>
+                                                                    <span class="sideBarText">Setting</span>
+                                                                </a>
+                                                                <asp:LinkButton ID="SignOutLink3" runat="server" OnClick="SignOut_OnClick">
+                                                                <span class="fa fa-sign-out sideBarIcon"></span>
+                                                                <span class="sideBarText">Sign out</span>
+                                                                </asp:LinkButton>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr style="height: 15%">
+                                                            <td class="sideBarContent">
+                                                                <a href="#">
+                                                                    <span class="fa fa-question-circle sideBarIcon"></span>
+                                                                    <span class="sideBarText">Help</span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="fa fa-info-circle sideBarIcon"></span>
+                                                                    <span class="sideBarText">Send feedback</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </ContentTemplate>
+                                    </asp:RoleGroup>
+
+                                </RoleGroups>
+
+                            </asp:LoginView>
+                        </div>
+                        <div>
+                            <a class="shake" href="mailto:liho_98@hotmail.com" title="Quick Email">
+                                <span class="fa fa-envelope-o fa-fw side-icon"></span>
+                            </a>
+                        </div>
+                        <div>
+                            <asp:LoginView ID="LoginViewProfile" runat="server">
+                                <AnonymousTemplate>
+                                    <span id="membership" title="Log In">
+                                        <a runat="server" href="~/Login.aspx" class="fa fa-user-circle-o fa-fw side-icon"></a>
+                                    </span>
+                                </AnonymousTemplate>
+
+                                <RoleGroups>
+                                    <asp:RoleGroup Roles="Administrators">
+                                        <ContentTemplate>
+                                            <span id="membership" title="Profile">
+                                                <a href="#" class="fa fa-user-circle-o fa-fw side-icon"></a>
+                                            </span>
+                                        </ContentTemplate>
+                                    </asp:RoleGroup>
+                                    <asp:RoleGroup Roles="Lecturers">
+                                        <ContentTemplate>
+                                            <span id="membership" title="Profile">
+                                                <a href="#" class="fa fa-user-circle-o fa-fw side-icon"></a>
+                                            </span>
+                                        </ContentTemplate>
+                                    </asp:RoleGroup>
+                                    <asp:RoleGroup Roles="Students">
+                                        <ContentTemplate>
+                                            <span id="membership" title="Profile">
+                                                <a href="#" class="fa fa-user-circle-o fa-fw side-icon"></a>
+                                            </span>
+                                        </ContentTemplate>
+                                    </asp:RoleGroup>
+                                </RoleGroups>
+                            </asp:LoginView>
+                        </div>
+                        <div id="side-tag">
+                            <span>
+                                <a href="#" class="side-tag" id="aboutUs" title="About Us">About Us</a>
+                            </span>
+                            <span>
+                                <a href="#" class="side-tag" id="adjust" title="Contact">Contact</a>
+                            </span>
+                        </div>
+                        <a runat="server" href="~/Default.aspx" title="OAS" style="float: left; margin-left: 10px;">
+                            <span>
+                                <img runat="server" id="icon" src="~/Content/images/icons_logos/oas_white.png" alt="Logo"></span>
+                            <span id="logo-name" style="">&nbsp;O&nbsp;A&nbsp;S<span style="font-size: 8px"> &copy;</span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr id="separator" class="displayNoneFunc" />
+
+            <asp:ContentPlaceHolder ID="bottomHeader" runat="server"></asp:ContentPlaceHolder>
+        </nav>
+        <!-- header end -->
+        <script async id="headerJs"></script>
+        <script>
+            document.getElementById("headerJs").src = path + "/Scripts/js/header.js";
+        </script>
+
+        <asp:ContentPlaceHolder ID="backgoundText" runat="server"></asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="slideshowContent" runat="server"></asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="contentBody" runat="server"></asp:ContentPlaceHolder>
+        <!-- footer start -->
+        <div id="footerDiv">
+            <div class="footer">
+                <div id="top-footer">
+                    <table style="user-select: none;">
+                        <tr>
+                            <td>
+                                <div>Get To Know Us</div>
+                                <span>
+                                    <a href="#">read our blog</a>
+                                    <a href="#">field stories</a>
+                                    <a href="#">meet our staff</a>
+                                </span>
+                            </td>
+                            <td>
+                                <div>Get Involved</div>
+                                <span>
+                                    <a href="#">volunteer</a>
+                                    <a href="#">brand partnerships</a>
+                                    <a href="#">shop our store</a>
+                                </span>
+                            </td>
+                            <td>
+                                <div>Resources</div>
+                                <span>
+                                    <a href="#">download assets</a>
+                                    <a href="#">see financials</a>
+                                    <a href="#">in-kind donors</a>
+                                </span>
+                            </td>
+                            <td>
+                                <div>Connect</div>
+                                <span>
+                                    <a href="#">contact us</a>
+                                    <a href="#">help center</a>
+                                    <a href="#">request a speaker</a>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <hr>
+
+                <div id="bottom-footer">
+                    <table style="margin: auto; table-layout: fixed; width: 95%; user-select: none;">
+                        <tr>
+                            <td>
+                                <a runat="server" href="~/Default.aspx">Homepage</a>
+                            </td>
+                            <td>
+                                <a id="top" onclick="scrollBackTop()" style="cursor: pointer">Back to top</a>
+                            </td>
+                            <td>
+                                <a href="#">Privacy policy</a>
+                            </td>
+                            <td>
+                                <span><span>&copy;</span> Copyright 2018</span>
+                            </td>
+                            <td>
+                                <span>All rights reserved</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="social-media">
+                    <table style="margin: auto; table-layout: fixed;">
+                        <tr>
+                            <td>
+                                <a target="_blank" href="https://www.facebook.com/environmental.society.00" class="fa fa-facebook-official fa-fw"></a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="https://www.instagram.com/liho___/" class="fa fa-instagram fa-fw"></a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="https://twitter.com/liho_98?lang=en" class="fa fa-twitter fa-fw"></a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="https://www.snapchat.com/add/liho_98" class="fa fa-snapchat-ghost fa-fw"></a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="https://www.youtube.com/channel/UCLKYsEXfI0PGXeKYL1KV7qA" class="fa fa-youtube-play fa-fw"></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- footer end -->
+
+        <script>
+
+            var style = document.getElementsByTagName('style'),
+                css = "@media only screen and (max-width:959px){.background-image{background-image:url('" + path + "/Content/images/phone-image.jpg')}}" +
+                    "@font-face{font-family:font-freestyle;src:url('" + path + "/Content/fonts/Freestyle_Script.TTF')}" +
+                    "@font-face{font-family:font-bradley;src:url('" + path + "/Content/fonts/Bradley_Hand_ITC.TTF')}";
+            style[0].appendChild(document.createTextNode(css));
+        </script>
+    </form>
+
+</body>
+</html>
