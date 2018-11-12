@@ -99,7 +99,7 @@
             color: red !important;
         }
 
-            .actionButton + a {
+            .actionButton + button {
                 color: #5d4037 !important;
             }
 
@@ -142,7 +142,8 @@
             }
 
         h2 {
-            margin-bottom: 0;
+            display:inline-block;
+            margin-top: 0;
             font-size: 20px;
             color: #5f5d5d;
             font-weight: 500;
@@ -228,7 +229,7 @@
         .box {
             background-color: transparent;
             width: 75%;
-            height: 75%;
+            height: 70%;
             position: absolute;
             top: 50%;
             right: 0;
@@ -299,6 +300,7 @@
 
         if (!Page.IsPostBack)
         {
+            BindRolesToRolesList();
         }
     }
     protected void removeUser_OnClick(object sender, EventArgs e)
@@ -317,7 +319,7 @@
         //table = (Table)TablePlaceHolder.FindControl("datatables");
         //table.Attributes.CssStyle.Add("display", "none");
         tableDiv.Attributes["style"] = "display:none!important;";
-        updateDiv.Attributes["style"] = "display:block!important;height:480px;";
+        updateDiv.Attributes["style"] = "display:block!important;height:450px;";
 
         Message.ForeColor = System.Drawing.Color.Green;
         Message.Text = button.Attributes["value"];
@@ -427,7 +429,7 @@
             </div>
 
             <div id="updateDiv" runat="server" class="box-wrapper fade">
-                <div class="box" style="height: 83%">
+                <div class="box" style="height: 85%">
 
                     <script runat="server">
 
@@ -442,7 +444,7 @@
                             RolesList.Items[0].Attributes.Add("disabled", "disabled");
                             RolesList.Items[0].Attributes.CssStyle.Add("background-color", "rgba(200,200,200,0.6)");
                         }
-                        protected void CreateAccountButton_Click(object sender, EventArgs e)
+                        protected void UpdateAccountButton_Click(object sender, EventArgs e)
                         {
                             MembershipCreateStatus createStatus;
                             MembershipUser newUser;
@@ -482,22 +484,32 @@
                                 statusMessage.Text = ex.Message;
                             }
                         }
+                        protected void returnLink_OnClick(object sender, EventArgs e)
+                        {
+                            tableDiv.Attributes["style"] = "display:block!important;";
+                            updateDiv.Attributes["style"] = "display:none!important";
+                        }
+
                     </script>
 
-                    <h2>Create User account</h2>
-                    <asp:TextBox ID="userID" runat="server" placeholder="User ID" autofocus="autofocus"></asp:TextBox>
+                    <h2>Edit User account</h2>
+                    <asp:LinkButton ID="returnLink" runat="server" OnClick="returnLink_OnClick" title="Back" style="all:unset;right:0;position:absolute;cursor:pointer">
+                            <i class="material-icons" style="float:right;margin-top:5px;font-weight:500;font-size:25px;">arrow_back</i>
+                    </asp:LinkButton>
+
+                    <asp:TextBox ID="userID" runat="server" autofocus="autofocus" Enabled="false" ></asp:TextBox>
                     <asp:TextBox ID="firstName" runat="server" placeholder="First name" Style="width: 49%"></asp:TextBox>
                     <asp:TextBox ID="lastName" runat="server" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
                     <asp:TextBox ID="email" runat="server" placeholder="Email address"></asp:TextBox>
-                    <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Password"></asp:TextBox>
-                    <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" placeholder="Confirm password"></asp:TextBox>
+                    <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="New password"></asp:TextBox>
+                    <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" placeholder="Confirm new password"></asp:TextBox>
                     <asp:DropDownList ID="RolesList" runat="server" AppendDataBoundItems="true" required="required" onchange="changeColor()">
                         <asp:ListItem Text="Select a Role" Selected="True" Value=""></asp:ListItem>
                     </asp:DropDownList>
 
                     <asp:Label ID="statusMessage" runat="server" ForeColor="Red"></asp:Label>
 
-                    <asp:Button ID="CreateButton" runat="server" Text="Create" OnClick="CreateAccountButton_Click" />
+                    <asp:Button ID="UpdateButton" runat="server" Text="Edit" OnClick="UpdateAccountButton_Click" />
                 </div>
             </div>
 

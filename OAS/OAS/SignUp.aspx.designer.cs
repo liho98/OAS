@@ -7,46 +7,64 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OAS.Views.Administrator {
+namespace OAS {
     
     
-    public partial class ManageUserAccount {
+    public partial class SignUp {
         
         /// <summary>
-        /// tableDiv control.
+        /// selectBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableDiv;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl selectBox;
         
         /// <summary>
-        /// TablePlaceHolder control.
+        /// Img1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder TablePlaceHolder;
+        protected global::System.Web.UI.HtmlControls.HtmlImage Img1;
         
         /// <summary>
-        /// Message control.
+        /// studentButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Message;
+        protected global::System.Web.UI.WebControls.LinkButton studentButton;
         
         /// <summary>
-        /// updateDiv control.
+        /// LecturerButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl updateDiv;
+        protected global::System.Web.UI.WebControls.LinkButton LecturerButton;
+        
+        /// <summary>
+        /// userBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl userBox;
+        
+        /// <summary>
+        /// icon control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage icon;
         
         /// <summary>
         /// returnLink control.
@@ -112,30 +130,93 @@ namespace OAS.Views.Administrator {
         protected global::System.Web.UI.WebControls.TextBox confirmPassword;
         
         /// <summary>
-        /// RolesList control.
+        /// role control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList RolesList;
+        protected global::System.Web.UI.WebControls.TextBox role;
         
         /// <summary>
-        /// statusMessage control.
+        /// gender control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label statusMessage;
+        protected global::System.Web.UI.WebControls.DropDownList gender;
         
         /// <summary>
-        /// UpdateButton control.
+        /// contactNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UpdateButton;
+        protected global::System.Web.UI.WebControls.TextBox contactNo;
+        
+        /// <summary>
+        /// dateOfBirth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dateOfBirth;
+        
+        /// <summary>
+        /// ProgramCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ProgramCode;
+        
+        /// <summary>
+        /// position control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList position;
+        
+        /// <summary>
+        /// invalidDetailsMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label invalidDetailsMessage;
+        
+        /// <summary>
+        /// PasswordConfirmRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordConfirmRequiredValidator;
+        
+        /// <summary>
+        /// PasswordConfirmCompareValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator PasswordConfirmCompareValidator;
+        
+        /// <summary>
+        /// signUpButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button signUpButton;
     }
 }

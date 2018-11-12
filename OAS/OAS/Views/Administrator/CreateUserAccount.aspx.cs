@@ -10,12 +10,55 @@ namespace OAS.Views.Administrator
 {
     public partial class CreateUserAccount : System.Web.UI.Page
     {
-        //private static string conStr = ConfigurationManager.ConnectionStrings["oasDB"].ConnectionString;
-        //private SqlConnection con = new SqlConnection(conStr);
         protected void Page_Load(object sender, EventArgs e)
         {
-            //con.Open();
+            if (!Page.IsPostBack)
+            {
+                BindRolesToRolesList();
+
+            }
         }
+        protected void CreateAccountButton_Click(object sender, EventArgs e)
+        {
+            MembershipCreateStatus createStatus;
+            MembershipUser newUser;
+            try
+            {
+                // Create new user.
+                if (Membership.RequiresQuestionAndAnswer)
+                {
+                    newUser = Membership.CreateUser(
+                      userID.Text,
+                      password.Text,
+                      email.Text,
+                      "",
+                      "",
+                      false,
+                      out createStatus);
+                }
+                else
+                {
+                    newUser = Membership.CreateUser(
+                      userID.Text,
+                      password.Text,
+                      email.Text);
+                }
+                Roles.AddUserToRole(userID.Text, RolesList.SelectedValue);
+                statusMessage.ForeColor = System.Drawing.Color.Green;
+                statusMessage.Text = "Successfully created user " + userID.Text + ".";
+            }
+            catch (MembershipCreateUserException ex)
+            {
+                statusMessage.ForeColor = System.Drawing.Color.Red;
+                statusMessage.Text = GetErrorMessage(ex.StatusCode);
+            }
+            catch (HttpException ex)
+            {
+                statusMessage.ForeColor = System.Drawing.Color.Red;
+                statusMessage.Text = ex.Message;
+            }
+        }
+
         protected string GetErrorMessage(MembershipCreateStatus status)
         {
             switch (status)
@@ -51,5 +94,16 @@ namespace OAS.Views.Administrator
                     return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
             }
         }
+        private void BindRolesToRolesList()
+        {
+            // Get all of the roles 
+            RolesList.DataSource = Roles.GetAllRoles();
+            RolesList.DataBind();
+
+            RolesList.Attributes.CssStyle.Add("color", "rgba(0,0,0,0.6)");
+            RolesList.Items[0].Attributes.Add("disabled", "disabled");
+            RolesList.Items[0].Attributes.CssStyle.Add("background-color", "rgba(200,200,200,0.6)");
+        }
+
     }
 }

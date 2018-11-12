@@ -4,7 +4,7 @@
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.IO" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -144,7 +144,9 @@
                     if (userRecords["Image"] != System.DBNull.Value)
                     {
                         // + "<img style=\"width: 100px;height:100px\" src=\"" + Encoding.Default.GetString((byte[]) userRecords["userImage"])+"\"/><br/>"
+                        //Response.Write(userRecords["userID"].ToString() + "<img style=\"width: 300px;height:200px\" src=\"" + Encoding.Default.GetString((byte[])userRecords["Image"]) + "\"/><br/>");
                         Response.Write(userRecords["userID"].ToString() + "<img style=\"width: 300px;height:200px\" src=\"" + Encoding.Default.GetString((byte[])userRecords["Image"]) + "\"/><br/>");
+                        //Response.Write(userRecords["userID"].ToString() + "<img style=\"width: 300px;height:200px\" src=\"" + Convert.ToBase64String((byte[])userRecords["Image"]) + "\"/><br/>");
 
                     }
                 }
