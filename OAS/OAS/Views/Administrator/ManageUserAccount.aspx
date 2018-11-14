@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="ManageUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.ManageUserAccount" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="ManageUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.ManageUserAccount" %>
 
-<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
 
     <link rel="stylesheet" id="bootstrapCss">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
@@ -8,61 +8,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
-    <script>
-        document.getElementById("bootstrapCss").href = path + "/Content/css/bootstrap.css";
-
-        $(document).ready(function () {
-            $('#contentBody_datatables').DataTable({
-                "pageLength": 5,
-                "lengthChange": false,
-                "columnDefs": [
-                    { "width": "10%", "targets": 3 }
-                ],
-                "columnDefs": [
-                    { "orderable": false, className: "dt-body-center", "targets": 3 }
-                ]
-
-            });
-        });
-    </script>
-
-    <!-- Overide the #contentBody height value default is 1.8 -->
-    <script>
-        var path = window.location.protocol + "//" + window.location.host;
-
-        $.when(
-            $.getScript(path + "/Scripts/js/dynamicSetHeight.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            //place your code here, the scripts are all loaded
-            dynamicSetHeight(0.77);
-            setLeftTriangle();
-        });
-
-        $.when(
-            $.getScript(path + "/Scripts/js/jquery.device.detector.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            //place your code here, the scripts are all loaded
-            $(window).on('resize', function () {
-                var instance = $.fn.deviceDetector;
-                if (instance.isDesktop()) {
-                    dynamicSetHeight(0.77);
-                }
-                if ($(window).outerWidth() > 958) {
-                    setLeftTriangle();
-                } else {
-                    document.getElementById("triangle-div").style.left = "";
-                }
-            });
-        });
-
-    </script>
 
     <style>
         video {
@@ -81,7 +26,7 @@
             margin-top: 80px;
         }
 
-        .reset-parent, #contentBody_datatables_next {
+        .reset-parent, #contentBody_Navigation_datatables_next {
             all: initial;
         }
 
@@ -99,7 +44,7 @@
             color: red !important;
         }
 
-            .actionButton + a {
+            .actionButton + button {
                 color: #5d4037 !important;
             }
 
@@ -142,14 +87,15 @@
             }
 
         h2 {
-            margin-bottom: 0;
+            display: inline-block;
+            margin-top: 0;
             font-size: 20px;
             color: #5f5d5d;
             font-weight: 500;
             font-family: "Segoe UI","Helvetica Neue","Lucida Grande","Roboto","Ebrima","Nirmala UI","Gadugi","Segoe Xbox Symbol","Segoe UI Symbol","Meiryo UI","Khmer UI","Tunga","Lao UI","Raavi","Iskoola Pota","Latha","Leelawadee","Microsoft YaHei UI","Microsoft JhengHei UI","Malgun Gothic","Estrangelo Edessa","Microsoft Himalaya","Microsoft New Tai Lue","Microsoft PhagsPa","Microsoft Tai Le","Microsoft Yi Baiti","Mongolian Baiti","MV Boli","Myanmar Text","Cambria Math";
         }
 
-        input[type=text], input[type=password], #contentBody_RolesList {
+        input, select {
             border-width: 1px;
             border-color: #666;
             border-color: rgba(0,0,0,.3);
@@ -164,11 +110,12 @@
             font-size: 13px;
             font-weight: 100;
             margin-top: 10px;
+            color: black !important;
             -webkit-transition: all 1s linear;
             transition: all 1s linear;
         }
 
-        #contentBody_firstName {
+        #contentBody_Navigation_firstName {
             float: left
         }
 
@@ -176,14 +123,14 @@
             border-color: rgb(102,102,255);
         }
 
-        #contentBody_statusMessage {
+        #contentBody_Navigation_statusMessage {
             text-align: left;
             font-weight: 500;
             font-size: 11px;
             letter-spacing: 0.5px;
             display: inline-block;
             float: left;
-            margin-top: 43px;
+            margin-top: 25px;
             max-width: 235px;
         }
 
@@ -221,14 +168,14 @@
             box-shadow: 0px 0px 70px -10px rgba(138,242,226,1);
         }
 
-        #contentBody_updateDiv {
+        #contentBody_Navigation_updateDiv {
             display: none !important;
         }
 
         .box {
             background-color: transparent;
             width: 75%;
-            height: 75%;
+            height: 70%;
             position: absolute;
             top: 50%;
             right: 0;
@@ -264,10 +211,29 @@
                 opacity: 1
             }
         }
+        .errorMsg {
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        #contentBody_SiteMapPath a {
+            padding: 0;
+            background-color: #fff !important;
+            color: rgba(125,155,125,1);
+            text-decoration: underline;
+        }
+
+        #contentBody_Menu_SkipLink {
+            display: none;
+        }
+        #bodyContent{
+            background-color:#fff;
+        }
+
     </style>
 </asp:Content>
 
-<asp:Content ID="videoSource" ContentPlaceHolderID="videoSource" runat="server">
+<asp:Content ID="AdminVideoSource" ContentPlaceHolderID="AdminVideoSource" runat="server">
     <source runat="server" type="video/mp4" src="~/Content/videos/bg_video2.mp4">
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -275,7 +241,7 @@
     </script>
 </asp:Content>
 
-<asp:Content ID="backgoundText" ContentPlaceHolderID="backgoundText" runat="server">
+<asp:Content ID="AdminBackgroundText" ContentPlaceHolderID="AdminBackgroundText" runat="server">
     <!-- background text -->
     <div style="position: fixed; top: 14%; width: 100%; color: #fff">
         <div id="sloganDiv" style="text-align: center;">
@@ -286,223 +252,73 @@
     </div>
 </asp:Content>
 
-<script runat="server">
-    List<MembershipUser> AllUsersList = new List<MembershipUser>();
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        foreach (MembershipUser user in Membership.GetAllUsers())
-        {
-            AllUsersList.Add(user);
-        }
+<asp:Content ID="Navigation" ContentPlaceHolderID="Navigation" runat="server">
 
-        createTable();
+    <div id="tableDiv" runat="server" class="reset-parent bootstrap-iso fade">
+        <!-- Any HTML here will be styled with Bootstrap CSS -->
+        <asp:PlaceHolder ID="TablePlaceHolder" runat="server"></asp:PlaceHolder>
+        <div style="width: 100%">
+            <asp:Label ID="Message" runat="server" Style="text-align: center; display: block; color: green;font-weight: 500;font-size: 14px;letter-spacing: 0.5px;"></asp:Label>
+        </div>
+    </div>
 
-        if (!Page.IsPostBack)
-        {
-        }
-    }
-    protected void removeUser_OnClick(object sender, EventArgs e)
-    {
-        LinkButton linkButton = sender as LinkButton;
+    <div id="updateDiv" runat="server" class="box-wrapper fade">
+        <div class="box" style="height: 85%">
 
-        Membership.DeleteUser(linkButton.Text);
+            <script runat="server">
 
-        Message.Text = linkButton.Text;
-        Response.Redirect(Request.RawUrl);
-    }
-    protected void editUser_OnClick(object sender, EventArgs e)
-    {
-        HtmlButton button = sender as HtmlButton;
-        //Table table;
-        //table = (Table)TablePlaceHolder.FindControl("datatables");
-        //table.Attributes.CssStyle.Add("display", "none");
-        tableDiv.Attributes["style"] = "display:none!important;";
-        updateDiv.Attributes["style"] = "display:block!important;height:480px;";
+            </script>
 
-        Message.ForeColor = System.Drawing.Color.Green;
-        Message.Text = button.Attributes["value"];
+            <h2>Edit User account</h2>
+            <asp:LinkButton ID="returnLink" runat="server" OnClick="returnLink_OnClick" title="Back" Style="all: unset; right: 0; position: absolute; cursor: pointer">
+                            <i class="material-icons" style="float:right;margin-top:5px;font-weight:500;font-size:25px;">arrow_back</i>
+            </asp:LinkButton>
 
-    }
-    protected void createTable()
-    {
-        String[] userRoles;
-        String showRoles;
-        Table table = new System.Web.UI.WebControls.Table();
-        TableRow tableRow;
-        TableCell tableCell;
-        HtmlGenericControl span; HtmlButton button;
-        LinkButton linkButton;
+            <asp:TextBox ID="userID" runat="server" Enabled="false" Style="background-color: transparent; cursor: not-allowed"></asp:TextBox>
+            <asp:TextBox ID="firstName" runat="server" required="required" autofocus="autofocus" placeholder="First name" Style="width: 49%"></asp:TextBox>
+            <asp:TextBox ID="lastName" runat="server" required="required" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
+            <asp:TextBox ID="email" TextMode="Email" required="required" runat="server" placeholder="Email address"></asp:TextBox>
+            <asp:TextBox ID="password" runat="server" required="required" TextMode="Password" placeholder="New password"></asp:TextBox>
+            <asp:TextBox ID="confirmPassword" runat="server" required="required" TextMode="Password" placeholder="Confirm new password"></asp:TextBox>
 
-        table.ID = "datatables";
-        table.CssClass = "table table-striped table-bordered";
-        table.Attributes.CssStyle.Add("width", "100%");
+            <asp:DropDownList ID="RolesList" runat="server" AutoPostBack="true" OnSelectedIndexChanged="RolesList_OnSelectedChange" AppendDataBoundItems="true" required="required">
+            </asp:DropDownList>
 
-        tableRow = new TableRow();
-        tableRow.TableSection = TableRowSection.TableHeader;
+            <asp:DropDownList ID="gender" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+                <asp:ListItem Selected="True">Male</asp:ListItem>
+                <asp:ListItem>Female</asp:ListItem>
+            </asp:DropDownList>
+            <asp:TextBox ID="contactNo" runat="server" required="required" placeholder="Contact No."></asp:TextBox>
+            <asp:TextBox ID="dateOfBirth" runat="server" TextMode="Date" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;"></asp:TextBox>
 
-        tableCell = new TableCell();
-        tableCell.Text = "User ID";
-        tableRow.Cells.Add(tableCell);
-        tableCell = new TableCell();
-        tableCell.Text = "Email";
-        tableRow.Cells.Add(tableCell);
-        tableCell = new TableCell();
-        tableCell.Text = "Role";
-        tableRow.Cells.Add(tableCell);
-        tableCell = new TableCell();
-        tableCell.Text = "Action";
-        tableRow.Cells.Add(tableCell);
-        table.Rows.Add(tableRow);
+            <asp:DropDownList ID="ProgramCode" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+                <asp:ListItem Selected="True">RSF</asp:ListItem>
+                <asp:ListItem>RSD</asp:ListItem>
+                <asp:ListItem>REI</asp:ListItem>
+                <asp:ListItem>RIP</asp:ListItem>
+            </asp:DropDownList>
 
-        for (int i = 0; i < AllUsersList.Count; i++)
-        {
-            tableRow = new TableRow();
-            tableCell = new TableCell();
-            tableCell.Text = AllUsersList[i].UserName;
-            tableRow.Cells.Add(tableCell);
-            tableCell = new TableCell();
-            tableCell.Text = AllUsersList[i].Email;
-            tableRow.Cells.Add(tableCell);
+            <asp:DropDownList ID="position" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+                <asp:ListItem Selected="True">Lecturer</asp:ListItem>
+                <asp:ListItem>Senior Lecturer</asp:ListItem>
+                <asp:ListItem>Principal Lecturer</asp:ListItem>
+            </asp:DropDownList>
 
-            showRoles = "";
-            userRoles = Roles.GetRolesForUser(AllUsersList[i].UserName);
-            for (int j = 0; j < userRoles.Length; j++)
-            {
-                showRoles = showRoles + userRoles[j] + ", ";
-            }
-            if (showRoles.Length != 0)
-            {
-                showRoles = showRoles.Remove(showRoles.Length - 2, 2);
-            }
-            tableCell = new TableCell();
-            tableCell.Text = showRoles;
-            tableRow.Cells.Add(tableCell);
+            <asp:CompareValidator ID="PasswordConfirmCompareValidator" runat="server" ControlToValidate="confirmPassword" ControlToCompare="password"
+                Display="Static" ForeColor="red" ErrorMessage="Confirm password must match password."
+                ValidationGroup="pass" CssClass="errorMsg"></asp:CompareValidator>
 
-            tableCell = new TableCell();
-            span = new HtmlGenericControl("span");
-            span.InnerHtml = "clear";
-            span.Attributes["class"] = "material-icons hvr-icon";
+            <asp:Label ID="statusMessage" runat="server" ForeColor="Red"></asp:Label>
+            <asp:RequiredFieldValidator ID="PasswordConfirmRequiredValidator"
+                runat="server"
+                ControlToValidate="confirmPassword"
+                ErrorMessage=""
+                ValidationGroup="pass"
+                Display="Dynamic" ForeColor="Red" CssClass="errorMsg" />
 
-            linkButton = new LinkButton();
-            linkButton.ID = "removeUser" + i;
-            linkButton.Text = AllUsersList[i].UserName;
-            linkButton.CssClass = "actionButton hvr-icon-pulse";
-            linkButton.Controls.Add(span);
-            // Register the event-handling method for the OnClientClick event. 
-            linkButton.Click += new EventHandler(this.removeUser_OnClick);
-            linkButton.OnClientClick = "return confirm('Are you sure to delete this user " + AllUsersList[i].UserName + "?');";
-            tableCell.Controls.Add(linkButton);
-
-            span = new HtmlGenericControl("span");
-            span.InnerHtml = "edit";
-            span.Attributes["class"] = "material-icons hvr-icon";
-
-            button = new HtmlButton();
-
-            button.ID = "editUser" + i;
-            button.Attributes["value"] = AllUsersList[i].UserName;
-            button.Attributes["class"] = "actionButton hvr-icon-pulse";
-            button.Controls.Add(span);
-            // Register the event-handling method for the OnClientClick event. 
-            button.ServerClick += new EventHandler(editUser_OnClick);
-            tableCell.Controls.Add(button);
-
-            tableRow.Cells.Add(tableCell);
-
-            table.Rows.Add(tableRow);
-
-        }
-        TablePlaceHolder.Controls.Add(table);
-    }
-</script>
-
-<asp:Content ID="contentBody" ContentPlaceHolderID="contentBody" runat="server">
-    <!-- content start -->
-    <div id="bodyContent" style="background-color: #fff; border-bottom: 1px solid rgb(205,205,205); z-index: 1">
-        <div class="content">
-            <div id="tableDiv" runat="server" class="reset-parent bootstrap-iso fade">
-                <!-- Any HTML here will be styled with Bootstrap CSS -->
-                <asp:PlaceHolder ID="TablePlaceHolder" runat="server"></asp:PlaceHolder>
-                <asp:Label ID="Message" runat="server"></asp:Label>
-            </div>
-
-            <div id="updateDiv" runat="server" class="box-wrapper fade">
-                <div class="box" style="height: 83%">
-
-                    <script runat="server">
-
-
-                        private void BindRolesToRolesList()
-                        {
-                            // Get all of the roles 
-                            RolesList.DataSource = Roles.GetAllRoles();
-                            RolesList.DataBind();
-
-                            RolesList.Attributes.CssStyle.Add("color", "rgba(0,0,0,0.6)");
-                            RolesList.Items[0].Attributes.Add("disabled", "disabled");
-                            RolesList.Items[0].Attributes.CssStyle.Add("background-color", "rgba(200,200,200,0.6)");
-                        }
-                        protected void CreateAccountButton_Click(object sender, EventArgs e)
-                        {
-                            MembershipCreateStatus createStatus;
-                            MembershipUser newUser;
-                            try
-                            {
-                                // Create new user.
-                                if (Membership.RequiresQuestionAndAnswer)
-                                {
-                                    newUser = Membership.CreateUser(
-                                      userID.Text,
-                                      password.Text,
-                                      email.Text,
-                                      "",
-                                      "",
-                                      false,
-                                      out createStatus);
-                                }
-                                else
-                                {
-                                    newUser = Membership.CreateUser(
-                                      userID.Text,
-                                      password.Text,
-                                      email.Text);
-                                }
-                                Roles.AddUserToRole(userID.Text, RolesList.SelectedValue);
-                                statusMessage.ForeColor = System.Drawing.Color.Green;
-                                statusMessage.Text = "Successfully created user " + userID.Text + ".";
-                            }
-                            catch (MembershipCreateUserException ex)
-                            {
-                                statusMessage.ForeColor = System.Drawing.Color.Red;
-                                //statusMessage.Text = GetErrorMessage(ex.StatusCode);
-                            }
-                            catch (HttpException ex)
-                            {
-                                statusMessage.ForeColor = System.Drawing.Color.Red;
-                                statusMessage.Text = ex.Message;
-                            }
-                        }
-                    </script>
-
-                    <h2>Create User account</h2>
-                    <asp:TextBox ID="userID" runat="server" placeholder="User ID" autofocus="autofocus"></asp:TextBox>
-                    <asp:TextBox ID="firstName" runat="server" placeholder="First name" Style="width: 49%"></asp:TextBox>
-                    <asp:TextBox ID="lastName" runat="server" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
-                    <asp:TextBox ID="email" runat="server" placeholder="Email address"></asp:TextBox>
-                    <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Password"></asp:TextBox>
-                    <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" placeholder="Confirm password"></asp:TextBox>
-                    <asp:DropDownList ID="RolesList" runat="server" AppendDataBoundItems="true" required="required" onchange="changeColor()">
-                        <asp:ListItem Text="Select a Role" Selected="True" Value=""></asp:ListItem>
-                    </asp:DropDownList>
-
-                    <asp:Label ID="statusMessage" runat="server" ForeColor="Red"></asp:Label>
-
-                    <asp:Button ID="CreateButton" runat="server" Text="Create" OnClick="CreateAccountButton_Click" />
-                </div>
-            </div>
+            <asp:Button ID="UpdateButton" runat="server" ValidationGroup="pass" Text="Save Changes" Style="color: #fff!important; width: auto!important;" OnClick="UpdateAccountButton_Click" />
 
         </div>
     </div>
-    <!-- content end -->
 
 </asp:Content>

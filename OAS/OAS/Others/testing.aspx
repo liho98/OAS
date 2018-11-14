@@ -4,7 +4,7 @@
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.IO" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -94,7 +94,7 @@
                     if (matchExtension.Contains(fileExtension) && matchMimeType.Contains(fileMimeType))
                     {
                         String imageUrl = "data:" + fileMimeType + ";base64," + Convert.ToBase64String(FileUploadControl.FileBytes);
-                        String updateStr = "UPDATE [dbo].[UserProfiles] SET Image = '" + imageUrl + "' WHERE UserId = '131AD9D1-2AD9-48E1-B114-558A9395399E';";
+                        String updateStr = "UPDATE [dbo].[UserProfiles] SET Image = '" + imageUrl + "' WHERE UserId = '9762b7c6-9d78-468c-bd9a-7d39f1d319f4';";
 
                         SqlCommand updateCmd = new SqlCommand(updateStr, con);
                         updateCmd.ExecuteNonQuery();
@@ -144,7 +144,9 @@
                     if (userRecords["Image"] != System.DBNull.Value)
                     {
                         // + "<img style=\"width: 100px;height:100px\" src=\"" + Encoding.Default.GetString((byte[]) userRecords["userImage"])+"\"/><br/>"
+                        //Response.Write(userRecords["userID"].ToString() + "<img style=\"width: 300px;height:200px\" src=\"" + Encoding.Default.GetString((byte[])userRecords["Image"]) + "\"/><br/>");
                         Response.Write(userRecords["userID"].ToString() + "<img style=\"width: 300px;height:200px\" src=\"" + Encoding.Default.GetString((byte[])userRecords["Image"]) + "\"/><br/>");
+                        //Response.Write(userRecords["userID"].ToString() + "<img style=\"width: 300px;height:200px\" src=\"" + Convert.ToBase64String((byte[])userRecords["Image"]) + "\"/><br/>");
 
                     }
                 }

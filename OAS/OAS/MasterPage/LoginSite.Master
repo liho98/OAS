@@ -8,10 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link runat="server" rel="icon" type="image/ico" href="~/Content/images/icons_logos/oas.ico">
     <link runat="server" rel="stylesheet" href="~/Content/css/style.css">
     <style>
-        #logo-name {
+        .logo-name {
             /* display: inline-block + vertical-align: middle can align the text beside an image */
             margin-top: -23px;
             display: inline-block;

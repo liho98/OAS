@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="AdministratorSite.master.cs" Inherits="OAS.MasterPage.AdministratorSite" %>
+
+
+<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+    <asp:ContentPlaceHolder ID="AdminHead" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="videoSource" ContentPlaceHolderID="videoSource" runat="server">
+    <asp:ContentPlaceHolder ID="AdminVideoSource" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="backgoundText" ContentPlaceHolderID="backgoundText" runat="server">
+    <asp:ContentPlaceHolder ID="AdminBackgroundText" runat="server"></asp:ContentPlaceHolder>
+</asp:Content>
+
+<asp:Content ID="contentBody" ContentPlaceHolderID="contentBody" runat="server">
+    <!-- content start -->
+    <div id="bodyContent">
+        <div class="content">
+            <div style="position: absolute; top: 0; width: 100%">
+                <asp:Menu ID="Menu" DataSourceID="AdministratorSiteMap" runat="server"></asp:Menu>
+                <asp:SiteMapPath ID="SiteMapPath" SiteMapProvider="AdministratorSiteMap" Style="all: unset!important; padding: 0; text-align: center" runat="server"></asp:SiteMapPath>
+                <asp:SiteMapDataSource ID="AdministratorSiteMap" runat="server" />
+            </div>
+
+            <asp:ContentPlaceHolder ID="Navigation" runat="server"></asp:ContentPlaceHolder>
+
+        </div>
+    </div>
+    <!-- content end -->
+
+</asp:Content>

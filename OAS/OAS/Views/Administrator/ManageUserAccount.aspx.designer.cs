@@ -49,6 +49,15 @@ namespace OAS.Views.Administrator {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl updateDiv;
         
         /// <summary>
+        /// returnLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton returnLink;
+        
+        /// <summary>
         /// userID control.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,60 @@ namespace OAS.Views.Administrator {
         protected global::System.Web.UI.WebControls.DropDownList RolesList;
         
         /// <summary>
+        /// gender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList gender;
+        
+        /// <summary>
+        /// contactNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox contactNo;
+        
+        /// <summary>
+        /// dateOfBirth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dateOfBirth;
+        
+        /// <summary>
+        /// ProgramCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ProgramCode;
+        
+        /// <summary>
+        /// position control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList position;
+        
+        /// <summary>
+        /// PasswordConfirmCompareValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator PasswordConfirmCompareValidator;
+        
+        /// <summary>
         /// statusMessage control.
         /// </summary>
         /// <remarks>
@@ -121,12 +184,21 @@ namespace OAS.Views.Administrator {
         protected global::System.Web.UI.WebControls.Label statusMessage;
         
         /// <summary>
-        /// CreateButton control.
+        /// PasswordConfirmRequiredValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateButton;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordConfirmRequiredValidator;
+        
+        /// <summary>
+        /// UpdateButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button UpdateButton;
     }
 }

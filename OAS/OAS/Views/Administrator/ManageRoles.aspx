@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="ManageRoles.aspx.cs" Inherits="OAS.Views.Administrator.ManageRoles" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="ManageRoles.aspx.cs" Inherits="OAS.Views.Administrator.ManageRoles" %>
 
-<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -101,7 +101,7 @@
             right: 0;
         }
 
-        #contentBody_createMsg, #contentBody_deleteMsg {
+        #contentBody_Navigation_deleteMsg, #contentBody_Navigation_createMsg {
             font-weight: 500;
             font-size: 11px;
             letter-spacing: 0.5px;
@@ -141,27 +141,26 @@
             overflow-y: scroll;
         }
 
-        /* (when the browser window is 959px wide or less) */
-        @media only screen and (max-width:959px) {
-            .tableContent {
-            }
+        #contentBody_SiteMapPath a {
+            padding: 0;
+            background-color: #fff !important;
+            color: rgba(125,155,125,1);
+            text-decoration: underline;
+        }
 
-            td {
-            }
+        #contentBody_Menu_SkipLink {
+            display: none;
         }
     </style>
-
 </asp:Content>
-
-<asp:Content ID="videoSource" ContentPlaceHolderID="videoSource" runat="server">
+<asp:Content ID="AdminVideoSource" ContentPlaceHolderID="AdminVideoSource" runat="server">
     <source runat="server" type="video/mp4" src="~/Content/videos/bg_video2.mp4">
     <script>
         var path = window.location.protocol + "//" + window.location.host;
         document.getElementsByClassName("background-image")[0].style.backgroundImage = "url('" + path + "/Content/images/background_images/login_signup_bg.jpg')";
     </script>
 </asp:Content>
-
-<asp:Content ID="backgoundText" ContentPlaceHolderID="backgoundText" runat="server">
+<asp:Content ID="AdminBackgroundText" ContentPlaceHolderID="AdminBackgroundText" runat="server">
     <!-- background text -->
     <div style="position: fixed; top: 14%; width: 100%; color: #fff">
         <div id="sloganDiv" style="text-align: center;">
@@ -171,134 +170,66 @@
         </div>
     </div>
 </asp:Content>
+<asp:Content ID="Navigation" ContentPlaceHolderID="Navigation" runat="server">
 
-<script runat="server">
+    <table class="tableContent">
+        <tr>
+            <td>
+                <h4>Existing Roles</h4>
 
-    public void Page_Load(object sender, EventArgs args)
-    {
-        if (!IsPostBack)
-        {
-            // Bind roles to RepeaterView.
-            RolesRepeater.DataSource = Roles.GetAllRoles();
-            RolesRepeater.DataBind();
-
-        }
-    }
-
-    public void CreateRole_OnClick(object sender, EventArgs args)
-    {
-        string roleName = RoleTextBox.Text.Trim();
-        try
-        {
-            if (Roles.RoleExists(roleName))
-            {
-                createMsg.ForeColor = System.Drawing.Color.Red;
-                createMsg.Text = "Role \"" + Server.HtmlEncode(roleName) + "\" already exists. Please specify a different role name.";
-                RoleTextBox.Text = "";
-                return;
-            }
-
-            Roles.CreateRole(roleName);
-            createMsg.ForeColor = System.Drawing.Color.Green;
-            createMsg.Text = "Role \"" + Server.HtmlEncode(roleName) + "\" created.";
-            RoleTextBox.Text = "";
-
-            // Re-bind roles to RepeaterView
-            RolesRepeater.DataSource = Roles.GetAllRoles(); ;
-            RolesRepeater.DataBind();
-        }
-        catch (Exception ex)
-        {
-            createMsg.ForeColor = System.Drawing.Color.Red;
-            createMsg.Text = "Please enter a valid Role name.";
-            RoleTextBox.Text = "";
-        }
-    }
-    public void DeleteRole_OnCommand(object sender, CommandEventArgs e)
-    {
-        try
-        {
-            Roles.DeleteRole(e.CommandArgument.ToString());
-            // Re-bind roles to RepeaterView
-            RolesRepeater.DataSource = Roles.GetAllRoles(); ;
-            RolesRepeater.DataBind();
-            deleteMsg.ForeColor = System.Drawing.Color.Green;
-            deleteMsg.Text = "Role \"" + e.CommandArgument.ToString() + "\" deleted.";
-        }
-        catch
-        {
-            deleteMsg.ForeColor = System.Drawing.Color.Red;
-            deleteMsg.Text = "Role \"" + e.CommandArgument.ToString() + "\" not deleted. Because there are user bind with this role. Kindly remove all the users from this role and proceed this operation again.";
-        }
-
-    }
-</script>
-
-<asp:Content ID="contentBody" ContentPlaceHolderID="contentBody" runat="server">
-    <!-- content start -->
-    <div id="bodyContent">
-        <div class="content">
-            <table class="tableContent">
-                <tr>
-                    <td>
-                        <h4>Existing Roles</h4>
-
-                        <div class="roleDiv">
-                            <asp:Repeater ID="RolesRepeater" runat="server">
-                                <HeaderTemplate>
-                                    <table class="roleTable">
-                                </HeaderTemplate>
-                                <ItemTemplate>
-                                    <tr>
-                                        <td style="width: 30%;"><%# Container.ItemIndex + 1 %>.</td>
-                                        <td style="width: 50%;">
-                                            <%# Container.DataItem %></td>
-                                        <td style="width: 20%;">
-                                            <asp:Button ID="DeleteRole" runat="server" Text="Remove" CommandName="Delete" CommandArgument="<%# Container.DataItem %>" OnCommand="DeleteRole_OnCommand" Style="float: right" />
-                                        </td>
-                                    </tr>
-                                </ItemTemplate>
-                                <FooterTemplate>
-                                    </table>
-                                </FooterTemplate>
-                            </asp:Repeater>
-                            <div style="margin-top: 5%">
-                                <asp:Label ID="deleteMsg" runat="server"></asp:Label>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <h4>Create a Role</h4>
-                        <div class="roleDiv">
-                            <table class="roleTable" style="overflow: hidden">
-                                <tr>
-                                    <td style="width: 40%; text-align: left">
-                                        <asp:Label ID="Label1" runat="server" Text="Label">Role name</asp:Label>
-                                    </td>
-                                    <td style="width: 10%;">:</td>
-                                    <td style="width: 45%;">
-                                        <asp:TextBox ID="RoleTextBox" runat="server" placeholder="eg. Admin" MaxLength="30" autofocus="autofocus"></asp:TextBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" style="text-align: left">
-                                        <br />
-                                    </td>
-                                    <td>
-                                        <br />
-                                        <asp:Button ID="CreateRoleButton" runat="server" Text="Create Role" OnClick="CreateRole_OnClick" Style="float: right" />
-                                    </td>
-                                </tr>
+                <div class="roleDiv">
+                    <asp:Repeater ID="RolesRepeater" runat="server">
+                        <HeaderTemplate>
+                            <table class="roleTable">
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <tr>
+                                <td style="width: 30%;"><%# Container.ItemIndex + 1 %>.</td>
+                                <td style="width: 50%;">
+                                    <%# Container.DataItem %></td>
+                                <td style="width: 20%;">
+                                    <asp:Button ID="DeleteRole" runat="server" Text="Remove" CommandName="Delete" CommandArgument="<%# Container.DataItem %>" OnCommand="DeleteRole_OnCommand" Style="float: right" />
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <FooterTemplate>
                             </table>
-                            <div style="margin-top: 5%">
-                                <asp:Label ID="createMsg" runat="server"></asp:Label>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <!-- content end -->
+                        </FooterTemplate>
+                    </asp:Repeater>
+                    <div style="margin-top: 5%">
+                        <asp:Label ID="deleteMsg" runat="server"></asp:Label>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <h4>Create a Role</h4>
+                <div class="roleDiv">
+                    <table class="roleTable" style="overflow: hidden">
+                        <tr>
+                            <td style="width: 40%; text-align: left">
+                                <asp:Label ID="Label1" runat="server" Text="Label">Role name</asp:Label>
+                            </td>
+                            <td style="width: 10%;">:</td>
+                            <td style="width: 45%;">
+                                <asp:TextBox ID="RoleTextBox" runat="server" placeholder="eg. Admin" MaxLength="30" autofocus="autofocus"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: left">
+                                <br />
+                            </td>
+                            <td>
+                                <br />
+                                <asp:Button ID="CreateRoleButton" runat="server" Text="Create Role" OnClick="CreateRole_OnClick" Style="float: right" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="margin-top: 5%">
+                        <asp:Label ID="createMsg" runat="server"></asp:Label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 </asp:Content>
