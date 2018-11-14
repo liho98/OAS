@@ -17,7 +17,7 @@
             border-right-width: 0;
             font-size: 13px;
             font-weight: 100;
-            margin-top: 10px;
+            margin-top: 10px;color:black!important;
             -webkit-transition: all 1s linear;
             transition: all 1s linear;
         }
@@ -150,7 +150,7 @@
                 <asp:ListItem>Female</asp:ListItem>
             </asp:DropDownList>
             <asp:TextBox ID="contactNo" runat="server" required="required" placeholder="Contact No."></asp:TextBox>
-            <asp:TextBox ID="dateOfBirth" runat="server" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" TextMode="Date"></asp:TextBox>
+            <asp:TextBox ID="dateOfBirth" runat="server" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;"  placeholder="Date of Birth" onfocus="(this.type='date')"></asp:TextBox>
 
             <% if (role.Text == "Students")
                 {
@@ -172,6 +172,9 @@
             <%} %>
 
             <asp:Label ID="invalidDetailsMessage" runat="server" ForeColor="Red" Text=""></asp:Label>
+            <div id="loginLink" runat="server" visible="false">
+                <a runat="server" href="~/Login.aspx" style="color:#0067b8;text-decoration:none;font-weight: 500;font-size: 11px;letter-spacing: 0.5px;margin-left:0px">Login</a>
+            </div>
 
             <asp:RequiredFieldValidator ID="PasswordConfirmRequiredValidator"
                 runat="server"

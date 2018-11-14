@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="CreateUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.CreateUserAccount" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="CreateUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.CreateUserAccount" %>
 
-<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -12,7 +12,7 @@
             })
         ).done(function () {
             //place your code here, the scripts are all loaded
-            dynamicSetHeight(0.85);
+            dynamicSetHeight(1.1);
             setLeftTriangle();
         });
 
@@ -25,7 +25,7 @@
             $(window).on('resize', function () {
                 var instance = $.fn.deviceDetector;
                 if (instance.isDesktop()) {
-                    dynamicSetHeight(0.85);
+                    dynamicSetHeight(1.1);
                 }
                 if ($(window).outerWidth() > 958) {
                     setLeftTriangle();
@@ -46,16 +46,18 @@
             background-size: cover;
             background-position: center;
         }
-
+        #bodyContent{
+            background-color:#fff;
+        }
         h2 {
-            margin-bottom: 0;
+            margin: 0;
             font-size: 20px;
             color: #5f5d5d;
             font-weight: 500;
             font-family: "Segoe UI","Helvetica Neue","Lucida Grande","Roboto","Ebrima","Nirmala UI","Gadugi","Segoe Xbox Symbol","Segoe UI Symbol","Meiryo UI","Khmer UI","Tunga","Lao UI","Raavi","Iskoola Pota","Latha","Leelawadee","Microsoft YaHei UI","Microsoft JhengHei UI","Malgun Gothic","Estrangelo Edessa","Microsoft Himalaya","Microsoft New Tai Lue","Microsoft PhagsPa","Microsoft Tai Le","Microsoft Yi Baiti","Mongolian Baiti","MV Boli","Myanmar Text","Cambria Math";
         }
 
-        input[type=text], input[type=password], #contentBody_RolesList {
+        select, input, #contentBody_RolesList {
             border-width: 1px;
             border-color: #666;
             border-color: rgba(0,0,0,.3);
@@ -74,6 +76,10 @@
             transition: all 1s linear;
         }
 
+            select, input[type=date] {
+                color: black !important;
+            }
+
         #contentBody_firstName {
             float: left
         }
@@ -82,7 +88,7 @@
             border-color: rgb(102,102,255);
         }
 
-        #contentBody_statusMessage {
+        #contentBody_Navigation_statusMessage {
             text-align: left;
             font-weight: 500;
             font-size: 11px;
@@ -99,6 +105,7 @@
             color: #fff;
             padding: 4px 12px 4px 12px;
             height: 32px;
+            width: auto;
             border-width: 1px;
             border-style: solid;
             cursor: pointer;
@@ -138,10 +145,31 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        #footerDiv {
+            margin-top: -5px;
+        }
+
+        .errorMsg {
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        #contentBody_SiteMapPath a {
+            padding: 0;
+            background-color: #fff !important;
+            color: rgba(125,155,125,1);
+            text-decoration: underline;
+        }
+
+        #contentBody_Menu_SkipLink {
+            display: none;
+        }
+
     </style>
 </asp:Content>
 
-<asp:Content ID="videoSource" ContentPlaceHolderID="videoSource" runat="server">
+<asp:Content ID="AdminVideoSource" ContentPlaceHolderID="AdminVideoSource" runat="server">
     <source runat="server" type="video/mp4" src="~/Content/videos/bg_video2.mp4">
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -149,7 +177,7 @@
     </script>
 </asp:Content>
 
-<asp:Content ID="backgoundText" ContentPlaceHolderID="backgoundText" runat="server">
+<asp:Content ID="AdminBackgroundText" ContentPlaceHolderID="AdminBackgroundText" runat="server">
     <!-- background text -->
     <div style="position: fixed; top: 14%; width: 100%; color: #fff">
         <div id="sloganDiv" style="text-align: center;">
@@ -160,43 +188,61 @@
     </div>
 </asp:Content>
 
-<asp:Content ID="contentBody" ContentPlaceHolderID="contentBody" runat="server">
-    <!-- content start -->
-    <div id="bodyContent" style="background-color: #fff; border-bottom: 1px solid rgb(205,205,205); z-index: 1">
-        <div class="content">
+<asp:Content ID="Navigation" ContentPlaceHolderID="Navigation" runat="server">
 
-            <div class="box-wrapper" style="height: 480px">
-                <div class="box" style="height: 83%">
+    <div class="box-wrapper" style="height: 685px; background-color: #fff">
+        <div class="box" style="height: 83%">
 
-                    <script runat="server">
+            <script runat="server">
+
+            </script>
+
+            <h2>Create User account</h2>
+            <asp:TextBox ID="userID" runat="server" placeholder="User ID" required="required" autofocus="autofocus"></asp:TextBox>
+            <asp:TextBox ID="firstName" runat="server" placeholder="First name" required="required" Style="width: 49%"></asp:TextBox>
+            <asp:TextBox ID="lastName" runat="server" placeholder="Last name" required="required" Style="width: 49%; float: right"></asp:TextBox>
+            <asp:TextBox ID="email" runat="server" TextMode="Email" required="required" placeholder="Email address"></asp:TextBox>
+            <asp:TextBox ID="password" runat="server" TextMode="Password" required="required" placeholder="Password"></asp:TextBox>
+            <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" required="required" placeholder="Confirm password"></asp:TextBox>
+            <asp:DropDownList ID="RolesList" AutoPostBack="true" runat="server" OnSelectedIndexChanged="RolesList_OnSelectedChange" AppendDataBoundItems="true" required="required" Style="color: rgba(0,0,0,0.6); font-size: 13px;">
+                <asp:ListItem Text="Select a Role" Selected="True" Value=""></asp:ListItem>
+            </asp:DropDownList>
+
+            <asp:DropDownList ID="gender" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+                <asp:ListItem Selected="True">Male</asp:ListItem>
+                <asp:ListItem>Female</asp:ListItem>
+            </asp:DropDownList>
+            <asp:TextBox ID="contactNo" runat="server" required="required" placeholder="Contact No."></asp:TextBox>
+            <asp:TextBox ID="dateOfBirth" runat="server" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" placeholder="Date of Birth" onfocus="(this.type='date')"></asp:TextBox>
+
+            <asp:DropDownList ID="ProgramCode" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+                <asp:ListItem Selected="True">RSF</asp:ListItem>
+                <asp:ListItem>RSD</asp:ListItem>
+                <asp:ListItem>REI</asp:ListItem>
+                <asp:ListItem>RIP</asp:ListItem>
+            </asp:DropDownList>
+
+            <asp:DropDownList ID="position" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+                <asp:ListItem Selected="True">Lecturer</asp:ListItem>
+                <asp:ListItem>Senior Lecturer</asp:ListItem>
+                <asp:ListItem>Principal Lecturer</asp:ListItem>
+            </asp:DropDownList>
 
 
+            <asp:Label ID="statusMessage" runat="server" ForeColor="Red"></asp:Label>
 
-                    </script>
+            <asp:Button ID="CreateButton" runat="server" Text="Create" ValidationGroup="pass" OnClick="CreateAccountButton_Click" />
 
-                    <h2>Create User account</h2>
-                    <asp:TextBox ID="userID" runat="server" placeholder="User ID" autofocus="autofocus"></asp:TextBox>
-                    <asp:TextBox ID="firstName" runat="server" placeholder="First name" Style="width: 49%"></asp:TextBox>
-                    <asp:TextBox ID="lastName" runat="server" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
-                    <asp:TextBox ID="email" runat="server" placeholder="Email address"></asp:TextBox>
-                    <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Password"></asp:TextBox>
-                    <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" placeholder="Confirm password"></asp:TextBox>
-                    <asp:DropDownList ID="RolesList" runat="server" AppendDataBoundItems="true" required="required" onchange="changeColor()">
-                        <asp:ListItem Text="Select a Role" Selected="True" Value=""></asp:ListItem>
-                    </asp:DropDownList>
+            <asp:RequiredFieldValidator ID="PasswordConfirmRequiredValidator"
+                runat="server"
+                ControlToValidate="confirmPassword"
+                ErrorMessage=""
+                ValidationGroup="pass"
+                Display="Dynamic" ForeColor="Red" CssClass="errorMsg" />
 
-                    <asp:Label ID="statusMessage" runat="server" ForeColor="Red"></asp:Label>
-
-                    <asp:Button ID="CreateButton" runat="server" Text="Create" OnClick="CreateAccountButton_Click" />
-                </div>
-            </div>
-
+            <asp:CompareValidator ID="PasswordConfirmCompareValidator" runat="server" ControlToValidate="confirmPassword" ControlToCompare="password"
+                Display="Static" ForeColor="red" ErrorMessage="Confirm password must match password."
+                ValidationGroup="pass" CssClass="errorMsg"></asp:CompareValidator>
         </div>
     </div>
-    <!-- content end -->
-    <script>
-        function changeColor() {
-            document.getElementById("contentBody_RolesList").style.color = "black";
-        }
-    </script>
 </asp:Content>

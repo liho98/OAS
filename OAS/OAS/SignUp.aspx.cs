@@ -76,7 +76,19 @@ namespace OAS
 
                     Roles.AddUserToRole(userID.Text, role.Text);
 
-                    string dafaultImage = Server.MapPath("~/Content/images/userAvatar/default_user.gif");
+                    char sex;
+                    string dafaultImage;
+                    if (gender.SelectedValue == "Male")
+                    {
+                        sex = 'M';
+                        dafaultImage = Server.MapPath("~/Content/images/userAvatar/defaultAvatarMale.jpg");
+                    }
+                    else
+                    {
+                        sex = 'F';
+                        dafaultImage = Server.MapPath("~/Content/images/userAvatar/defaultAvatarFemale.jpg");
+                    }
+                    
                     byte[] imageBytes = System.IO.File.ReadAllBytes(dafaultImage);
                     String imageUrl = "data:" + System.IO.Path.GetExtension(dafaultImage) + ";base64," + Convert.ToBase64String(imageBytes);
 
@@ -86,8 +98,6 @@ namespace OAS
                     using (SqlConnection con = new SqlConnection(connectionString))
                     {
                         con.Open();
-                        char sex;
-                        if (gender.SelectedValue == "Male") { sex = 'M'; } else { sex = 'F'; }
                         SqlCommand sqlCommand = new SqlCommand(insertSql, con);
                         sqlCommand.Parameters.AddWithValue("@UserId", newUserId);
                         sqlCommand.Parameters.AddWithValue("@FirstName", firstName.Text);
@@ -95,15 +105,24 @@ namespace OAS
                         sqlCommand.Parameters.AddWithValue("@Gender", sex);
                         sqlCommand.Parameters.AddWithValue("@ContactNo", contactNo.Text);
                         sqlCommand.Parameters.AddWithValue("@DateOfBirth", dateOfBirth.Text);
-                        sqlCommand.Parameters.AddWithValue("@Status", DBNull.Value);
-                        sqlCommand.Parameters.AddWithValue("@Position", position.Text);
-                        sqlCommand.Parameters.AddWithValue("@ProgCode", ProgramCode.Text);
+                        sqlCommand.Parameters.AddWithValue("@Status", "Good");
+                        if (role.Text == "Students")
+                        {
+                            sqlCommand.Parameters.AddWithValue("@ProgCode", ProgramCode.Text);
+                            sqlCommand.Parameters.AddWithValue("@Position", DBNull.Value);
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.AddWithValue("@ProgCode", DBNull.Value);
+                            sqlCommand.Parameters.AddWithValue("@Position", position.Text);
+                        }
                         sqlCommand.Parameters.AddWithValue("@Image", Encoding.Default.GetBytes(imageUrl));
                         sqlCommand.ExecuteNonQuery();
                         con.Close();
                     }
                     invalidDetailsMessage.ForeColor = System.Drawing.Color.Green;
                     invalidDetailsMessage.Text = "You have registered successfully.";
+                    loginLink.Visible = true;
                     selectBox.Attributes["style"] = "display:none!important;";
                     userBox.Attributes["style"] = "display:block!important;height: 685px!important";
 
@@ -124,6 +143,7 @@ namespace OAS
                     userBox.Attributes["style"] = "display:block!important;height: 685px!important";
                     invalidDetailsMessage.ForeColor = System.Drawing.Color.Red;
                     invalidDetailsMessage.Text = GetErrorMessage(ex.StatusCode);
+                    loginLink.Visible = false;
                 }
                 catch (HttpException ex)
                 {
@@ -131,6 +151,7 @@ namespace OAS
                     userBox.Attributes["style"] = "display:block!important;height: 685px!important";
                     invalidDetailsMessage.ForeColor = System.Drawing.Color.Red;
                     invalidDetailsMessage.Text = ex.Message;
+                    loginLink.Visible = false;
                 }
             }
         }

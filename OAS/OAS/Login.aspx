@@ -20,14 +20,18 @@
             <div style="font-weight: 100; font-size: 13px;">
                 <br />
                 <!--span>No account?&nbsp;</!--span-->
-                <a runat="server" href="#" style="color: #0067b8;">&nbsp;Forgot password?</a>
                 <label style="float: right">
                     <asp:CheckBox ID="rememberMe" runat="server" />
                     <span style="margin-top: -7px; display: inline-block; vertical-align: middle;">Remember me</span>
                 </label>
+                <a runat="server" href="#" style="color: #0067b8;margin-left:-3px;">&nbsp;Forgot password?</a>
+                <div style="margin-top:3px;">
+                    <span>No account? </span>
+                    <a runat="server" href="~/SignUp.aspx" style="color: #0067b8;">&nbsp;&nbsp;Create one!</a>
+                </div>
             </div>
 
-            <asp:Label ID="invalidCredentialsMessage" runat="server" Visible="false" ForeColor="Red" Text="Your username or password is invalid. Please try again."></asp:Label>
+            <asp:Label ID="invalidCredentialsMessage" style="margin-top:16px;" runat="server" Visible="false" ForeColor="Red" Text="Your username or password is invalid. Please try again."></asp:Label>
 
             <asp:Button ID="loginButton" runat="server" Text="Sign in" OnClick="loginButton_Click" />
 

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+
+  <siteMapNode url="~/Views/Administrator/ManageUserAccount.aspx" title=" Manage User"  description="View, Delete or Edit User">
+    <siteMapNode url="~/Views/Administrator/CreateUserAccount.aspx" title="Create User"  description="Add New User" />
+
+    <siteMapNode url="~/Views/Administrator/ManageRoles.aspx" title=" Manage Role"  description="View or Delete Role">
+      <siteMapNode url="~/Views/Administrator/UsersAndRoles.aspx" title="Provide Role"  description="Add or remove Roles from Users" />
+    </siteMapNode>
+
+  </siteMapNode>
+
+</siteMap>

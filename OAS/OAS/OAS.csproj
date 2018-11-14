@@ -76,7 +76,6 @@
     <Content Include="Content\css\header.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\images\background_images\bg_image.jpeg" />
-    <Content Include="Content\images\background_images\IMG_3034.JPG" />
     <Content Include="Content\images\background_images\login_signup_bg.jpg" />
     <Content Include="Content\images\gif\default_user.gif" />
     <Content Include="Content\images\gif\gif1.gif" />
@@ -93,8 +92,8 @@
     <Content Include="Content\images\slideshow_index_page\slide3.jpg" />
     <Content Include="Content\images\slideshow_index_page\slide4.jpg" />
     <Content Include="Content\images\slideshow_index_page\slide5.png" />
-    <Content Include="Content\images\userAvatar\defaultAvatarFemale.gif" />
-    <Content Include="Content\images\userAvatar\defaultAvatarMale.gif" />
+    <Content Include="Content\images\userAvatar\defaultAvatarFemale.jpg" />
+    <Content Include="Content\images\userAvatar\defaultAvatarMale.jpg" />
     <Content Include="Content\images\userAvatar\default_user.gif" />
     <Content Include="Content\videos\bg_video1.mp4" />
     <Content Include="Content\videos\bg_video2.mp4" />
@@ -104,7 +103,6 @@
     <Content Include="Others\template.aspx" />
     <Content Include="Others\testing.aspx" />
     <Content Include="Others\WebForm1.aspx" />
-    <Content Include="Profile.aspx" />
     <Content Include="Scripts\js\dynamicSetHeight.js" />
     <Content Include="Scripts\js\header.js" />
     <Content Include="Scripts\js\jquery.device.detector.js" />
@@ -116,6 +114,7 @@
     <Content Include="Views\Administrator\ManageRoles.aspx" />
     <Content Include="Views\Administrator\ManageUserAccount.aspx" />
     <Content Include="Views\Administrator\UsersAndRoles.aspx" />
+    <Content Include="Views\Profile.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +134,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPage\AdministratorSite.Master.cs">
+      <DependentUpon>AdministratorSite.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage\AdministratorSite.Master.designer.cs">
+      <DependentUpon>AdministratorSite.Master</DependentUpon>
     </Compile>
     <Compile Include="MasterPage\LoginSite.Master.cs">
       <DependentUpon>LoginSite.Master</DependentUpon>
@@ -170,13 +176,6 @@
     </Compile>
     <Compile Include="Others\WebForm1.aspx.designer.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Profile.aspx.cs">
-      <DependentUpon>Profile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Profile.aspx.designer.cs">
-      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignUp.aspx.cs">
@@ -221,13 +220,22 @@
     <Compile Include="Views\Administrator\UsersAndRoles.aspx.designer.cs">
       <DependentUpon>UsersAndRoles.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\Bradley_Hand_ITC.ttf" />
     <Content Include="Content\fonts\Freestyle_Script.TTF" />
     <Content Include="MasterPage\MainSite.Master" />
     <Content Include="MasterPage\LoginSite.Master" />
+    <Content Include="MasterPage\AdministratorSite.Master" />
     <None Include="packages.config" />
+    <Content Include="Views\Administrator\AdministratorWeb.sitemap" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

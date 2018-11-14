@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="UsersAndRoles.aspx.cs" Inherits="OAS.Views.Administrator.UsersAndRoles" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="UsersAndRoles.aspx.cs" Inherits="OAS.Views.Administrator.UsersAndRoles" %>
 
-<asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -125,7 +125,7 @@
             right: 0;
         }
 
-        #contentBody_ActionStatusByUser, #contentBody_ActionStatusByRole {
+        #contentBody_Navigation_ActionStatusByUser, #contentBody_ActionStatusByRole {
             font-weight: 500;
             font-size: 11px;
             letter-spacing: 0.5px;
@@ -202,10 +202,21 @@
                 .roleTable thead td, .roleTable thead td:hover {
                     background-color: #fff;
                 }
+
+        #contentBody_SiteMapPath a {
+            padding: 0;
+            background-color: #fff !important;
+            color: rgba(125,155,125,1);
+            text-decoration: underline;
+        }
+
+        #contentBody_Menu_SkipLink {
+            display: none;
+        }
     </style>
 </asp:Content>
 
-<asp:Content ID="videoSource" ContentPlaceHolderID="videoSource" runat="server">
+<asp:Content ID="AdminVideoSource" ContentPlaceHolderID="AdminVideoSource" runat="server">
     <source runat="server" type="video/mp4" src="~/Content/videos/bg_video2.mp4">
     <script>
         var path = window.location.protocol + "//" + window.location.host;
@@ -213,7 +224,7 @@
     </script>
 </asp:Content>
 
-<asp:Content ID="backgoundText" ContentPlaceHolderID="backgoundText" runat="server">
+<asp:Content ID="AdminBackgroundText" ContentPlaceHolderID="AdminBackgroundText" runat="server">
     <!-- background text -->
     <div style="position: fixed; top: 14%; width: 100%; color: #fff">
         <div id="sloganDiv" style="text-align: center;">
@@ -224,38 +235,27 @@
     </div>
 </asp:Content>
 
-<script runat="server">
-
-
-</script>
-
-<asp:Content ID="contentBody" ContentPlaceHolderID="contentBody" runat="server">
-    <!-- content start -->
-    <div id="bodyContent">
-        <div class="content">
-            <table class="tableContent">
-                <tr>
-                    <td>
-                        <h4>Assign Roles to Users</h4>
-                        <table style="width: 100%; table-layout: fixed">
-                            <tr>
-                                <td>
-                                    <input type="text" id="searchUserIDInput" onkeyup="searchUserFunction()" placeholder="Search for User..." title="Type in an ID" onkeydown="if (event.keyCode == 13) return false /">
-                                </td>
-                                <td>
-                                    <input type="text" id="searchRoleInput" onkeyup="searchRoleFunction()" placeholder="Search for Role..." title="Type in a role" onkeydown="if (event.keyCode == 13) return false" />
-                                </td>
-                            </tr>
-                        </table>
-                        <div id="RoleTable" runat="server" class="roleDiv">
-                        </div>
-                        <div style="height: 40px; width: 100%;">
-                            <asp:Label ID="ActionStatusByUser" runat="server"></asp:Label>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <!-- content end -->
+<asp:Content ID="Navigation" ContentPlaceHolderID="Navigation" runat="server">
+    <table class="tableContent">
+        <tr>
+            <td>
+                <h4>Assign Roles to Users</h4>
+                <table style="width: 100%; table-layout: fixed">
+                    <tr>
+                        <td>
+                            <input type="text" id="searchUserIDInput" onkeyup="searchUserFunction()" placeholder="Search for User..." title="Type in an ID" onkeydown="if (event.keyCode == 13) return false /">
+                        </td>
+                        <td>
+                            <input type="text" id="searchRoleInput" onkeyup="searchRoleFunction()" placeholder="Search for Role..." title="Type in a role" onkeydown="if (event.keyCode == 13) return false" />
+                        </td>
+                    </tr>
+                </table>
+                <div id="RoleTable" runat="server" class="roleDiv">
+                </div>
+                <div style="height: 40px; width: 100%;">
+                    <asp:Label ID="ActionStatusByUser" runat="server"></asp:Label>
+                </div>
+            </td>
+        </tr>
+    </table>
 </asp:Content>

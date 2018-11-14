@@ -94,7 +94,7 @@
                     if (matchExtension.Contains(fileExtension) && matchMimeType.Contains(fileMimeType))
                     {
                         String imageUrl = "data:" + fileMimeType + ";base64," + Convert.ToBase64String(FileUploadControl.FileBytes);
-                        String updateStr = "UPDATE [dbo].[UserProfiles] SET Image = '" + imageUrl + "' WHERE UserId = '131AD9D1-2AD9-48E1-B114-558A9395399E';";
+                        String updateStr = "UPDATE [dbo].[UserProfiles] SET Image = '" + imageUrl + "' WHERE UserId = '9762b7c6-9d78-468c-bd9a-7d39f1d319f4';";
 
                         SqlCommand updateCmd = new SqlCommand(updateStr, con);
                         updateCmd.ExecuteNonQuery();
