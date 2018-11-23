@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="OAS.Default" %>
+﻿<%@ Page Title="OAS | Homepage" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="OAS.Default" %>
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
     <script>

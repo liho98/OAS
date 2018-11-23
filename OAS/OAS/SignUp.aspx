@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/LoginSite.Master" AutoEventWireup="true" CodeBehind="SignUp.aspx.cs" Inherits="OAS.SignUp" %>
+﻿<%@ Page Title="OAS | Sign up" Language="C#" MasterPageFile="~/MasterPage/LoginSite.Master" AutoEventWireup="true" CodeBehind="SignUp.aspx.cs" Inherits="OAS.SignUp" %>
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
 

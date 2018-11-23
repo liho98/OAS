@@ -1,38 +1,23 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="CreateUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.CreateUserAccount" %>
+﻿<%@ Page Title="OAS | Create User Account" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="CreateUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.CreateUserAccount" %>
 
 <asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
-        var path = window.location.protocol + "//" + window.location.host;
-
-        $.when(
-            $.getScript(path + "/Scripts/js/dynamicSetHeight.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            //place your code here, the scripts are all loaded
+        $(document).ready(function () {
             dynamicSetHeight(1.1);
             setLeftTriangle();
         });
 
-        $.when(
-            $.getScript(path + "/Scripts/js/jquery.device.detector.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            $(window).on('resize', function () {
-                var instance = $.fn.deviceDetector;
-                if (instance.isDesktop()) {
-                    dynamicSetHeight(1.1);
-                }
-                if ($(window).outerWidth() > 958) {
-                    setLeftTriangle();
-                } else {
-                    document.getElementById("triangle-div").style.left = "";
-                }
-            });
+        $(window).on('resize', function () {
+            var instance = $.fn.deviceDetector;
+            if (instance.isDesktop()) {
+                dynamicSetHeight(1.1);
+            }
+            if ($(window).outerWidth() > 958) {
+                setLeftTriangle();
+            } else {
+                document.getElementById("triangle-div").style.left = "";
+            }
         });
     </script>
 
@@ -46,9 +31,11 @@
             background-size: cover;
             background-position: center;
         }
-        #bodyContent{
-            background-color:#fff;
+
+        #bodyContent {
+            background-color: #fff;
         }
+
         h2 {
             margin: 0;
             font-size: 20px;
@@ -155,6 +142,7 @@
             font-size: 11px;
             letter-spacing: 0.5px;
         }
+
         #contentBody_SiteMapPath a {
             padding: 0;
             background-color: #fff !important;
@@ -165,7 +153,6 @@
         #contentBody_Menu_SkipLink {
             display: none;
         }
-
     </style>
 </asp:Content>
 

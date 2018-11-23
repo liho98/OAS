@@ -11,7 +11,7 @@ namespace OAS.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            this.Page.Header.DataBind();
         }
     }
 }

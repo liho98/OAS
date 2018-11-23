@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/LoginSite.Master" AutoEventWireup="true" CodeBehind="UnauthorizedAccess.aspx.cs" Inherits="OAS.UnauthorizedAccess" %>
+﻿<%@ Page Title="OAS | Unauthorized Access" Language="C#" MasterPageFile="~/MasterPage/LoginSite.Master" AutoEventWireup="true" CodeBehind="UnauthorizedAccess.aspx.cs" Inherits="OAS.UnauthorizedAccess" %>
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -15,7 +15,12 @@
             <script runat="server">
                 protected void returnLink_OnClick(object sender, EventArgs e)
                 {
-                    Response.Redirect(FormsAuthentication.LoginUrl + "?ReturnUrl=" + Request.QueryString["ReturnURL"]);
+                    FormsAuthentication.SignOut();
+                    if (Request.QueryString["ReturnURL"] != null)
+                    {
+                        Response.Redirect(FormsAuthentication.LoginUrl + "?ReturnUrl=" + Request.QueryString["ReturnURL"]);
+                    }
+                    Response.Redirect(FormsAuthentication.LoginUrl);
                 }
             </script>
 

@@ -167,7 +167,7 @@ namespace OAS
                     return "An User ID for that email address already exists. Please enter a different email address.";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Use 8 characters or more for your password, and must contain at least 1 non alphanumeric characters.";
 
                 case MembershipCreateStatus.InvalidEmail:
                     return "The email address provided is invalid. Please check the value and try again.";

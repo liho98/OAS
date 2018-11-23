@@ -72,6 +72,8 @@
       <DependentUpon>oasDB.mdf</DependentUpon>
     </Content>
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\footer.css" />
     <Content Include="Content\css\header.css" />
     <Content Include="Content\css\style.css" />
@@ -103,8 +105,61 @@
     <Content Include="Others\template.aspx" />
     <Content Include="Others\testing.aspx" />
     <Content Include="Others\WebForm1.aspx" />
+    <Content Include="ResetPassword.aspx" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\ckeditor.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ar.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ast.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\bg.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ca.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\cs.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\da.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\de-ch.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\de.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\el.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\en-au.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\eo.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\es.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\et.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\eu.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\fa.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\fi.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\fr.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\gl.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\gu.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\he.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\hr.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\hu.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\it.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ja.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\km.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\kn.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ko.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ku.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\nb.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ne.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\nl.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\no.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\oc.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\pl.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\pt-br.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\pt.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ro.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ru.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\si.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\sk.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\sq.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\sv.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\tr.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\tt.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\ug.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\uk.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\zh-cn.js" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\translations\zh.js" />
+    <Content Include="Scripts\js\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\js\dynamicSetHeight.js" />
     <Content Include="Scripts\js\header.js" />
+    <Content Include="Scripts\js\jquery-3.3.1.js" />
+    <Content Include="Scripts\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\js\jquery.device.detector.js" />
     <Content Include="Scripts\js\slideshow.js" />
     <Content Include="Scripts\Oas_Sql_Scripts\sql.sql" />
@@ -114,7 +169,17 @@
     <Content Include="Views\Administrator\ManageRoles.aspx" />
     <Content Include="Views\Administrator\ManageUserAccount.aspx" />
     <Content Include="Views\Administrator\UsersAndRoles.aspx" />
+    <Content Include="Views\Lecturer\CreateAssessment.aspx" />
+    <Content Include="Views\Lecturer\CreateMCQuestion.aspx" />
+    <Content Include="Views\Lecturer\CreateWrittenQuestion.aspx" />
+    <Content Include="Views\Lecturer\ManageAssessment.aspx" />
+    <Content Include="Views\Lecturer\ManageQuestion.aspx" />
+    <Content Include="Views\Lecturer\MarkAssignment.aspx" />
+    <Content Include="Views\Lecturer\MarkingOrViewScore.aspx" />
+    <Content Include="Views\Lecturer\UpdateAssessment.aspx" />
     <Content Include="Views\Profile.aspx" />
+    <Content Include="Views\Student\AnswerMCQ.aspx" />
+    <Content Include="Views\Student\AnswerWritten.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +221,7 @@
     <Compile Include="MasterPage\MainSite.Master.designer.cs">
       <DependentUpon>MainSite.Master</DependentUpon>
     </Compile>
+    <Compile Include="Models\AesCrypto.cs" />
     <Compile Include="Others\template.aspx.cs">
       <DependentUpon>template.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,6 +244,13 @@
       <DependentUpon>WebForm1.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SignUp.aspx.cs">
       <DependentUpon>SignUp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -220,12 +293,82 @@
     <Compile Include="Views\Administrator\UsersAndRoles.aspx.designer.cs">
       <DependentUpon>UsersAndRoles.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Lecturer\CreateAssessment.aspx.cs">
+      <DependentUpon>CreateAssessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\CreateAssessment.aspx.designer.cs">
+      <DependentUpon>CreateAssessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\CreateMCQuestion.aspx.cs">
+      <DependentUpon>CreateMCQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\CreateMCQuestion.aspx.designer.cs">
+      <DependentUpon>CreateMCQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\CreateWrittenQuestion.aspx.cs">
+      <DependentUpon>CreateWrittenQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\CreateWrittenQuestion.aspx.designer.cs">
+      <DependentUpon>CreateWrittenQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\ManageAssessment.aspx.cs">
+      <DependentUpon>ManageAssessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\ManageAssessment.aspx.designer.cs">
+      <DependentUpon>ManageAssessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\ManageQuestion.aspx.cs">
+      <DependentUpon>ManageQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\ManageQuestion.aspx.designer.cs">
+      <DependentUpon>ManageQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\MarkAssignment.aspx.cs">
+      <DependentUpon>MarkAssignment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\MarkAssignment.aspx.designer.cs">
+      <DependentUpon>MarkAssignment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\MarkingOrViewScore.aspx.cs">
+      <DependentUpon>MarkingOrViewScore.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\MarkingOrViewScore.aspx.designer.cs">
+      <DependentUpon>MarkingOrViewScore.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lecturer\UpdateAssessment.aspx.cs">
+      <DependentUpon>UpdateAssessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Lecturer\UpdateAssessment.aspx.designer.cs">
+      <DependentUpon>UpdateAssessment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Student\AnswerMCQ.aspx.cs">
+      <DependentUpon>AnswerMCQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Student\AnswerMCQ.aspx.designer.cs">
+      <DependentUpon>AnswerMCQ.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Student\AnswerWritten.aspx.cs">
+      <DependentUpon>AnswerWritten.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Student\AnswerWritten.aspx.designer.cs">
+      <DependentUpon>AnswerWritten.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -234,8 +377,15 @@
     <Content Include="MasterPage\MainSite.Master" />
     <Content Include="MasterPage\LoginSite.Master" />
     <Content Include="MasterPage\AdministratorSite.Master" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2" />
     <None Include="packages.config" />
     <Content Include="Views\Administrator\AdministratorWeb.sitemap" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\ckeditor.js.map" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\LICENSE.md" />
+    <Content Include="Scripts\js\ckeditor5-build-classic\README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -244,9 +394,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Views\Lecturers\" />
-    <Folder Include="Views\Students\" />
+    <Folder Include="UserControl\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

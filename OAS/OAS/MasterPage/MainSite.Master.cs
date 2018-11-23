@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -12,10 +13,11 @@ namespace OAS.MasterPage
 {
     public partial class MainSite : System.Web.UI.MasterPage
     {
-        protected String firstName;
+        protected String firstName, userAvatar;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            this.Page.Header.DataBind();
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 try
@@ -25,7 +27,7 @@ namespace OAS.MasterPage
                     Guid UserId = (Guid)(Membership.GetUser(HttpContext.Current.User.Identity.Name)).ProviderUserKey;
                     SqlConnection con = new SqlConnection(connectionString);
 
-                    string selectSql = "Select FirstName " +
+                    string selectSql = "Select FirstName, Image " +
                             "from [dbo].[UserProfiles] Where UserId = '" + UserId.ToString() + "'";
 
                     con.Open();
@@ -33,6 +35,7 @@ namespace OAS.MasterPage
                     SqlDataReader userRecords = sqlCommand.ExecuteReader();
                     userRecords.Read();
                     firstName = userRecords["FirstName"].ToString();
+                    userAvatar = Encoding.Default.GetString((byte[])userRecords["Image"]);
                     con.Close();
                 }
                 catch

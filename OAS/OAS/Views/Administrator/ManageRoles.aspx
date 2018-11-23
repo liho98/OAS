@@ -1,38 +1,23 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="ManageRoles.aspx.cs" Inherits="OAS.Views.Administrator.ManageRoles" %>
+﻿<%@ Page Title="OAS |  Manage Roles" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="ManageRoles.aspx.cs" Inherits="OAS.Views.Administrator.ManageRoles" %>
 
 <asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
-        var path = window.location.protocol + "//" + window.location.host;
-
-        $.when(
-            $.getScript(path + "/Scripts/js/dynamicSetHeight.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            //place your code here, the scripts are all loaded
+        $(document).ready(function () {
             dynamicSetHeight(0.65);
             setLeftTriangle();
         });
 
-        $.when(
-            $.getScript(path + "/Scripts/js/jquery.device.detector.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            $(window).on('resize', function () {
-                var instance = $.fn.deviceDetector;
-                if (instance.isDesktop()) {
-                    dynamicSetHeight(0.65);
-                }
-                if ($(window).outerWidth() > 958) {
-                    setLeftTriangle();
-                } else {
-                    document.getElementById("triangle-div").style.left = "";
-                }
-            });
+        $(window).on('resize', function () {
+            var instance = $.fn.deviceDetector;
+            if (instance.isDesktop()) {
+                dynamicSetHeight(0.65);
+            }
+            if ($(window).outerWidth() > 958) {
+                setLeftTriangle();
+            } else {
+                document.getElementById("triangle-div").style.left = "";
+            }
         });
     </script>
 

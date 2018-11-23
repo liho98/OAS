@@ -1,39 +1,41 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="OAS.Views.Profile" %>
+﻿<%@ Page Title="OAS | Profile" Language="C#" MasterPageFile="~/MasterPage/MainSite.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="OAS.Views.Profile" %>
 
 <asp:Content ID="head" ContentPlaceHolderID="head" runat="server">
+
     <!-- Overide the #contentBody height value default is 1.8 -->
     <script>
-        var path = window.location.protocol + "//" + window.location.host;
-
-        $.when(
-            $.getScript(path + "/Scripts/js/dynamicSetHeight.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            //place your code here, the scripts are all loaded
+        $(document).ready(function () {
             dynamicSetHeight(1);
             setLeftTriangle();
         });
 
-        $.when(
-            $.getScript(path + "/Scripts/js/jquery.device.detector.js"),
-            $.Deferred(function (deferred) {
-                $(deferred.resolve);
-            })
-        ).done(function () {
-            $(window).on('resize', function () {
-                var instance = $.fn.deviceDetector;
-                if (instance.isDesktop()) {
-                    dynamicSetHeight(1);
-                }
-                if ($(window).outerWidth() > 958) {
-                    setLeftTriangle();
-                } else {
-                    document.getElementById("triangle-div").style.left = "";
-                }
+        $(window).on('resize', function () {
+            var instance = $.fn.deviceDetector;
+            if (instance.isDesktop()) {
+                dynamicSetHeight(1);
+            }
+            if ($(window).outerWidth() > 958) {
+                setLeftTriangle();
+            } else {
+                document.getElementById("triangle-div").style.left = "";
+            }
+        });
+
+        $(document).ready(function () {
+            $('#contentBody_datatables').DataTable({
+                "scrollY": "285px",
+                "scrollCollapse": true,
+                paging: false,
+                "searching": false,
+                "info": false,
+                "ordering": false,
+                "lengthChange": false,
+                "columnDefs": [{ "width": "10%", "targets": 0 }],
+                fixedColumns: { heightMatch: 'none' }
+
             });
         });
+
     </script>
 
     <style>
@@ -45,6 +47,20 @@
             filter: brightnes(250%);
             background-size: cover;
             background-position: center;
+        }
+
+        .dataTables_scrollBody::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .dataTables_scrollBody::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0);
+            background-color: white;
+        }
+
+        .dataTables_scrollBody::-webkit-scrollbar-thumb {
+            background-color: rgba(100,100,100,1);
+            outline: 1px solid slategrey;
         }
 
         .box-wrapper {
@@ -161,6 +177,20 @@
             border-bottom: 1px solid rgb(200,200,200) !important;
             width: 100% !important;
         }
+
+        #contentBody_datatables {
+            text-align: left;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+            #contentBody_datatables tr {
+                padding-bottom: 50px;
+            }
+
+            #contentBody_datatables td {
+                border: 1px solid rgba(0,0,0,0.1);
+            }
     </style>
 </asp:Content>
 
@@ -182,225 +212,6 @@
         </div>
     </div>
 </asp:Content>
-
-<%@ Import Namespace="System.Data" %>
-<%@ Import Namespace="System.Data.SqlClient" %>
-<%@ Import Namespace="System.IO" %>
-
-<script runat="server">
-
-    private static string connectionString = ConfigurationManager.ConnectionStrings["oasDB"].ConnectionString;
-    //Get the UserId of the just-added user
-    Guid UserId = (Guid)(Membership.GetUser(HttpContext.Current.User.Identity.Name.ToUpper())).ProviderUserKey;
-
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        if (!Page.IsPostBack)
-        {
-            ViewState.Clear();
-            getProfile();
-            message.Text = (String)Request.QueryString["Message"];
-        }
-    }
-
-    private void getProfile()
-    {
-        SqlConnection con = new SqlConnection(connectionString);
-
-        string selectSql = "Select FirstName,LastName,Gender,ContactNo,DateOfBirth,Status,Position,ProgCode,Image, Email " +
-                "from [dbo].[UserProfiles] u, [dbo].[aspnet_Membership] m where u.UserId = '" + UserId.ToString() + "' and m.UserId = '" + UserId.ToString() + "'";
-
-        con.Open();
-        SqlCommand sqlCommand = new SqlCommand(selectSql, con);
-        SqlDataReader userRecords = sqlCommand.ExecuteReader();
-        String title;
-
-        userRecords.Read();
-        if (userRecords["Gender"].ToString() == "M")
-        {
-            title = "Mr. ";
-        }
-        else
-        {
-            title = "Ms. ";
-        }
-
-        String showRoles = "";
-        String[] userRoles;
-        userRoles = Roles.GetRolesForUser(User.Identity.Name);
-        for (int j = 0; j < userRoles.Length; j++)
-        {
-            if (userRoles.Length != 0)
-            {
-                userRoles[j] = userRoles[j].Remove(userRoles[j].Length - 1, 1);
-            }
-            showRoles = showRoles + userRoles[j] + ", ";
-        }
-        if (showRoles.Length != 0)
-        {
-            showRoles = showRoles.Remove(showRoles.Length - 2, 2);
-        }
-
-        Role.InnerText = "Role : " + showRoles;
-        Name.InnerText = title + userRecords["FirstName"].ToString() + " " + userRecords["LastName"].ToString();
-        StatusText.InnerText = userRecords["Status"].ToString();
-
-        userAvartar.Attributes.CssStyle.Add("background-image", "url('" + Encoding.Default.GetString((byte[])userRecords["Image"]) + "')");
-        UserIdText.Text = HttpContext.Current.User.Identity.Name.ToUpper();
-        FirstNametext.Text = userRecords["FirstName"].ToString();
-        LastNameText.Text = userRecords["LastName"].ToString();
-        EmailText.Text = userRecords["Email"].ToString();
-        PhoneText.Text = userRecords["ContactNo"].ToString();
-
-        for (int i = 0; i < ProgrammeDropDownList.Items.Count; i++)
-        {
-            if (ProgrammeDropDownList.Items[i].Value == userRecords["ProgCode"].ToString())
-            {
-                ProgrammeDropDownList.Items[i].Selected = true;
-            }
-        }
-        for (int i = 0; i < PositionDropDownList.Items.Count; i++)
-        {
-            if (PositionDropDownList.Items[i].Value == userRecords["Position"].ToString())
-            {
-                PositionDropDownList.Items[i].Selected = true;
-            }
-        }
-        DateOfBirthText.Text = String.Format("{0:yyy-MM-dd}", ((DateTime)userRecords["DateOfBirth"]));
-        con.Close();
-    }
-    protected void editProfileButton_OnClick(object sender, EventArgs e)
-    {
-        message.Text = "";
-        if (editProfileButton.Text == "Edit Profile")
-        {
-            editProfileButton.Text = "Cancel Edit";
-
-            updateButton.Visible = true;
-            FirstNametext.Enabled = true;
-            FirstNametext.Focus();
-            LastNameText.Enabled = true;
-            EmailText.Enabled = true;
-            PhoneText.Enabled = true;
-            //ProgrammeDropDownList.Enabled = true;
-            //PositionDropDownList.Enabled = true;
-            DateOfBirthText.Enabled = true;
-            changePhoto.Visible = true;
-
-            FirstNametext.Attributes["class"] = "inputBox";
-            LastNameText.Attributes["class"] = "inputBox";
-            EmailText.Attributes["class"] = "inputBox";
-            PhoneText.Attributes["class"] = "inputBox";
-            //ProgrammeDropDownList.Attributes["class"] = "inputBox";
-            //PositionDropDownList.Attributes["class"] = "inputBox";
-            DateOfBirthText.Attributes["class"] = "inputBox";
-        }
-        else
-        {
-            editProfileButton.Text = "Edit Profile";
-
-            updateButton.Visible = false;
-            UserIdText.Enabled = false;
-            FirstNametext.Enabled = false;
-            LastNameText.Enabled = false;
-            EmailText.Enabled = false;
-            PhoneText.Enabled = false;
-            //ProgrammeDropDownList.Enabled = false;
-            //PositionDropDownList.Enabled = false;
-            DateOfBirthText.Enabled = false;
-            changePhoto.Visible = false;
-        }
-        Page.ClientScript.RegisterStartupScript(this.GetType(), "Registered Script", "swapDiv('About');", true);
-    }
-    protected void updateProfileButton_OnClick(object sender, EventArgs e)
-    {
-        /*
-        string updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = @FirstName, LastName = @LastName, " +
-                "ContactNo = @ContactNo, ProgCode = @ProgCode, Position = @Position," +
-                "DateOfBirth = @DateOfBirth WHERE UserId = @UserId";
-        */
-        /*
-        String imageUrl = "data:" + fileMimeType + ";base64," + Convert.ToBase64String(userAvatarUpload.FileBytes);
-        updateCommand.Parameters.AddWithValue("@FirstName", FirstNametext.Text);
-        updateCommand.Parameters.AddWithValue("@LastName", LastNameText.Text);
-        updateCommand.Parameters.AddWithValue("@ContactNo", PhoneText.Text);
-        updateCommand.Parameters.AddWithValue("@ProgCode", ProgrammeDropDownList.SelectedValue);
-        updateCommand.Parameters.AddWithValue("@Position", PositionDropDownList.SelectedValue);
-        updateCommand.Parameters.AddWithValue("@Image", Encoding.Default.GetBytes(imageUrl));
-        updateCommand.Parameters.AddWithValue("@DateOfBirth", DateOfBirthText.Text);
-        updateCommand.Parameters.AddWithValue("@UserId", UserId);
-        */
-
-        string fileName = userAvatarUpload.PostedFile.FileName.ToLower();
-        string fileExtension = System.IO.Path.GetExtension(fileName);
-        string fileMimeType = userAvatarUpload.PostedFile.ContentType;
-
-        string[] matchExtension = { ".jpg", ".jpeg", ".png", ".gif" };
-        string[] matchMimeType = { "image/jpg", "image/jpeg", "image/png", "image/gif" };
-
-        ViewState.Clear();
-
-        try
-        {
-            String updateSql = "";
-            SqlConnection con = new SqlConnection(connectionString);
-
-            if (userAvatarUpload.HasFile)
-            {
-                if (matchExtension.Contains(fileExtension) && matchMimeType.Contains(fileMimeType))
-                {
-                    String imageUrl = "data:" + fileMimeType + ";base64," + Convert.ToBase64String(userAvatarUpload.FileBytes);
-
-                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + FirstNametext.Text + "', LastName = '" + LastNameText.Text + "', " +
-                        "ContactNo = '" + PhoneText.Text + "', " +
-                        "DateOfBirth = '" + DateOfBirthText.Text + "'," +
-                        "Image = '" + imageUrl + "' WHERE UserId = '" + UserId.ToString() + "'";
-                }
-                else
-                {
-                    message.Text = "Upload status: Only jpg, jpeg, png or gif file is accepted!";
-                }
-            }
-            else
-            {
-                updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + FirstNametext.Text + "', LastName = '" + LastNameText.Text + "', " +
-                    "ContactNo = '" + PhoneText.Text + "', " +
-                  "DateOfBirth = '" + DateOfBirthText.Text + "' WHERE UserId = '" + UserId.ToString() + "'";
-            }
-            // GetUser() without parameter returns the current logged in user.
-            MembershipUser user = Membership.GetUser();
-            user.Email = EmailText.Text;
-            Membership.UpdateUser(user);
-
-            con.Open();
-            SqlCommand updateCommand = new SqlCommand(updateSql, con);
-            updateCommand.ExecuteNonQuery();
-            con.Close();
-
-            message.Text = "You have successfully updated your account.";
-        }
-        catch (Exception ex)
-        {
-            message.Text = ex.Message;
-        }
-        Response.Redirect(Request.Url.GetLeftPart(UriPartial.Path) + "?Message=" + message.Text);
-    }
-    protected void changePassButton_OnClick(object sender, EventArgs e)
-    {
-        try
-        {
-            // Update the password.
-            if (Membership.Provider.ChangePassword(User.Identity.Name, currentPasswordText.Text, newPasswordText.Text))
-            {
-                message.Text = "Password has changed successfully.";
-                return;
-            }
-        }
-        catch { }
-        message.Text = "Password change failed. Please re-enter your credential and try again.";
-    }
-
-</script>
 
 <asp:Content ID="contentBody" ContentPlaceHolderID="contentBody" runat="server">
     <!-- content start -->
@@ -463,24 +274,46 @@
 
                                 <div class="linkOption" style="transform: translate(0, 14%); width: 65%; height: 80%; text-align: left; margin: auto;">
 
-                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">WORKLINK
+                                    <% if (User.IsInRole("Administrators")){ %>
+
+                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">Manage User
                                     </h4>
-                                    <a href="#">Website Link</a>
-                                    <a href="#">Website Link</a>
-                                    <a href="#">Website Link</a>
+                                    <a runat="server" href="~/Views/Administrator/ManageUserAccount.aspx">Manage User Account</a>
+                                    <a runat="server" href="~/Views/Administrator/CreateUserAccount.aspx">Create User Account</a>
+                                    <a runat="server" href="~/Views/Administrator/ManageRoles.aspx">Manage Roles</a>
+                                    <a runat="server" href="~/Views/Administrator/UsersAndRoles.aspx">Provide Roles</a>
+                                    <br />
+                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">Manage Assessment
+                                    </h4>
+                                    <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">Assessment</a>
+
+                                    <%}else if (User.IsInRole("Lecturers")){ %>
+
+                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">Manage Assessment
+                                    </h4>
+                                    <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">Assessment</a>
+
+                                    <%}else{ %>
+
+                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">Written
+                                    </h4>
+                                    <a runat="server" href="#">Written</a>
 
                                     <br />
-                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">SKILLS
+                                    <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">MCQuestion
                                     </h4>
-                                    <a href="#">Website Link</a>
-                                    <a href="#">Website Link</a>
-                                    <a href="#">Website Link</a>
+                                    <a runat="server" href="#">MCQ</a>
+
+                                    <%} %>
                                 </div>
 
                             </td>
                             <td id="container" class="rightPanel" style="transform: translate(0, 0%); font-weight: 600; width: 70%; height: 55%;">
 
                                 <div id="timelineDiv" class="fade">
+
+                                    <asp:PlaceHolder ID="TimelinePlaceHolder" runat="server"></asp:PlaceHolder>
+
                                 </div>
                                 <div id="aboutDiv" class="fade" style="display: none;">
                                     <table style="width: 100%; height: 90%; table-layout: fixed; text-align: left;">

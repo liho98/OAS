@@ -21,21 +21,6 @@ namespace OAS.Views.Administrator
             password.Attributes.Add("value", password.Text);
             confirmPassword.Attributes.Add("value", confirmPassword.Text);
 
-            string bootscrapScript = "document.getElementById(\"bootstrapCss\").href = path + \"/Content/css/bootstrap.css\";" +
-            "$(document).ready(function () {" +
-                "$('#contentBody_Navigation_datatables').DataTable({" +
-                    "\"pageLength\": 5," +
-                    "\"lengthChange\": false," +
-                    "\"columnDefs\": [" +
-                       " { \"width\": \"10%\", \"targets\": 3 }" +
-                    "]," +
-                    "\"columnDefs\": [" +
-                        "{ \"orderable\": false, className: \"dt-body-center\", \"targets\": 3 }" +
-                    "]" +
-                "});" +
-            "});";
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "RegisteredBootscrapScript", bootscrapScript, true);
-
             foreach (MembershipUser user in Membership.GetAllUsers())
             {
                 AllUsersList.Add(user);

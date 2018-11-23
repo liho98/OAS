@@ -11,25 +11,45 @@
     <meta name="msapplication-tap-highlight" content="no">
 
     <link runat="server" rel="icon" type="image/ico" href="~/Content/images/icons_logos/oas.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <link runat="server" rel="stylesheet" href="~/Content/css/font-awesome.min.css">
     <link runat="server" rel="stylesheet" href="~/Content/css/header.css">
     <link runat="server" rel="stylesheet" href="~/Content/css/style.css">
     <link runat="server" rel="stylesheet" href="~/Content/css/footer.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script defer id="jqueryDeviceDetector"></script>
-    <script defer id="dynamicSetHeight"></script>
+    <script src="<%# ResolveUrl("~/Scripts/js/jquery-3.3.1.js") %>"></script>
+    <script defer src="<%# ResolveUrl("~/Scripts/js/jquery.device.detector.js") %>"></script>
+    <script defer src="<%# ResolveUrl("~/Scripts/js/dynamicSetHeight.js") %>"></script>
 
     <script>
         var path = window.location.protocol + "//" + window.location.host;
-        document.getElementById("jqueryDeviceDetector").src = path + "/Scripts/js/jquery.device.detector.js";
-        document.getElementById("dynamicSetHeight").src = path + "/Scripts/js/dynamicSetHeight.js";
     </script>
 
-    <style></style>
+    <style>
+        /* google font */
+        /* fallback */
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+
+    <link rel="stylesheet" href="<%# ResolveUrl("~/Content/css/bootstrap.css") %>">
+    <link rel="stylesheet" href="<%# ResolveUrl("~/Content/css/dataTables.bootstrap4.min.css") %>">
+
+    <script src="<%# ResolveUrl("~/Scripts/js/jquery.dataTables.min.js") %>"></script>
+    <script src="<%# ResolveUrl("~/Scripts/js/dataTables.bootstrap4.min.js") %>"></script>
+
+    <script src="<%# ResolveUrl("~/Scripts/js/ckeditor5-build-classic/ckeditor.js") %>"></script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
@@ -115,7 +135,7 @@
                                                             <td>
                                                                 <a runat="server" href="~/Views/Profile.aspx">
                                                                     <div class="userAvatar">
-                                                                        <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                        <img src="<%= userAvatar %>" alt="userAvatar">
                                                                         <div>
                                                                             <span>Hi, <%= firstName %>
                                                                                 <%--asp:LoginName ID="LoginName1" Style="text-transform: uppercase" runat="server" /--%>
@@ -128,7 +148,7 @@
 
                                                         <tr style="height: 25%">
                                                             <td class="sideBarContent">
-                                                                <a href="#">
+                                                                <a runat="server" href="~/Views/Profile.aspx">
                                                                     <span class="fa fa-dashboard sideBarIcon"></span>
                                                                     <span class="sideBarText">Dashboard</span>
                                                                 </a>
@@ -137,7 +157,17 @@
                                                                     <span class="sideBarText">Manage user</span>
                                                                 </a>
 
-                                                                <a href="#">
+                                                                <a runat="server" href="~/Views/Lecturer/CreateAssessment.aspx">
+                                                                    <span class="fa fa-plus sideBarIcon"></span>
+                                                                    <span class="sideBarText">Create Assessment</span>
+                                                                </a>
+
+                                                                <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">
+                                                                    <span class="fa fa-book sideBarIcon"></span>
+                                                                    <span class="sideBarText">Manage Assessment</span>
+                                                                </a>
+
+                                                                <a runat="server" href="~/Views/Profile.aspx">
                                                                     <span class="fa fa-cog sideBarIcon"></span>
                                                                     <span class="sideBarText">Setting</span>
                                                                 </a>
@@ -176,7 +206,7 @@
                                                             <td>
                                                                 <a runat="server" href="~/Views/Profile.aspx">
                                                                     <div class="userAvatar">
-                                                                        <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                        <img src="<%= userAvatar %>" alt="userAvatar">
                                                                         <div>
                                                                             <span>Hi, <%= firstName %></span>
                                                                         </div>
@@ -187,11 +217,22 @@
 
                                                         <tr style="height: 25%">
                                                             <td class="sideBarContent">
-                                                                <a href="#">
+                                                                <a runat="server" href="~/Views/Profile.aspx">
                                                                     <span class="fa fa-dashboard sideBarIcon"></span>
                                                                     <span class="sideBarText">Dashboard</span>
                                                                 </a>
-                                                                <a href="#">
+
+                                                                <a runat="server" href="~/Views/Lecturer/CreateAssessment.aspx">
+                                                                    <span class="fa fa-plus sideBarIcon"></span>
+                                                                    <span class="sideBarText">Create Assessment</span>
+                                                                </a>
+
+                                                                <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">
+                                                                    <span class="fa fa-book sideBarIcon"></span>
+                                                                    <span class="sideBarText">Manage Assessment</span>
+                                                                </a>
+
+                                                                <a runat="server" href="~/Views/Profile.aspx">
                                                                     <span class="fa fa-cog sideBarIcon"></span>
                                                                     <span class="sideBarText">Setting</span>
                                                                 </a>
@@ -228,7 +269,7 @@
                                                             <td>
                                                                 <a runat="server" href="~/Views/Profile.aspx">
                                                                     <div class="userAvatar">
-                                                                        <img runat="server" src="~/Content/images/gif/default_user.gif" alt="default_user">
+                                                                        <img src="<%= userAvatar %>" alt="userAvatar">
                                                                         <div>
                                                                             <span>Hi, <%= firstName %></span>
                                                                         </div>
@@ -239,11 +280,11 @@
 
                                                         <tr style="height: 25%">
                                                             <td class="sideBarContent">
-                                                                <a href="#">
+                                                                <a runat="server" href="~/Views/Profile.aspx">
                                                                     <span class="fa fa-dashboard sideBarIcon"></span>
                                                                     <span class="sideBarText">Dashboard</span>
                                                                 </a>
-                                                                <a href="#">
+                                                                <a runat="server" href="~/Views/Profile.aspx">
                                                                     <span class="fa fa-cog sideBarIcon"></span>
                                                                     <span class="sideBarText">Setting</span>
                                                                 </a>
@@ -418,11 +459,11 @@
         <!-- footer end -->
 
         <script>
-
             var style = document.getElementsByTagName('style'),
                 css = "@media only screen and (max-width:959px){.background-image{background-image:url('" + path + "/Content/images/phone-image.jpg')}}" +
                     "@font-face{font-family:font-freestyle;src:url('" + path + "/Content/fonts/Freestyle_Script.TTF')}" +
-                    "@font-face{font-family:font-bradley;src:url('" + path + "/Content/fonts/Bradley_Hand_ITC.TTF')}";
+                    "@font-face{font-family:font-bradley;src:url('" + path + "/Content/fonts/Bradley_Hand_ITC.TTF')}" +
+                    "@font-face {font-family: 'Material Icons';src: url('" + path + "/Content/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('woff2');}";
             style[0].appendChild(document.createTextNode(css));
         </script>
     </form>

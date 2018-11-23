@@ -1,14 +1,18 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="ManageUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.ManageUserAccount" %>
+﻿<%@ Page Title="OAS | Manage User Account" Language="C#" MasterPageFile="~/MasterPage/AdministratorSite.Master" AutoEventWireup="true" CodeBehind="ManageUserAccount.aspx.cs" Inherits="OAS.Views.Administrator.ManageUserAccount" %>
 
 <asp:Content ID="AdminHead" ContentPlaceHolderID="AdminHead" runat="server">
+<script>
+        $(document).ready(function () {
+            $('#contentBody_Navigation_datatables').DataTable({
+                pageLength: 5,
+                paging: true,
+                "lengthChange": false,
+                "columnDefs": [{ "width": "10%", "targets": 3 }],
+                "columnDefs": [{ "orderable": false, className: "dt-body-center", "targets": 3 }]
+            });
+        });
 
-    <link rel="stylesheet" id="bootstrapCss">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
+</script>
     <style>
         video {
             opacity: 0.6;
@@ -37,7 +41,9 @@
         .dt-body-center {
             text-align: center !important;
         }
-
+        .material-icons{
+            font-size: 24px;
+        }
         .actionButton {
             all: initial !important;
             cursor: pointer !important;
@@ -228,6 +234,9 @@
         }
         #bodyContent{
             background-color:#fff;
+        }
+        #spin {
+            font-size:20px;
         }
 
     </style>
