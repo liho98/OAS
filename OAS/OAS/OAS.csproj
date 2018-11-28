@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -60,11 +64,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\oasDB.mdf" />
@@ -165,6 +164,7 @@
     <Content Include="Scripts\Oas_Sql_Scripts\sql.sql" />
     <Content Include="SignUp.aspx" />
     <Content Include="UnauthorizedAccess.aspx" />
+    <Content Include="CreateControl.ascx" />
     <Content Include="Views\Administrator\CreateUserAccount.aspx" />
     <Content Include="Views\Administrator\ManageRoles.aspx" />
     <Content Include="Views\Administrator\ManageUserAccount.aspx" />
@@ -264,6 +264,13 @@
     </Compile>
     <Compile Include="UnauthorizedAccess.aspx.designer.cs">
       <DependentUpon>UnauthorizedAccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateControl.ascx.cs">
+      <DependentUpon>CreateControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateControl.ascx.designer.cs">
+      <DependentUpon>CreateControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\Administrator\CreateUserAccount.aspx.cs">
       <DependentUpon>CreateUserAccount.aspx</DependentUpon>
@@ -381,11 +388,11 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2" />
-    <None Include="packages.config" />
     <Content Include="Views\Administrator\AdministratorWeb.sitemap" />
     <Content Include="Scripts\js\ckeditor5-build-classic\ckeditor.js.map" />
     <Content Include="Scripts\js\ckeditor5-build-classic\LICENSE.md" />
     <Content Include="Scripts\js\ckeditor5-build-classic\README.md" />
+    <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
