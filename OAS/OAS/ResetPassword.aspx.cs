@@ -82,7 +82,7 @@ namespace OAS
             catch (Exception ex)
             {
                 Message.ForeColor = System.Drawing.Color.Red;
-                Message.Text = "The token is expired or invalid.";
+                Message.Text = "Use 8 characters or more for your password, and must contain at least 1 non alphanumeric characters. Or your account has been locked. ";
             }
         }
     }

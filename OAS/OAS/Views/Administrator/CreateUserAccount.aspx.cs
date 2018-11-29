@@ -41,92 +41,96 @@ namespace OAS.Views.Administrator
         }
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
-            MembershipCreateStatus createStatus;
-            MembershipUser newUser;
-            try
+            if (Page.IsValid)
             {
-                // Create new user.
-                if (Membership.RequiresQuestionAndAnswer)
-                {
-                    newUser = Membership.CreateUser(
-                      userID.Text,
-                      password.Text,
-                      email.Text,
-                      "",
-                      "",
-                      false,
-                      out createStatus);
-                }
-                else
-                {
-                    newUser = Membership.CreateUser(
-                      userID.Text,
-                      password.Text,
-                      email.Text);
-                }
-                Roles.AddUserToRole(userID.Text, RolesList.SelectedValue);
 
-                //Get the UserId of the just-added user
-                newUser = Membership.GetUser(userID.Text);
-                Guid newUserId = (Guid)newUser.ProviderUserKey;
-
-                char sex;
-                string dafaultImage;
-                if (gender.SelectedValue == "Male")
+                MembershipCreateStatus createStatus;
+                MembershipUser newUser;
+                try
                 {
-                    sex = 'M';
-                    dafaultImage = Server.MapPath("~/Content/images/userAvatar/defaultAvatarMale.jpg");
-                }
-                else
-                {
-                    sex = 'F';
-                    dafaultImage = Server.MapPath("~/Content/images/userAvatar/defaultAvatarFemale.jpg");
-                }
-
-                byte[] imageBytes = System.IO.File.ReadAllBytes(dafaultImage);
-                String imageUrl = "data:" + System.IO.Path.GetExtension(dafaultImage) + ";base64," + Convert.ToBase64String(imageBytes);
-
-                string insertSql = "INSERT INTO UserProfiles(UserId, FirstName, LastName, Gender, ContactNo, DateOfBirth, Status, Position, ProgCode, Image)" +
-                    "VALUES(@UserId, @FirstName, @LastName, @Gender, @ContactNo, @DateOfBirth, @Status, @Position, @ProgCode, @Image)";
-
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                    SqlCommand sqlCommand = new SqlCommand(insertSql, con);
-                    sqlCommand.Parameters.AddWithValue("@UserId", newUserId);
-                    sqlCommand.Parameters.AddWithValue("@FirstName", firstName.Text);
-                    sqlCommand.Parameters.AddWithValue("@LastName", lastName.Text);
-                    sqlCommand.Parameters.AddWithValue("@Gender", sex);
-                    sqlCommand.Parameters.AddWithValue("@ContactNo", contactNo.Text);
-                    sqlCommand.Parameters.AddWithValue("@DateOfBirth", dateOfBirth.Text);
-                    sqlCommand.Parameters.AddWithValue("@Status", "Good");
-                    if (RolesList.SelectedValue == "Students")
+                    // Create new user.
+                    if (Membership.RequiresQuestionAndAnswer)
                     {
-                        sqlCommand.Parameters.AddWithValue("@ProgCode", ProgramCode.Text);
-                        sqlCommand.Parameters.AddWithValue("@Position", DBNull.Value);
+                        newUser = Membership.CreateUser(
+                          userID.Text,
+                          password.Text,
+                          email.Text,
+                          "",
+                          "",
+                          false,
+                          out createStatus);
                     }
                     else
                     {
-                        sqlCommand.Parameters.AddWithValue("@ProgCode", DBNull.Value);
-                        sqlCommand.Parameters.AddWithValue("@Position", position.Text);
+                        newUser = Membership.CreateUser(
+                          userID.Text,
+                          password.Text,
+                          email.Text);
                     }
-                    sqlCommand.Parameters.AddWithValue("@Image", Encoding.Default.GetBytes(imageUrl));
-                    sqlCommand.ExecuteNonQuery();
-                    con.Close();
-                }
+                    Roles.AddUserToRole(userID.Text, RolesList.SelectedValue);
 
-                statusMessage.ForeColor = System.Drawing.Color.Green;
-                statusMessage.Text = "Successfully created user " + userID.Text + ".";
-            }
-            catch (MembershipCreateUserException ex)
-            {
-                statusMessage.ForeColor = System.Drawing.Color.Red;
-                statusMessage.Text = GetErrorMessage(ex.StatusCode);
-            }
-            catch (HttpException ex)
-            {
-                statusMessage.ForeColor = System.Drawing.Color.Red;
-                statusMessage.Text = ex.Message;
+                    //Get the UserId of the just-added user
+                    newUser = Membership.GetUser(userID.Text);
+                    Guid newUserId = (Guid)newUser.ProviderUserKey;
+
+                    char sex;
+                    string dafaultImage;
+                    if (gender.SelectedValue == "Male")
+                    {
+                        sex = 'M';
+                        dafaultImage = Server.MapPath("~/Content/images/userAvatar/defaultAvatarMale.jpg");
+                    }
+                    else
+                    {
+                        sex = 'F';
+                        dafaultImage = Server.MapPath("~/Content/images/userAvatar/defaultAvatarFemale.jpg");
+                    }
+
+                    byte[] imageBytes = System.IO.File.ReadAllBytes(dafaultImage);
+                    String imageUrl = "data:" + System.IO.Path.GetExtension(dafaultImage) + ";base64," + Convert.ToBase64String(imageBytes);
+
+                    string insertSql = "INSERT INTO UserProfiles(UserId, FirstName, LastName, Gender, ContactNo, DateOfBirth, Status, Position, ProgCode, Image)" +
+                        "VALUES(@UserId, @FirstName, @LastName, @Gender, @ContactNo, @DateOfBirth, @Status, @Position, @ProgCode, @Image)";
+
+                    using (SqlConnection con = new SqlConnection(connectionString))
+                    {
+                        con.Open();
+                        SqlCommand sqlCommand = new SqlCommand(insertSql, con);
+                        sqlCommand.Parameters.AddWithValue("@UserId", newUserId);
+                        sqlCommand.Parameters.AddWithValue("@FirstName", firstName.Text);
+                        sqlCommand.Parameters.AddWithValue("@LastName", lastName.Text);
+                        sqlCommand.Parameters.AddWithValue("@Gender", sex);
+                        sqlCommand.Parameters.AddWithValue("@ContactNo", contactNo.Text);
+                        sqlCommand.Parameters.AddWithValue("@DateOfBirth", CalendarUserControl.SelectedDate);
+                        sqlCommand.Parameters.AddWithValue("@Status", "Good");
+                        if (RolesList.SelectedValue == "Students")
+                        {
+                            sqlCommand.Parameters.AddWithValue("@ProgCode", ProgramCode.Text);
+                            sqlCommand.Parameters.AddWithValue("@Position", DBNull.Value);
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.AddWithValue("@ProgCode", DBNull.Value);
+                            sqlCommand.Parameters.AddWithValue("@Position", position.Text);
+                        }
+                        sqlCommand.Parameters.AddWithValue("@Image", Encoding.Default.GetBytes(imageUrl));
+                        sqlCommand.ExecuteNonQuery();
+                        con.Close();
+                    }
+
+                    statusMessage.ForeColor = System.Drawing.Color.Green;
+                    statusMessage.Text = "Successfully created user " + userID.Text + ".";
+                }
+                catch (MembershipCreateUserException ex)
+                {
+                    statusMessage.ForeColor = System.Drawing.Color.Red;
+                    statusMessage.Text = GetErrorMessage(ex.StatusCode);
+                }
+                catch (HttpException ex)
+                {
+                    statusMessage.ForeColor = System.Drawing.Color.Red;
+                    statusMessage.Text = ex.Message;
+                }
             }
         }
 
@@ -141,7 +145,7 @@ namespace OAS.Views.Administrator
                     return "An User ID for that email address already exists. Please enter a different email address.";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Use 8 characters or more for your password, and must contain at least 1 non alphanumeric characters.";
 
                 case MembershipCreateStatus.InvalidEmail:
                     return "The email address provided is invalid. Please check the value and try again.";

@@ -154,17 +154,17 @@
                                                                 </a>
                                                                 <a runat="server" href="~/Views/Administrator/ManageUserAccount.aspx">
                                                                     <span class="fa fa-users sideBarIcon"></span>
-                                                                    <span class="sideBarText">Manage user</span>
+                                                                    <span class="sideBarText">User</span>
                                                                 </a>
 
                                                                 <a runat="server" href="~/Views/Lecturer/CreateAssessment.aspx">
                                                                     <span class="fa fa-plus sideBarIcon"></span>
-                                                                    <span class="sideBarText">Create Assessment</span>
+                                                                    <span class="sideBarText">Create</span>
                                                                 </a>
 
                                                                 <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">
                                                                     <span class="fa fa-book sideBarIcon"></span>
-                                                                    <span class="sideBarText">Manage Assessment</span>
+                                                                    <span class="sideBarText">Manage</span>
                                                                 </a>
 
                                                                 <a runat="server" href="~/Views/Profile.aspx">
@@ -224,12 +224,12 @@
 
                                                                 <a runat="server" href="~/Views/Lecturer/CreateAssessment.aspx">
                                                                     <span class="fa fa-plus sideBarIcon"></span>
-                                                                    <span class="sideBarText">Create Assessment</span>
+                                                                    <span class="sideBarText">Create</span>
                                                                 </a>
 
                                                                 <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">
                                                                     <span class="fa fa-book sideBarIcon"></span>
-                                                                    <span class="sideBarText">Manage Assessment</span>
+                                                                    <span class="sideBarText">Manage</span>
                                                                 </a>
 
                                                                 <a runat="server" href="~/Views/Profile.aspx">
@@ -318,7 +318,7 @@
                             </asp:LoginView>
                         </div>
                         <div>
-                            <a class="shake" href="mailto:liho_98@hotmail.com" title="Quick Email">
+                            <a class="shake" href="mailto:OAS.edu.my@gmail.com" title="Quick Email">
                                 <span class="fa fa-envelope-o fa-fw side-icon"></span>
                             </a>
                         </div>
@@ -437,10 +437,10 @@
                     <table style="margin: auto; table-layout: fixed;">
                         <tr>
                             <td>
-                                <a target="_blank" href="https://www.facebook.com/environmental.society.00" class="fa fa-facebook-official fa-fw"></a>
+                                <a target="_blank" href="https://www.facebook.com/OASite-340044310155731" class="fa fa-facebook-official fa-fw"></a>
                             </td>
                             <td>
-                                <a target="_blank" href="https://www.instagram.com/liho___/" class="fa fa-instagram fa-fw"></a>
+                                <a target="_blank" href="https://www.instagram.com/liho_98/" class="fa fa-instagram fa-fw"></a>
                             </td>
                             <td>
                                 <a target="_blank" href="https://twitter.com/liho_98?lang=en" class="fa fa-twitter fa-fw"></a>
@@ -449,7 +449,7 @@
                                 <a target="_blank" href="https://www.snapchat.com/add/liho_98" class="fa fa-snapchat-ghost fa-fw"></a>
                             </td>
                             <td>
-                                <a target="_blank" href="https://www.youtube.com/channel/UCLKYsEXfI0PGXeKYL1KV7qA" class="fa fa-youtube-play fa-fw"></a>
+                                <a target="_blank" href="https://www.youtube.com/watch?v=qhWg8JEMZAc" class="fa fa-youtube-play fa-fw"></a>
                             </td>
                         </tr>
                     </table>

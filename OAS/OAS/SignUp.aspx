@@ -84,6 +84,63 @@
             margin-top: 38px;
             max-width: 235px;
         }
+        #loginBox_CalendarUserControl_Calendar {
+            color: #fff;
+            padding: 60px 40px 80px 40px;
+            width: 100%;
+            height: ;
+            box-shadow: 0px 2px 6px rgba(2,2,2,0.2);
+            position: relative;
+            text-decoration: none !important;
+            font-family: 'Avenir', sans-serif;
+            background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+            background-size: 400% 400%;
+            animation: Gradient 15s ease infinite;
+            border: none;
+            font-size: 13px;
+            position: absolute;
+            z-index: 1;
+            transform: translateY(-100%);
+        }
+
+            #loginBox_CalendarUserControl_Calendar tr td:first-child {
+                background-color: transparent !important;
+                font-size: 15px;
+                font-weight: 700;
+            }
+
+            #loginBox_CalendarUserControl_Calendar tbody tr:first-child td {
+                padding: 10px;
+            }
+
+            #loginBox_CalendarUserControl_Calendar a {
+                color: #fff !important;
+                text-decoration: none;
+            }
+
+        @keyframes Gradient {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
+        ul{
+            padding: 0;
+        }
+        li{
+            display:none;
+        }
+        ul li:first-child{
+            list-style-type: none;
+            display:block;
+        }
     </style>
 
 </asp:Content>
@@ -125,6 +182,58 @@
                     <i class="material-icons" style="float:right;margin-top:5px;font-weight:500;font-size:25px;">arrow_back</i>
             </asp:LinkButton>
 
+            <asp:RequiredFieldValidator ID="userIDRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="userID"
+                ErrorMessage="Please fill the User ID field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="firstNameRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="firstName"
+                ErrorMessage="Please fill the First Name field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="lastNameRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="lastName"
+                ErrorMessage="Please fill the Last Name field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="emailRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="email"
+                ErrorMessage="Please fill the Email field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="passwordRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="password"
+                ErrorMessage="Please fill the Password field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="confirmPasswordRequiredValidator"
+                runat="server"
+                ControlToValidate="confirmPassword"
+                ErrorMessage="Please fill the confirm password field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:CompareValidator ID="confirmPasswordCompareValidator" runat="server" ControlToValidate="confirmPassword" ControlToCompare="password"
+                Display="Static" ForeColor="red" ErrorMessage="Confirm password must match password." style="display:none"
+                ValidationGroup="ValidateGroup" CssClass="errorMsg"></asp:CompareValidator>
+
+            <asp:RequiredFieldValidator ID="contactNoRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="contactNo"
+                ErrorMessage="Please enter the Contact No. field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
 
             <% if (role.Text == "Students")
                 {
@@ -136,12 +245,12 @@
             <h2 style="margin-bottom: 10px;">Create Lecturer Account</h2>
             <%} %>
 
-            <asp:TextBox ID="userID" runat="server" placeholder="User ID" required="required" autofocus="autofocus"></asp:TextBox>
-            <asp:TextBox ID="firstName" runat="server" placeholder="First name" required="required" Style="width: 49%"></asp:TextBox>
-            <asp:TextBox ID="lastName" runat="server" placeholder="Last name" required="required" Style="width: 49%; float: right"></asp:TextBox>
-            <asp:TextBox ID="email" runat="server" required="required" placeholder="Email address"></asp:TextBox>
-            <asp:TextBox ID="password" runat="server" TextMode="Password" required="required" placeholder="Password"></asp:TextBox>
-            <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" required="required" ValidationGroup="pass" placeholder="Confirm password"></asp:TextBox>
+            <asp:TextBox ID="userID" runat="server" placeholder="User ID" autofocus="autofocus"></asp:TextBox>
+            <asp:TextBox ID="firstName" runat="server" placeholder="First name" Style="width: 49%"></asp:TextBox>
+            <asp:TextBox ID="lastName" runat="server" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
+            <asp:TextBox ID="email" runat="server" placeholder="Email address"></asp:TextBox>
+            <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="Password"></asp:TextBox>
+            <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" ValidationGroup="ValidateGroup" placeholder="Confirm password"></asp:TextBox>
 
             <asp:TextBox ID="role" runat="server" Visible="false"></asp:TextBox>
 
@@ -149,8 +258,11 @@
                 <asp:ListItem Selected="True">Male</asp:ListItem>
                 <asp:ListItem>Female</asp:ListItem>
             </asp:DropDownList>
-            <asp:TextBox ID="contactNo" runat="server" required="required" placeholder="Contact No."></asp:TextBox>
+            <asp:TextBox ID="contactNo" runat="server" placeholder="Contact No."></asp:TextBox>
+            <%-- 
             <asp:TextBox ID="dateOfBirth" runat="server" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;"  placeholder="Date of Birth" onfocus="(this.type='date')"></asp:TextBox>
+            --%>
+            <uc:Calendar runat="server" ID="CalendarUserControl" OnCalendarVisibilityChanged="CalendarUserControl_OnCalendarVisibilityChanged" />
 
             <% if (role.Text == "Students")
                 {
@@ -176,18 +288,11 @@
                 <a runat="server" href="~/Login.aspx" style="color:#0067b8;text-decoration:none;font-weight: 500;font-size: 11px;letter-spacing: 0.5px;margin-left:0px">Login</a>
             </div>
 
-            <asp:RequiredFieldValidator ID="PasswordConfirmRequiredValidator"
-                runat="server"
-                ControlToValidate="confirmPassword"
-                ErrorMessage=""
-                ValidationGroup="pass"
-                Display="Dynamic" ForeColor="Red" CssClass="errorMsg" />
+            <asp:Button ID="signUpButton" runat="server" Text="Sign up" OnClick="SignUpButton_Click" ValidationGroup="ValidateGroup" />
 
-            <asp:CompareValidator ID="PasswordConfirmCompareValidator" runat="server" ControlToValidate="confirmPassword" ControlToCompare="password"
-                Display="Static" ForeColor="red" ErrorMessage="Confirm password must match password."
-                ValidationGroup="pass" CssClass="errorMsg"></asp:CompareValidator>
+            <asp:ValidationSummary ID="ValidationSummary" runat="server" Font-Size="Small" ForeColor="Red" ValidationGroup="ValidateGroup" 
+                DisplayMode="BulletList" ShowSummary="true"  />
 
-            <asp:Button ID="signUpButton" runat="server" Text="Sign up" OnClick="SignUpButton_Click" ValidationGroup="pass" />
         </div>
     </div>
 </asp:Content>

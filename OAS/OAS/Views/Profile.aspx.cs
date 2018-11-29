@@ -29,6 +29,8 @@ namespace OAS.Views
         {
             if (!Page.IsPostBack)
             {
+                ((TextBox)CalendarUserControl.FindControl("txtDate")).Enabled = false;
+                ((LinkButton)CalendarUserControl.FindControl("Literal")).Visible = false;
                 ViewState.Clear();
                 getProfile();
                 message.Text = (String)Request.QueryString["Message"];
@@ -108,7 +110,7 @@ namespace OAS.Views
                     PositionDropDownList.Items[i].Selected = true;
                 }
             }
-            DateOfBirthText.Text = String.Format("{0:yyy-MM-dd}", ((DateTime)userRecords["DateOfBirth"]));
+            CalendarUserControl.SelectedDate = String.Format("{0:yyy-MM-dd}", ((DateTime)userRecords["DateOfBirth"]));
             con.Close();
         }
         protected void editProfileButton_OnClick(object sender, EventArgs e)
@@ -126,7 +128,9 @@ namespace OAS.Views
                 PhoneText.Enabled = true;
                 //ProgrammeDropDownList.Enabled = true;
                 //PositionDropDownList.Enabled = true;
-                DateOfBirthText.Enabled = true;
+                //DateOfBirthText.Enabled = true;
+                ((TextBox)CalendarUserControl.FindControl("txtDate")).Enabled = true;
+                ((LinkButton)CalendarUserControl.FindControl("Literal")).Visible = true;
                 changePhoto.Visible = true;
 
                 FirstNametext.Attributes["class"] = "inputBox";
@@ -135,7 +139,7 @@ namespace OAS.Views
                 PhoneText.Attributes["class"] = "inputBox";
                 //ProgrammeDropDownList.Attributes["class"] = "inputBox";
                 //PositionDropDownList.Attributes["class"] = "inputBox";
-                DateOfBirthText.Attributes["class"] = "inputBox";
+                ((TextBox)CalendarUserControl.FindControl("txtDate")).Attributes["class"] = "inputBox";
             }
             else
             {
@@ -149,11 +153,18 @@ namespace OAS.Views
                 PhoneText.Enabled = false;
                 //ProgrammeDropDownList.Enabled = false;
                 //PositionDropDownList.Enabled = false;
-                DateOfBirthText.Enabled = false;
+                //DateOfBirthText.Enabled = false;
+                ((TextBox)CalendarUserControl.FindControl("txtDate")).Enabled = false;
+                ((LinkButton)CalendarUserControl.FindControl("Literal")).Visible = false;
                 changePhoto.Visible = false;
             }
             Page.ClientScript.RegisterStartupScript(this.GetType(), "Registered Script", "swapDiv('About');", true);
         }
+        protected void CalendarUserControl_OnCalendarVisibilityChanged(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Registered Script", "swapDiv('About');", true);
+        }
+
         protected void updateProfileButton_OnClick(object sender, EventArgs e)
         {
             /*
@@ -195,7 +206,7 @@ namespace OAS.Views
 
                         updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + FirstNametext.Text + "', LastName = '" + LastNameText.Text + "', " +
                             "ContactNo = '" + PhoneText.Text + "', " +
-                            "DateOfBirth = '" + DateOfBirthText.Text + "'," +
+                            "DateOfBirth = '" + CalendarUserControl.SelectedDate + "'," +
                             "Image = '" + imageUrl + "' WHERE UserId = '" + UserId.ToString() + "'";
                     }
                     else
@@ -208,7 +219,7 @@ namespace OAS.Views
                 {
                     updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + FirstNametext.Text + "', LastName = '" + LastNameText.Text + "', " +
                         "ContactNo = '" + PhoneText.Text + "', " +
-                      "DateOfBirth = '" + DateOfBirthText.Text + "' WHERE UserId = '" + UserId.ToString() + "'";
+                      "DateOfBirth = '" + CalendarUserControl.SelectedDate + "' WHERE UserId = '" + UserId.ToString() + "'";
                 }
                 // GetUser() without parameter returns the current logged in user.
                 MembershipUser user = Membership.GetUser();

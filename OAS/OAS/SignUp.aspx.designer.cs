@@ -76,6 +76,78 @@ namespace OAS {
         protected global::System.Web.UI.WebControls.LinkButton returnLink;
         
         /// <summary>
+        /// userIDRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator userIDRequiredFieldValidator;
+        
+        /// <summary>
+        /// firstNameRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator firstNameRequiredFieldValidator;
+        
+        /// <summary>
+        /// lastNameRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator lastNameRequiredFieldValidator;
+        
+        /// <summary>
+        /// emailRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator emailRequiredFieldValidator;
+        
+        /// <summary>
+        /// passwordRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator passwordRequiredFieldValidator;
+        
+        /// <summary>
+        /// confirmPasswordRequiredValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator confirmPasswordRequiredValidator;
+        
+        /// <summary>
+        /// confirmPasswordCompareValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator confirmPasswordCompareValidator;
+        
+        /// <summary>
+        /// contactNoRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator contactNoRequiredFieldValidator;
+        
+        /// <summary>
         /// userID control.
         /// </summary>
         /// <remarks>
@@ -157,13 +229,13 @@ namespace OAS {
         protected global::System.Web.UI.WebControls.TextBox contactNo;
         
         /// <summary>
-        /// dateOfBirth control.
+        /// CalendarUserControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dateOfBirth;
+        protected global::OAS.UserControl.CalendarUserControl CalendarUserControl;
         
         /// <summary>
         /// ProgramCode control.
@@ -202,24 +274,6 @@ namespace OAS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl loginLink;
         
         /// <summary>
-        /// PasswordConfirmRequiredValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordConfirmRequiredValidator;
-        
-        /// <summary>
-        /// PasswordConfirmCompareValidator control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator PasswordConfirmCompareValidator;
-        
-        /// <summary>
         /// signUpButton control.
         /// </summary>
         /// <remarks>
@@ -227,5 +281,14 @@ namespace OAS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button signUpButton;
+        
+        /// <summary>
+        /// ValidationSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary;
     }
 }

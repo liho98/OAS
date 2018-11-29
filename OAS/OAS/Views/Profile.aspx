@@ -191,6 +191,60 @@
             #contentBody_datatables td {
                 border: 1px solid rgba(0,0,0,0.1);
             }
+            #contentBody_CalendarUserControl_Literal{
+                all:initial!important;
+                cursor:pointer!important;
+                transform: translateY(-120%)!important;
+                float: right!important;
+            }
+        #contentBody_CalendarUserControl_Calendar {
+            color: #fff;
+            padding: 60px 40px 80px 40px;
+            width: 40%;
+            box-shadow: 0px 2px 6px rgba(2,2,2,0.2);
+            position: relative;
+            text-decoration: none !important;
+            font-family: 'Avenir', sans-serif;
+            background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+            background-size: 400% 400%;
+            animation: Gradient 15s ease infinite;
+            border: none;
+            font-size: 13px;
+            position: absolute;
+            z-index: 1;
+            transform: translateY(-100%);
+        }
+
+            #contentBody_CalendarUserControl_Calendar tr td:first-child {
+                background-color: transparent !important;
+                font-size: 15px;
+                font-weight: 700;
+            }
+
+            #contentBody_CalendarUserControl_Calendar tbody tr:first-child td {
+                padding: 10px;
+            }
+
+            #contentBody_CalendarUserControl_Calendar a {
+                all:initial;
+                cursor:pointer;
+                color: #fff !important;
+                text-decoration: none;
+            }
+
+        @keyframes Gradient {
+            0% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+
+            100% {
+                background-position: 0% 50%
+            }
+        }
     </style>
 </asp:Content>
 
@@ -286,12 +340,14 @@
                                     <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">Manage Assessment
                                     </h4>
                                     <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">Assessment</a>
+                                    <a runat="server" href="~/Views/Lecturer/CreateAssessment.aspx">Create</a>
 
                                     <%}else if (User.IsInRole("Lecturers")){ %>
 
                                     <h4 style="font-size: 12px; color: #818182; font-weight: 600; margin-top: 0px; margin-bottom: 20px;">Manage Assessment
                                     </h4>
                                     <a runat="server" href="~/Views/Lecturer/ManageAssessment.aspx">Assessment</a>
+                                    <a runat="server" href="~/Views/Lecturer/CreateAssessment.aspx">Create</a>
 
                                     <%}else{ %>
 
@@ -393,7 +449,10 @@
                                             <td>
                                                 <label>Date of Birth</label></td>
                                             <td>
+                                                <%-- 
                                                 <asp:TextBox ID="DateOfBirthText" required="required" TextMode="Date" runat="server" Enabled="false"></asp:TextBox>
+                                                --%>
+                                                <uc:Calendar runat="server" ID="CalendarUserControl" OnCalendarVisibilityChanged="CalendarUserControl_OnCalendarVisibilityChanged" />
                                             </td>
                                         </tr>
                                     </table>

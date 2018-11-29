@@ -18,8 +18,15 @@ namespace OAS
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            password.Attributes.Add("value", password.Text);
+            confirmPassword.Attributes.Add("value", confirmPassword.Text);
             selectBox.Attributes["style"] = "display:block!important;height:390px!important";
             userBox.Attributes["style"] = "display:none!important;";
+        }
+
+        protected void CalendarUserControl_OnCalendarVisibilityChanged(object sender, EventArgs e)
+        {
+            userBox.Attributes["style"] = "display:block!important;height: 685px!important";
         }
 
         protected void studentButton_OnClick(object sender, EventArgs e)
@@ -43,7 +50,7 @@ namespace OAS
         }
         protected void SignUpButton_Click(object sender, EventArgs e)
         {
-            if (PasswordConfirmCompareValidator.IsValid)
+            if (Page.IsValid)
             {
                 MembershipCreateStatus createStatus;
                 MembershipUser newUser;
@@ -104,7 +111,8 @@ namespace OAS
                         sqlCommand.Parameters.AddWithValue("@LastName", lastName.Text);
                         sqlCommand.Parameters.AddWithValue("@Gender", sex);
                         sqlCommand.Parameters.AddWithValue("@ContactNo", contactNo.Text);
-                        sqlCommand.Parameters.AddWithValue("@DateOfBirth", dateOfBirth.Text);
+                        //sqlCommand.Parameters.AddWithValue("@DateOfBirth", dateOfBirth.Text);
+                        sqlCommand.Parameters.AddWithValue("@DateOfBirth", CalendarUserControl.SelectedDate);
                         sqlCommand.Parameters.AddWithValue("@Status", "Good");
                         if (role.Text == "Students")
                         {
@@ -132,7 +140,8 @@ namespace OAS
                     email.Text = "";
                     gender.ClearSelection();
                     contactNo.Text = "";
-                    dateOfBirth.Text = "";
+                    //dateOfBirth.Text = "";
+                    CalendarUserControl.SelectedDate = "";
                     ProgramCode.ClearSelection();
                     position.ClearSelection();
 
