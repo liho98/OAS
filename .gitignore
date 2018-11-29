@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/OAS/OAS/libman.json
+/OAS/OAS/CreateControl.ascx
+/OAS/OAS/CreateControl.ascx.designer.cs
+/OAS/OAS/CreateControl.ascx.cs
