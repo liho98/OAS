@@ -99,9 +99,11 @@
             -webkit-appearance: button;
             float: right;
         }
+
         .box td {
             padding: 0 !important;
         }
+
         #contentBody_tableDiv {
             border: 1px solid rgba(0,0,0,0.2);
         }
@@ -154,43 +156,26 @@
 
     <!-- content end -->
 
-    <script>
+    <script id="">
 
-        <% for(int i = 0; i < questionList.Count; i++) { %>
+        <% for (int i = 0; i < questionList.Count; i++)
+        { %>
 
         ClassicEditor
-            .create(document.querySelector('#contentBody_editor'+<%= i %>), {
-        })
+            .create(document.querySelector('#contentBody_editor' +<%= i %>), {
+            })
             .then(editor => {
-                 console.log(editor);
-             })
+                console.log(editor);
+            })
             .catch(error => {
-            console.error(error);
-        });
+                console.error(error);
+            });
 
         <%}%>
 
-        var minutesLabel = document.getElementById("minutes");
-        var secondsLabel = document.getElementById("seconds");
-        var totalSeconds = <%= Convert.ToInt16(assignment[3]) * 60 %>;
-        setInterval(setTime, 1000);
-
-        function setTime() {
-            if (totalSeconds > 0) {
-                totalSeconds--;
-            }
-            secondsLabel.innerHTML = pad(totalSeconds % 60);
-            minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-        }
-
-        function pad(val) {
-            var valString = val + "";
-            if (valString.length < 2) {
-                return "0" + valString;
-            } else {
-                return valString;
-            }
-        }
     </script>
+
+    <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
+    <asp:Timer ID="Timer" runat="server" OnTick="Timer_Tick"></asp:Timer>
 
 </asp:Content>

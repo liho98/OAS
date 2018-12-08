@@ -116,12 +116,13 @@ namespace OAS.Views.Lecturer
 
         private void deleteQuestion(String questionId)
         {
-            string deleteSql = "Delete From Question Where QuestionId = '" + questionId + "'";
+            string deleteSql = "Delete From Question Where QuestionId = @QuestionId";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(deleteSql, con);
+                sqlCommand.Parameters.AddWithValue("@QuestionId", Guid.Parse(questionId));
                 sqlCommand.ExecuteNonQuery();
                 con.Close();
             }
@@ -243,7 +244,7 @@ namespace OAS.Views.Lecturer
                     {
                         if (optionList[j][1] == "True")
                         {
-                            htmlGenericControl3.InnerHtml += "<div class=\"optionDiv\">" + "<span style=\"color:#00ff3a;\">&#" + (count + 9398) + "; <span>" + optionList[j][0] + "</div>";
+                            htmlGenericControl3.InnerHtml += "<div style=\"background-color:rgba(185,246,202,0.35);\" class=\"optionDiv\">" + "<span>&#" + (count + 9398) + "; <span>" + optionList[j][0] + "</div>";
                         }
                         else
                         {
@@ -270,6 +271,7 @@ namespace OAS.Views.Lecturer
                 linkButton.Text = questionList[i][3];
                 linkButton.Attributes.Add("style", "all:inherit;cursor:pointer;border: 1px solid rgba(0,0,0,0.2);display:inline-block");
                 //linkButton.Click += new EventHandler(this.editQuestion_OnClick);
+                linkButton.OnClientClick = "return false;";
                 linkButton.Controls.Add(span);
                 htmlGenericControl.Controls.Add(linkButton);
 

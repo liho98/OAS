@@ -34,7 +34,19 @@ namespace OAS.Views.Student
                 }
                 getQuestion(Guid.Parse(assignment[0]));
                 Session["assignment"] = assignment;
-                Session.Timeout = 1000;
+
+                if (Session["Timer"] == null)
+                {
+                    TimeSpan timeSpan = TimeSpan.FromMinutes(Convert.ToInt16(assignment[3]));
+                    Timer.Interval = Convert.ToInt32((timeSpan.TotalMilliseconds + 1000));
+                    ScriptManager.RegisterStartupScript(this, GetType(), "setTimerSession", "sessionStorage.setItem('timer', " + Convert.ToInt32(timeSpan.TotalSeconds + 1).ToString() + " );", true);
+                    //Timer.Interval = 11000;
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "setTimerSession", "sessionStorage.setItem('timer', " + 11 + " );", true);
+                    Session["Timer"] = timeSpan.Minutes;
+                }
+                ScriptManager.RegisterStartupScript(this, GetType(), "setTimer", "var minutesLabel = document.getElementById(\"minutes\");var secondsLabel = document.getElementById(\"seconds\");var totalSeconds = sessionStorage.getItem('timer');setInterval(setTime, 1000);function setTime(){if (totalSeconds > 0){totalSeconds--;sessionStorage.setItem('timer', totalSeconds);}secondsLabel.innerHTML = pad(totalSeconds % 60);minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));}function pad(val){var valString = val + \"\";if (valString.length < 2){return \"0\" + valString;}else{return valString;}}", true);
+
+                Session.Timeout = Convert.ToInt16(assignment[3]);
             }
 
             if (ViewState["questionList"] != null)
@@ -49,6 +61,27 @@ namespace OAS.Views.Student
                 Message.Text = (String)Request.QueryString["Message"];
             }
         }
+        protected void Timer_Tick(object sender, EventArgs e)
+        {
+            if (Session["assignment"] != null)
+            {
+                assignment = (String[])Session["assignment"];
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Session expired, returning back.');" +
+                    "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+            }
+            TextBox textbox = new TextBox();
+            for (int i = 0; i < questionList.Count; i++)
+            {
+                textbox = (TextBox)AnswerTablePlaceHolder.FindControl("editor" + i);
+                saveStudentAnswer(Guid.Parse(questionList[i][3]), textbox.Text);
+            }
+            Session.Remove("Timer");
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Times up your answer has been submitted.\\nPlease wait the Lecturer to mark it.\\nYour result will send through to your OAS Email Account.');" +
+                 "location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+        }
 
         protected void SubmitButton_OnClick(object sender, EventArgs e)
         {
@@ -57,7 +90,11 @@ namespace OAS.Views.Student
             {
                 assignment = (String[])Session["assignment"];
             }
-
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Session expired, returning back.');" +
+                    "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+            }
             TextBox textbox = new TextBox();
 
             for (int i = 0; i < questionList.Count; i++)
@@ -94,7 +131,6 @@ namespace OAS.Views.Student
             }
 
         }
-
         private void saveStudentAnswer(Guid questionId, String studentAnswer)
         {
             string insertSql = "INSERT INTO Answer(QuestionId, UserId, AnswerText) " +

@@ -28,12 +28,13 @@ namespace OAS.Views.Lecturer
         private void GetAllAssessmentToList()
         {
             string selectSql = "Select * From Assessment a, Contributor c, UserProfiles u Where a.AssessmentId = c.AssessmentId and " +
-                               "c.UserId = u.UserId and u.UserId = '" + ((Guid)(Membership.GetUser(HttpContext.Current.User.Identity.Name).ProviderUserKey)).ToString() + "'";
+                               "c.UserId = u.UserId and u.UserId = @UserId";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                sqlCommand.Parameters.AddWithValue("@UserId", ((Guid)(Membership.GetUser(HttpContext.Current.User.Identity.Name).ProviderUserKey)));
                 SqlDataReader assessmentRecords = sqlCommand.ExecuteReader();
 
                 while (assessmentRecords.Read())
@@ -236,12 +237,13 @@ namespace OAS.Views.Lecturer
         {
             LinkButton linkButton = sender as LinkButton;
 
-            string deleteSql = "Delete From Assessment Where AssessmentId = '" + linkButton.Text + "'";
+            string deleteSql = "Delete From Assessment Where AssessmentId = @AssessmentId";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(deleteSql, con);
+                sqlCommand.Parameters.AddWithValue("@AssessmentId", linkButton.Text);
                 sqlCommand.ExecuteNonQuery();
                 con.Close();
             }

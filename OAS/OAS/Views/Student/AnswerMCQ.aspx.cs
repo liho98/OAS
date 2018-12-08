@@ -37,7 +37,18 @@ namespace OAS.Views.Student
                 }
                 getQuestion(Guid.Parse(assignment[0]));
                 Session["assignment"] = assignment;
-                Session.Timeout = 1000;
+                if (Session["Timer"] == null)
+                {
+                    TimeSpan timeSpan = TimeSpan.FromMinutes(Convert.ToInt16(assignment[3]));
+                    Timer.Interval = Convert.ToInt32((timeSpan.TotalMilliseconds+1000));
+                    ScriptManager.RegisterStartupScript(this, GetType(), "setTimerSession", "sessionStorage.setItem('timer', " + Convert.ToInt32(timeSpan.TotalSeconds + 1).ToString() + " );", true);
+                    //Timer.Interval = 11000;
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "setTimerSession", "sessionStorage.setItem('timer', " + 11 + " );", true);
+                    Session["Timer"] = timeSpan.Minutes;
+                }
+                ScriptManager.RegisterStartupScript(this, GetType(), "setTimer", "var minutesLabel = document.getElementById(\"minutes\");var secondsLabel = document.getElementById(\"seconds\");var totalSeconds = sessionStorage.getItem('timer');setInterval(setTime, 1000);function setTime(){if (totalSeconds > 0){totalSeconds--;sessionStorage.setItem('timer', totalSeconds);}secondsLabel.innerHTML = pad(totalSeconds % 60);minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));}function pad(val){var valString = val + \"\";if (valString.length < 2){return \"0\" + valString;}else{return valString;}}", true);
+
+                Session.Timeout = Convert.ToInt16(assignment[3]);
             }
             //if (Session["assessment"] != null)
             //{
@@ -60,11 +71,62 @@ namespace OAS.Views.Student
             }
         }
 
+        protected void Timer_Tick(object sender, EventArgs e)
+        {
+            if (Session["assignment"] != null)
+            {
+                assignment = (String[])Session["assignment"];
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Session expired, returning back.');" +
+                    "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+            }
+            int correctAnsCount = 0;
+            RadioButtonList radioButtonList = new RadioButtonList();
+
+            for (int i = 0; i < questionList.Count; i++)
+            {
+                radioButtonList = (RadioButtonList)AnswerTablePlaceHolder.FindControl("OptionRadioButton" + i);
+
+                getOption(Guid.Parse(questionList[i][3]));
+
+                for (int j = 0; j < optionList.Count; j++)
+                {
+                    if (optionList[j][0] != "<p>&nbsp;</p>")
+                    {
+                        if (optionList[j][0] == radioButtonList.SelectedValue && optionList[j][1] == "True")
+                        {
+                            correctAnsCount++;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < questionList.Count; i++)
+            {
+                radioButtonList = (RadioButtonList)AnswerTablePlaceHolder.FindControl("OptionRadioButton" + i);
+                saveStudentAnswer(Guid.Parse(questionList[i][3]), radioButtonList.SelectedValue);
+            }
+
+            double score = Math.Round((((double)correctAnsCount / questionList.Count) * 100.0), 2);
+            saveStudentScore(Guid.Parse(assignment[0]), score);
+
+            Session.Remove("Timer");
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Times up your answer has been submitted.\\nYou have correct " + correctAnsCount + " question out of " + questionList.Count + ".\\nHence your total score is " + score.ToString("0.00") + "%');" +
+                "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+        }
+
         protected void SubmitButton_OnClick(object sender, EventArgs e)
         {
             if (Session["assignment"] != null)
             {
                 assignment = (String[])Session["assignment"];
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Session expired, returning back.');" +
+                    "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
             }
 
             bool isAllCheck = false;
@@ -121,7 +183,7 @@ namespace OAS.Views.Student
                 saveStudentScore(Guid.Parse(assignment[0]), score);
 
                 Message.ForeColor = System.Drawing.Color.Green;
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('You have submitted your answers.\\nYou have correct " + correctAnsCount + " question out of " + questionList.Count + ".\\nHence your total score is " + score + "');" +
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('You have submitted your answers.\\nYou have correct " + correctAnsCount + " question out of " + questionList.Count + ".\\nHence your total score is " + score.ToString("0.00") + "%');" +
                     "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
                 //Message.Text = "You have submitted your answers.";
             }

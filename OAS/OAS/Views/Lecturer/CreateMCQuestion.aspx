@@ -119,7 +119,6 @@
             <div class="box-wrapper">
                 <div class="box" style="width: 100%; top: 50%; height: 100%">
 
-
                     <div style="float: right">
                         <label>
                             Question Level : 
@@ -132,9 +131,11 @@
                         </asp:DropDownList>
                         </label>
                     </div>
+                    <div>
+                        Status : <asp:Label ID="MessageLabel" ForeColor="LightGreen" runat="server" Text=""></asp:Label>
+                    </div>
 
                     <asp:PlaceHolder ID="MCQTablePlaceholder" runat="server"></asp:PlaceHolder>
-                    <asp:Label Style="float: left;" ID="MessageLabel" runat="server" Text=""></asp:Label>
                     <asp:Button ID="SubmitButton" runat="server" OnClick="SubmitButton_OnClick" Text="Create Question" />
 
                 </div>

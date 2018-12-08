@@ -83,7 +83,8 @@
         .dt-body-center {
             text-align: center !important;
         }
-        .material-icons{
+
+        .material-icons {
             font-size: 24px;
         }
 
@@ -97,9 +98,9 @@
                 color: #007bff !important;
             }
 
-            .actionButton + a + a {
-                color: #5d4037 !important;
-            }
+                .actionButton + a + a {
+                    color: #5d4037 !important;
+                }
 
         @keyframes hvr-icon-pulse {
             25% {
@@ -138,9 +139,10 @@
                 -webkit-animation-iteration-count: infinite;
                 animation-iteration-count: infinite;
             }
-            #spin{
-                font-size:20px;
-            }
+
+        #spin {
+            font-size: 20px;
+        }
     </style>
 </asp:Content>
 
@@ -170,12 +172,12 @@
 
             <div class="box-wrapper">
                 <div class="box" style="width: 100%; top: 50%; height: 90%; background-color: ;">
-                    <div id="tableDiv" runat="server" style="height:100%;overflow:auto" class="reset-parent bootstrap-iso">
+                    <div style="width: 100%;">
+                        Status : <asp:Label ID="Message" runat="server" Style="text-align: left; color: green; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;"></asp:Label>
+                    </div>
+                    <div id="tableDiv" runat="server" style="height: 100%; overflow: auto" class="reset-parent bootstrap-iso">
                         <!-- Any HTML here will be styled with Bootstrap CSS -->
                         <asp:PlaceHolder ID="AssessmentTablePlaceHolder" runat="server"></asp:PlaceHolder>
-                        <div style="width: 100%">
-                            <asp:Label ID="Message" runat="server" Style="text-align: center; display: block; color: green; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;"></asp:Label>
-                        </div>
                     </div>
                 </div>
             </div>

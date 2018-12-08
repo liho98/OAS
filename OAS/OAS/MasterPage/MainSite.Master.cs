@@ -28,10 +28,11 @@ namespace OAS.MasterPage
                     SqlConnection con = new SqlConnection(connectionString);
 
                     string selectSql = "Select FirstName, Image " +
-                            "from [dbo].[UserProfiles] Where UserId = '" + UserId.ToString() + "'";
+                            "from [dbo].[UserProfiles] Where UserId = @UserId;";
 
                     con.Open();
                     SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                    sqlCommand.Parameters.AddWithValue("@UserId", UserId);
                     SqlDataReader userRecords = sqlCommand.ExecuteReader();
                     userRecords.Read();
                     firstName = userRecords["FirstName"].ToString();

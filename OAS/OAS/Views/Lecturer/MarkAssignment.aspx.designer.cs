@@ -13,6 +13,33 @@ namespace OAS.Views.Lecturer {
     public partial class MarkAssignment {
         
         /// <summary>
+        /// CommentTextboxRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CommentTextboxRequiredFieldValidator;
+        
+        /// <summary>
+        /// ScoreTextboxRequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ScoreTextboxRequiredFieldValidator;
+        
+        /// <summary>
+        /// ScoreTextboxRangeFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RangeValidator ScoreTextboxRangeFieldValidator;
+        
+        /// <summary>
         /// Message control.
         /// </summary>
         /// <remarks>
@@ -20,6 +47,15 @@ namespace OAS.Views.Lecturer {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Message;
+        
+        /// <summary>
+        /// ValidationSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary;
         
         /// <summary>
         /// tableDiv control.

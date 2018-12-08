@@ -22,6 +22,10 @@ namespace OAS
             confirmPassword.Attributes.Add("value", confirmPassword.Text);
             selectBox.Attributes["style"] = "display:block!important;height:390px!important";
             userBox.Attributes["style"] = "display:none!important;";
+            if (CalendarUserControl.IsVisible && IsPostBack)
+            {
+                userBox.Attributes["style"] = "display:block!important;height: 685px!important";
+            }
         }
 
         protected void CalendarUserControl_OnCalendarVisibilityChanged(object sender, EventArgs e)

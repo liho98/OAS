@@ -52,6 +52,18 @@ namespace OAS.UserControl
                 txtDate.Text = value;
             }
         }
+        public bool IsVisible
+        {
+            get
+            {
+                return this.Calendar.Visible;
+            }
+            set
+            {
+                this.Calendar.Visible = value;
+            }
+        }
+
         public event CalendarVisibilityChangedEventHandler CalendarVisibilityChanged;
         public event DateSelectedEventHandler DateSelected;
         
@@ -82,6 +94,9 @@ namespace OAS.UserControl
             {
                 return this._isChangeVisible;
             }
+        }
+        public CalendarVisibilityChangedEventArgs()
+        {
         }
         public CalendarVisibilityChangedEventArgs(bool isCalendarVisible)
         {

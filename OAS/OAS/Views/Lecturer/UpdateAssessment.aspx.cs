@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace OAS.Views.Lecturer
@@ -82,13 +83,14 @@ namespace OAS.Views.Lecturer
         private void getAssessmentDetails(String assessmentId)
         {
             string selectSql = "Select au.UserName, isHost From Assessment a, Contributor c, UserProfiles u, " +
-                    "aspnet_Users au Where a.AssessmentId = c.AssessmentId and a.AssessmentId = '" + assessmentId + "' and " +
+                    "aspnet_Users au Where a.AssessmentId = c.AssessmentId and a.AssessmentId = @AssessmentId and " +
                     "c.UserId = u.UserId and u.UserId = au.UserId";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                sqlCommand.Parameters.AddWithValue("@AssessmentId", Guid.Parse(assessmentId));
                 SqlDataReader ContributorRecords = sqlCommand.ExecuteReader();
 
                 while (ContributorRecords.Read())
@@ -103,13 +105,14 @@ namespace OAS.Views.Lecturer
             //ViewState["selectedContributorList"] = selectedContributorList;
 
             selectSql = "Select au.UserName From Assessment a, Assignment ass, UserProfiles up, aspnet_Users au " +
-                "Where a.AssessmentId = ass.AssessmentId and ass.AssessmentId = '" + assessmentId + "' " +
+                "Where a.AssessmentId = ass.AssessmentId and ass.AssessmentId = @AssessmentId  " +
                 "and ass.UserId = up.UserId and up.UserId = au.UserId";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                sqlCommand.Parameters.AddWithValue("@AssessmentId", Guid.Parse(assessmentId));
                 SqlDataReader AssignmentRecords = sqlCommand.ExecuteReader();
 
                 while (AssignmentRecords.Read())
@@ -238,7 +241,11 @@ namespace OAS.Views.Lecturer
             catch (Exception ex)
             {
                 MessageLabel.ForeColor = System.Drawing.Color.Red;
-                MessageLabel.Text = "Assessment cannot be updated. Check again your details." + ex.ToString();
+                HyperLink a = new HyperLink(); HtmlGenericControl span = new HtmlGenericControl("span");
+                span.InnerText = "Assessment cannot be updated. Please return back to manage page. ";
+                a.Text = "Back";a.NavigateUrl = ResolveUrl("~/Views/Lecturer/ManageAssessment.aspx");a.Attributes.Add("style", "all: unset;color: #55afff;cursor: pointer;");
+                MessageLabel.Controls.Add(span);
+                MessageLabel.Controls.Add(a);
             }
         }
 
@@ -263,13 +270,15 @@ namespace OAS.Views.Lecturer
             "Select q.QuestionId from UserProfiles up, Assignment ass, Answer ans, Assessment a, Question q " +
             "Where up.UserId = ass.UserId and up.UserId = ans.UserId and ass.AssessmentId = a.AssessmentId " +
             "and q.AssessmentId = a.AssessmentId and q.QuestionId = ans.QuestionId and " +
-            "up.UserId = '" + userId + "' " +
-            "and ass.AssessmentId = '" + assessmentId + "') and UserId = '" + userId + "'";
+            "up.UserId = @UserId " +
+            "and ass.AssessmentId = @AssessmentId) and UserId = @UserId";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(deleteSql, con);
+                sqlCommand.Parameters.AddWithValue("@AssessmentId", Guid.Parse(assessmentId));
+                sqlCommand.Parameters.AddWithValue("@UserId", Guid.Parse(userId));
                 sqlCommand.ExecuteNonQuery();
                 con.Close();
             }

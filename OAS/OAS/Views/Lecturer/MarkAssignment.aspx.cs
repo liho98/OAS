@@ -172,20 +172,27 @@ namespace OAS.Views.Lecturer
 
         protected void SubmitButton_OnClick(object sender, EventArgs e)
         {
-
-            try
+            if (Page.IsValid)
             {
-                SendEmailService("Your OAS Assessment Result", EmailBodyHtml(studentAssessment[1], Double.Parse(ScoreTextbox.Text), CommentTextbox.Text, assessment[1]), Membership.GetUser(studentAssessment[0]).Email);
-                saveStudentScore(Guid.Parse(assessment[0]), (Guid)(Membership.GetUser(studentAssessment[0])).ProviderUserKey, int.Parse(ScoreTextbox.Text));
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('A result with score and comment will send to Student\\'s email.');" +
-                    "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+                try
+                {
+                    SendEmailService("Your OAS Assessment Result", EmailBodyHtml(studentAssessment[1], Double.Parse(ScoreTextbox.Text), CommentTextbox.Text, assessment[1]), Membership.GetUser(studentAssessment[0]).Email);
+                    saveStudentScore(Guid.Parse(assessment[0]), (Guid)(Membership.GetUser(studentAssessment[0])).ProviderUserKey, double.Parse(ScoreTextbox.Text));
+                    ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "javascript:alert('A result with score and comment will send to Student\\'s email.');" +
+                        "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+                }
+                catch(Exception ex)
+                { Message.Text = ex.ToString(); }
             }
-            catch
-            { }
+            else
+            {
+                //ValidationSummary.ShowMessageBox = true;
+                //ValidationSummary.ShowSummary = true;
+            }
 
         }
 
-        private void saveStudentScore(Guid AssessmentId, Guid userId, Double score)
+        private void saveStudentScore(Guid AssessmentId, Guid userId, double score)
         {
             string updateSql = "UPDATE [dbo].[Assignment] SET Score = @Score Where AssessmentId = @AssessmentId and UserId = @UserId";
 

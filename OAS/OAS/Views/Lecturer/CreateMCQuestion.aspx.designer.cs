@@ -22,15 +22,6 @@ namespace OAS.Views.Lecturer {
         protected global::System.Web.UI.WebControls.DropDownList LevelDropDownList;
         
         /// <summary>
-        /// MCQTablePlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder MCQTablePlaceholder;
-        
-        /// <summary>
         /// MessageLabel control.
         /// </summary>
         /// <remarks>
@@ -38,6 +29,15 @@ namespace OAS.Views.Lecturer {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label MessageLabel;
+        
+        /// <summary>
+        /// MCQTablePlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder MCQTablePlaceholder;
         
         /// <summary>
         /// SubmitButton control.

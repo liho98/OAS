@@ -276,6 +276,19 @@
         .popupButton {
             margin-left: 10px !important;
         }
+        ul{
+            padding: 0;
+        }
+        li{
+            display:none;
+        }
+        ul li:first-child{
+            list-style-type: none;
+            display:block;
+        }
+        #contentBody_ValidationSummary{
+            display:inline-block;
+        }
     </style>
 </asp:Content>
 
@@ -325,6 +338,28 @@
 
             <div id="assessmentId" class="box-wrapper">
                 <div class="box" style="background-color: ">
+                    <div style="width:100%;text-align: left;">
+
+                        <asp:RequiredFieldValidator ID="TitleTextBoxRequiredFieldValidator"
+                            runat="server"
+                            ControlToValidate="TitleTextBox"
+                            ErrorMessage="Please fill the Assessment Title field." style="display:none"
+                            ValidationGroup="ValidateGroup"
+                            Display="Static" ForeColor="Red" CssClass="errorMsg" />
+                        <asp:RequiredFieldValidator ID="DescriptionTextAreaRequiredFieldValidator"
+                            runat="server"
+                            ControlToValidate="DescriptionTextArea"
+                            ErrorMessage="Please fill the Description field." style="display:none"
+                            ValidationGroup="ValidateGroup"
+                            Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+                        <span>
+                            Status : 
+                        </span>
+                        <asp:Label ID="MessageLabel" runat="server" ForeColor="Green" Text="" Style="font-family: monospace"></asp:Label>
+                        <asp:ValidationSummary ID="ValidationSummary" runat="server" Font-Size="Small" ForeColor="Red" ValidationGroup="ValidateGroup" 
+                            DisplayMode="BulletList" ShowSummary="true" />                    
+                    </div>
                     <hr />
                     <br />
                     <table style="width: 100%; table-layout: fixed;">
@@ -335,7 +370,7 @@
                             <td style="width: 10%">:
                             </td>
                             <td>
-                                <asp:TextBox ID="TitleTextBox" autofocus="autofocus" required="required" placeholder="Assessment title" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="TitleTextBox" autofocus="autofocus" placeholder="Assessment title" runat="server"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
@@ -412,7 +447,6 @@
 
                                 </div>
 
-
                             </td>
                         </tr>
                         <tr>
@@ -420,8 +454,7 @@
                                 <br />
                                 <hr />
                                 <br />
-                                <asp:Label ID="MessageLabel" runat="server" ForeColor="Green" Text="" Style="font-family: monospace;"></asp:Label>
-                                <asp:Button ID="CreateButton" runat="server" Text="Create" OnClick="CreateButton_OnClick" />
+                                <asp:Button ID="CreateButton" runat="server" Text="Create" OnClick="CreateButton_OnClick" ValidationGroup="ValidateGroup" />
                             </td>
                         </tr>
 

@@ -57,6 +57,19 @@
         <div id="sloganDiv" style="text-align: center;">
             <div style="margin: 20px;">
                 <span id="slogan">Testing</span>
+                <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
+        <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
+        <%--asp:UpdatePanel ID="UpdatePanel" runat="server">
+            <ContentTemplate>
+                <asp:Label ID="Label1" runat="server" Text="TimeLeft:"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+            </ContentTemplate
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="Timer"  />
+            </Triggers>
+        </asp:UpdatePanel--%>
+        <asp:Timer ID="Timer" runat="server" OnTick="Timer_Tick"></asp:Timer>
+
             </div>
         </div>
     </div>
@@ -68,10 +81,44 @@
         private static string conStr = ConfigurationManager.ConnectionStrings["oasDB"].ConnectionString;
         private SqlConnection con = new SqlConnection(conStr);
 
+        //private static int mm, ss;
+        private static double TimeAllSecondes = 5;
+
         void Page_Load(Object sender, EventArgs e)
         {
+            Timer.Interval = 5000;
+
             con.Open();
         }
+
+        protected void Timer_Tick(object sender, EventArgs e)
+        {
+            //Timer timer = sender as Timer;
+                //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('You have submitted your answers.\\nPlease wait the Lecturer to mark it.\\nYour result will send through to your OAS Email Account.');" +
+                 //    "window.location = '" + Request.Url.Scheme + "://" + Request.Url.Authority + "/Views/Profile.aspx';", true);
+                
+
+            //Response.Redirect("~/Others/template.aspx");
+
+
+
+            if (TimeAllSecondes > 0)
+            {
+                TimeAllSecondes = TimeAllSecondes - 1;
+            }
+            else
+            {
+                TimeAllSecondes = 5;
+                Response.Redirect("~/Others/template.aspx");
+            }
+
+            //TimeSpan timeSpan = TimeSpan.FromSeconds(TimeAllSecondes);
+            //mm = timeSpan.Minutes;
+            //ss = timeSpan.Seconds;
+
+            //Label2.Text = "  " + mm + ":" + ss;
+        }
+
         protected void UploadButton_Click(object sender, EventArgs e)
         {
             string fileName = FileUploadControl.PostedFile.FileName.ToLower();
@@ -81,11 +128,11 @@
             string[] matchExtension = { ".jpg", ".jpeg", ".png", ".gif" };
             string[] matchMimeType = { "image/jpg", "image/jpeg", "image/png", "image/gif" };
 
-                String selectStr = "select UserId from [dbo].[aspnet_Users] where UserName = 1;";
+            String selectStr = "select UserId from [dbo].[aspnet_Users] where UserName = 1;";
 
-                //SqlCommand selectCmd = new SqlCommand(selectStr, con);
-                //SqlDataReader userRecords = selectCmd.ExecuteReader();
-                  
+            //SqlCommand selectCmd = new SqlCommand(selectStr, con);
+            //SqlDataReader userRecords = selectCmd.ExecuteReader();
+
 
             if (FileUploadControl.HasFile)
             {

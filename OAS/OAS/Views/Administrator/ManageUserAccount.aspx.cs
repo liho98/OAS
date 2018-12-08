@@ -33,6 +33,13 @@ namespace OAS.Views.Administrator
                 Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RegisteredSetHeightScript", setHeight("0.77"), true);
                 BindRolesToRolesList();
             }
+            else
+            {
+                if (CalendarUserControl.IsVisible)
+                {
+                    Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RegisteredSetHeightScript", setHeight("1.1"), true);
+                }
+            }
         }
         protected void removeUser_OnClick(object sender, EventArgs e)
         {
@@ -204,6 +211,10 @@ namespace OAS.Views.Administrator
             }
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RegisteredSetHeightScript", setHeight("1.1"), true);
         }
+        protected void CalendarUserControl_OnCalendarVisibilityChanged(object sender, EventArgs e)
+        {
+            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RegisteredSetHeightScript", setHeight("1.1"), true);
+        }
         protected void UpdateAccountButton_Click(object sender, EventArgs e)
         {
             Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "RegisteredSetHeightScript", setHeight("1.1"), true);
@@ -219,28 +230,42 @@ namespace OAS.Views.Administrator
 
                 if (RolesList.SelectedValue == "Students")
                 {
-                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + firstName.Text + "', LastName = '" + lastName.Text + "', " +
-                        "ContactNo = '" + contactNo.Text + "', Gender = '" + gender.SelectedValue.Substring(0, 1) + "'," +
-                        "ProgCode = '" + ProgramCode.SelectedValue + "', " + "Position = NULL, " +
-                        "DateOfBirth = '" + dateOfBirth.Text + "' WHERE UserId = '" + UserId.ToString() + "'";
+                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = @FirstName, LastName = @LastName, " +
+                        "ContactNo = @ContactNo, Gender = @Gender," +
+                        "ProgCode = @ProgCode, " + "Position = NULL, " +
+                        "DateOfBirth = @DateOfBirth WHERE UserId = @UserId;";
                 }
                 else
                 {
-                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + firstName.Text + "', LastName = '" + lastName.Text + "', " +
-                        "ContactNo = '" + contactNo.Text + "', Gender = '" + gender.SelectedValue.Substring(0, 1) + "'," +
-                        "ProgCode = NULL, " + "Position = '" + position.SelectedValue + "', " +
-                        "DateOfBirth = '" + dateOfBirth.Text + "' WHERE UserId = '" + UserId.ToString() + "'";
+                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = @FirstName, LastName = @LastName, " +
+                        "ContactNo = @ContactNo, Gender = @Gender," +
+                        "ProgCode = NULL, " + "Position = @Position, " +
+                        "DateOfBirth = @DateOfBirth WHERE UserId = @UserId;";
                 }
 
                 user.Email = email.Text;
-                user.ChangePassword(username, password.Text);
-                Membership.UpdateUser(user);
+                Membership.Provider.UpdateUser(user);
+                user.ChangePassword(user.ResetPassword(), password.Text);
 
                 Roles.RemoveUserFromRole(username, Roles.GetRolesForUser(username)[0]);
                 Roles.AddUserToRole(username, RolesList.SelectedValue);
 
                 con.Open();
                 SqlCommand updateCommand = new SqlCommand(updateSql, con);
+                updateCommand.Parameters.AddWithValue("@FirstName", firstName.Text);
+                updateCommand.Parameters.AddWithValue("@LastName", lastName.Text);
+                updateCommand.Parameters.AddWithValue("@ContactNo", contactNo.Text);
+                updateCommand.Parameters.AddWithValue("@Gender", gender.SelectedValue.Substring(0, 1));
+                updateCommand.Parameters.AddWithValue("@DateOfBirth", CalendarUserControl.SelectedDate);
+                updateCommand.Parameters.AddWithValue("@UserId", UserId);
+                if (RolesList.SelectedValue == "Students")
+                {
+                    updateCommand.Parameters.AddWithValue("@ProgCode", ProgramCode.SelectedValue);
+                }
+                else
+                {
+                    updateCommand.Parameters.AddWithValue("@Position", position.SelectedValue);
+                }
                 updateCommand.ExecuteNonQuery();
                 con.Close();
 
@@ -250,7 +275,7 @@ namespace OAS.Views.Administrator
             catch (Exception ex)
             {
                 statusMessage.ForeColor = System.Drawing.Color.Red;
-                statusMessage.Text = ex.ToString();
+                statusMessage.Text = "Update failed, it may caused by email address already exists or use 8 characters or more for your password, and must contain at least 1 non alphanumeric characters.";
             }
         }
         protected void returnLink_OnClick(object sender, EventArgs e)
@@ -281,10 +306,11 @@ namespace OAS.Views.Administrator
             SqlConnection con = new SqlConnection(connectionString);
 
             string selectSql = "Select FirstName,LastName,Gender,ContactNo,DateOfBirth,Status,Position,ProgCode, Email " +
-                    "from [dbo].[UserProfiles] u, [dbo].[aspnet_Membership] m where u.UserId = '" + UserId.ToString() + "' and m.UserId = '" + UserId.ToString() + "'";
+                    "from [dbo].[UserProfiles] u, [dbo].[aspnet_Membership] m where u.UserId = @UserId and m.UserId = @UserId";
 
             con.Open();
             SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+            sqlCommand.Parameters.AddWithValue("@UserId", UserId);
             SqlDataReader userRecords = sqlCommand.ExecuteReader();
 
             String[] userRoles;
@@ -340,7 +366,7 @@ namespace OAS.Views.Administrator
                     }
                 }
             }
-            dateOfBirth.Text = String.Format("{0:yyy-MM-dd}", ((DateTime)userRecords["DateOfBirth"]));
+            CalendarUserControl.SelectedDate = String.Format("{0:yyy-MM-dd}", ((DateTime)userRecords["DateOfBirth"]));
             con.Close();
         }
 

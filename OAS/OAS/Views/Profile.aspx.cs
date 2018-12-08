@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OAS.UserControl;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -34,7 +35,13 @@ namespace OAS.Views
                 ViewState.Clear();
                 getProfile();
                 message.Text = (String)Request.QueryString["Message"];
+                if (message.Text.Contains("Password"))
+                {
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Registered Script", "swapDiv('ChangePassword');" + CalendarUserControl.IsVisible + ((LinkButton)CalendarUserControl.FindControl("Literal")).Visible + "", true);
+                }
+                CalendarUserControl.IsVisible = false;
             }
+
             if (User.IsInRole("Students"))
             {
                 getAssignment();
@@ -45,6 +52,10 @@ namespace OAS.Views
                 GetAllAssessmentToList();
                 createAssessmentTable();
             }
+            if (CalendarUserControl.IsVisible)
+            {
+                Page.ClientScript.RegisterStartupScript(this.GetType(), "Registered Script", "swapDiv('About');"+ CalendarUserControl.IsVisible +((LinkButton)CalendarUserControl.FindControl("Literal")).Visible+ "", true);
+            }
         }
 
         private void getProfile()
@@ -52,10 +63,11 @@ namespace OAS.Views
             SqlConnection con = new SqlConnection(connectionString);
 
             string selectSql = "Select FirstName,LastName,Gender,ContactNo,DateOfBirth,Status,Position,ProgCode,Image, Email " +
-                    "from [dbo].[UserProfiles] u, [dbo].[aspnet_Membership] m where u.UserId = '" + UserId.ToString() + "' and m.UserId = '" + UserId.ToString() + "'";
+                    "from [dbo].[UserProfiles] u, [dbo].[aspnet_Membership] m where u.UserId = @UserId and m.UserId = @UserId";
 
             con.Open();
             SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+            sqlCommand.Parameters.AddWithValue("@UserId", UserId);
             SqlDataReader userRecords = sqlCommand.ExecuteReader();
             String title;
 
@@ -115,6 +127,7 @@ namespace OAS.Views
         }
         protected void editProfileButton_OnClick(object sender, EventArgs e)
         {
+            CalendarUserControl.IsVisible = false;
             message.Text = "";
             if (editProfileButton.Text == "Edit Profile")
             {
@@ -204,10 +217,10 @@ namespace OAS.Views
                     {
                         String imageUrl = "data:" + fileMimeType + ";base64," + Convert.ToBase64String(userAvatarUpload.FileBytes);
 
-                        updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + FirstNametext.Text + "', LastName = '" + LastNameText.Text + "', " +
-                            "ContactNo = '" + PhoneText.Text + "', " +
-                            "DateOfBirth = '" + CalendarUserControl.SelectedDate + "'," +
-                            "Image = '" + imageUrl + "' WHERE UserId = '" + UserId.ToString() + "'";
+                        updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = @FirstName, LastName = @LastName, " +
+                            "ContactNo = @ContactNo, " +
+                            "DateOfBirth = @DateOfBirth," +
+                            "Image = '" + imageUrl + "' WHERE UserId = @UserId";
                     }
                     else
                     {
@@ -217,9 +230,9 @@ namespace OAS.Views
                 }
                 else
                 {
-                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = '" + FirstNametext.Text + "', LastName = '" + LastNameText.Text + "', " +
-                        "ContactNo = '" + PhoneText.Text + "', " +
-                      "DateOfBirth = '" + CalendarUserControl.SelectedDate + "' WHERE UserId = '" + UserId.ToString() + "'";
+                    updateSql = "UPDATE [dbo].[UserProfiles] SET FirstName = @FirstName, LastName = @LastName, " +
+                        "ContactNo = @ContactNo, " +
+                      "DateOfBirth = @DateOfBirth WHERE UserId = @UserId";
                 }
                 // GetUser() without parameter returns the current logged in user.
                 MembershipUser user = Membership.GetUser();
@@ -228,6 +241,11 @@ namespace OAS.Views
 
                 con.Open();
                 SqlCommand updateCommand = new SqlCommand(updateSql, con);
+                updateCommand.Parameters.AddWithValue("@FirstName", FirstNametext.Text);
+                updateCommand.Parameters.AddWithValue("@LastName", LastNameText.Text);
+                updateCommand.Parameters.AddWithValue("@ContactNo", PhoneText.Text);
+                updateCommand.Parameters.AddWithValue("@DateOfBirth", CalendarUserControl.SelectedDate);
+                updateCommand.Parameters.AddWithValue("@UserId", UserId);
                 updateCommand.ExecuteNonQuery();
                 con.Close();
 
@@ -251,18 +269,21 @@ namespace OAS.Views
                 }
             }
             catch { }
-            message.Text = "Password change failed. Please re-enter your credential and try again.";
+            message.Text = "Password change failed. Please re-enter your credential and try again. Use 8 characters or more for your password, and must contain at least 1 non alphanumeric characters.";
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "Registered Script", "swapDiv('ChangePassword');", true);
+            Response.Redirect(Request.Url.GetLeftPart(UriPartial.Path) + "?Message=" + message.Text);
         }
 
         private String getLecturerName(String assessmentId)
         {
             string selectSql = "Select CONCAT(FirstName + ' ', LastName) As [Name] From Assessment a, Contributor c, UserProfiles u " +
-                               "where a.AssessmentId = c.AssessmentId and c.UserId = u.UserId and c.isHost = 'True' and a.AssessmentId = '" + assessmentId + "'";
+                               "where a.AssessmentId = c.AssessmentId and c.UserId = u.UserId and c.isHost = 'True' and a.AssessmentId = @AssessmentId";
             string lecturerName = "";
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                sqlCommand.Parameters.AddWithValue("@AssessmentId", Guid.Parse(assessmentId));
                 SqlDataReader lecturerNameRecords = sqlCommand.ExecuteReader();
 
                 if (lecturerNameRecords.Read())
@@ -326,15 +347,26 @@ namespace OAS.Views
                 linkButton.Text = i.ToString();
                 linkButton.Attributes.Add("style", "all:unset;cursor:pointer;padding:10px;padding-top:20px;padding-bottom:20px;display:block");
                 // Register the event-handling method for the CheckedChanged event. 
-                linkButton.Click += new EventHandler(this.sendAssignment_OnClick);
-
                 linkButton.Controls.Add(span);
+
+                if (checkIsAnswered(Guid.Parse(assignmentList[i][0])))
+                {
+                    linkButton.OnClientClick = "alert('You have submitted your answers.\\nPlease wait your lecturer to mark it.');";
+                }
+                else
+                {
+                    linkButton.OnClientClick = "javascript:return confirm('Are you ready to start the Assessment Test?\\nTest Duration : " + assignmentList[i][3] + " mins');";
+                    linkButton.Click += new EventHandler(this.sendAssignment_OnClick);
+                }
 
                 if (checkIsAnswered(Guid.Parse(assignmentList[i][0])) && isScored(Guid.Parse(assignmentList[i][0])))
                 {
+                    //linkButton.OnClientClick = "javascript:return confirm('You have been scored.\\nAre you wish to review your question and answer?');";
+                    linkButton.OnClientClick = "";
+                    linkButton.Click += new EventHandler(this.reviewAssignment_OnClick);
                     span = new HtmlGenericControl("span");
                     span.Attributes.Add("style", "float:right");
-                    span.InnerHtml = "Score : " + getScore(Guid.Parse(assignmentList[i][0]));
+                    span.InnerHtml = "Score : " + getScore(Guid.Parse(assignmentList[i][0])).ToString("0.00") + "%";
                     linkButton.Controls.Add(span);
                 }
 
@@ -345,7 +377,23 @@ namespace OAS.Views
 
             TimelinePlaceHolder.Controls.Add(table);
         }
+        protected void reviewAssignment_OnClick(object sender, EventArgs e)
+        {
+            LinkButton linkButton = sender as LinkButton;
 
+            Session.Add("assignment", assignmentList[Convert.ToInt16(linkButton.Text)]);
+            Session.Timeout = 1000;
+
+            if (assignmentList[Convert.ToInt16(linkButton.Text)][2].Trim() == "Written")
+            {
+                Response.Redirect("~/Views/Student/ReviewWrittenAnswer.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/Views/Student/ReviewMCQAnswer.aspx");
+            }
+
+        }
         protected void sendAssignment_OnClick(object sender, EventArgs e)
         {
             LinkButton linkButton = sender as LinkButton;
@@ -355,10 +403,12 @@ namespace OAS.Views
 
             if (assignmentList[Convert.ToInt16(linkButton.Text)][2].Trim() == "Written")
             {
+                Session.Remove("Timer");
                 Response.Redirect("~/Views/Student/AnswerWritten.aspx");
             }
             else
             {
+                Session.Remove("Timer");
                 Response.Redirect("~/Views/Student/AnswerMCQ.aspx");
             }
 
@@ -443,12 +493,13 @@ namespace OAS.Views
         private void GetAllAssessmentToList()
         {
             string selectSql = "Select * From Assessment a, Contributor c, UserProfiles u Where a.AssessmentId = c.AssessmentId and " +
-                               "c.UserId = u.UserId and u.UserId = '" + ((Guid)(Membership.GetUser(HttpContext.Current.User.Identity.Name).ProviderUserKey)).ToString() + "' ORDER BY CreatedDate DESC ";
+                               "c.UserId = u.UserId and u.UserId = @UserId ORDER BY CreatedDate DESC ";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                sqlCommand.Parameters.AddWithValue("@UserId", (Guid)(Membership.GetUser(HttpContext.Current.User.Identity.Name)).ProviderUserKey);
                 SqlDataReader assessmentRecords = sqlCommand.ExecuteReader();
 
                 while (assessmentRecords.Read())

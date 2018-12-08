@@ -482,7 +482,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <asp:Button ID="changePass" ValidationGroup="pass" autopostback="false" UseSubmitBehavior="false" OnClick="changePassButton_OnClick" CssClass="editBtn" Style="font-weight: 500; color: #495057; float: right" runat="server" Text="Change Password" />
+                                                <asp:Button ID="changePass" ValidationGroup="pass" UseSubmitBehavior="false" OnClick="changePassButton_OnClick" CssClass="editBtn" Style="font-weight: 500; color: #495057; float: right" runat="server" Text="Change Password" />
                                             </td>
 
                                         </tr>

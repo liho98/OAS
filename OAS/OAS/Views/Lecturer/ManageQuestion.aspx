@@ -150,7 +150,7 @@
         }
 
         .optionDiv {
-            width: 50%
+            width: 100%;padding-top: 12px;
         }
 
             .optionDiv p {
@@ -182,15 +182,15 @@
     <!-- content start -->
     <div id="bodyContent" style="background-color: #fff; border-bottom: 1px solid rgb(205,205,205); z-index: 1">
         <div class="content">
-
+            <div style="width: 85%;margin: auto;text-align: left;transform: translateY(280%);z-index:2;position:relative">
+                Status :
+                <asp:Label ID="Message" runat="server" Style="text-align: center; color: green; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;"></asp:Label>
+            </div>
             <div class="box-wrapper">
                 <div class="box" style="width: 100%; top: 50%; height: 100%; background-color: ;">
                     <div id="tableDiv" runat="server" style="height: 100%; overflow: scroll;" class="reset-parent bootstrap-iso">
                         <!-- Any HTML here will be styled with Bootstrap CSS -->
                         <asp:PlaceHolder ID="QuestionTablePlaceHolder" runat="server"></asp:PlaceHolder>
-                        <div style="width: 100%">
-                            <asp:Label ID="Message" runat="server" Style="text-align: center; display: block; color: green; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;"></asp:Label>
-                        </div>
                     </div>
                 </div>
             </div>

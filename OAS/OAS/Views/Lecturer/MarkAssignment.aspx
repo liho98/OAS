@@ -125,7 +125,7 @@
             margin-top: 4px;
         }
 
-        input[type=number] {
+        input[type=text] {
             width: 100%;
             height: 20px;
             padding: 12px 20px;
@@ -134,6 +134,19 @@
             border-radius: 4px;
             background-color: #f8f8f8;
             margin-bottom: 20px;
+        }
+        ul{
+            padding: 0;
+        }
+        li{
+            display:none;
+        }
+        ul li:first-child{
+            list-style-type: none;
+            display:block;
+        }
+        #contentBody_ValidationSummary{
+            display:inline-block;
         }
     </style>
 </asp:Content>
@@ -164,18 +177,46 @@
 
             <div class="box-wrapper">
                 <div class="box" style="width: 100%; top: 40%; height: 75%; background-color: ;">
-                    <div style="width: 100%">
-                        <asp:Label ID="Message" runat="server" Style="text-align: center; display: block; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;"></asp:Label>
+
+                    <asp:RequiredFieldValidator ID="CommentTextboxRequiredFieldValidator"
+                        runat="server"
+                        ControlToValidate="CommentTextbox"
+                        ErrorMessage="Please fill the Comment field." style="display:none"
+                        ValidationGroup="ValidateGroup"
+                        Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+                    <asp:RequiredFieldValidator ID="ScoreTextboxRequiredFieldValidator"
+                        runat="server"
+                        ControlToValidate="ScoreTextbox"
+                        ErrorMessage="Please fill the Score field." style="display:none"
+                        ValidationGroup="ValidateGroup"
+                        Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+                      <asp:RangeValidator id="ScoreTextboxRangeFieldValidator"
+                           ControlToValidate="ScoreTextbox"
+                           MinimumValue="0.0"
+                           MaximumValue="100.0" 
+                           Type="Double" 
+                           ValidationGroup="ValidateGroup" style="display:none"
+                           ErrorMessage="The score must be from 0 to 100."
+                           Display="Static" ForeColor="Red" CssClass="errorMsg"
+                           runat="server"/>
+
+                    <div style="width: 100%;height:30px;">
+                        Status : <asp:Label ID="Message" Text="" runat="server" Style="text-align: center; font-weight: 500; font-size: 14px; letter-spacing: 0.5px;"></asp:Label>
+                        <asp:ValidationSummary ID="ValidationSummary" runat="server" Font-Size="Small" ForeColor="Red" ValidationGroup="ValidateGroup" 
+                            DisplayMode="BulletList" ShowSummary="true"  />
+
                     </div>
                     <div id="tableDiv" runat="server" style="height: 100%; overflow: scroll;" class="reset-parent bootstrap-iso">
                         <!-- Any HTML here will be styled with Bootstrap CSS -->
                         <asp:PlaceHolder ID="MarkAssignmentTablePlaceHolder" runat="server"></asp:PlaceHolder>
                     </div>
                     <div>
-                        <asp:TextBox ID="CommentTextbox" placeholder="Enter your comment here." required="required" TextMode="MultiLine" runat="server"></asp:TextBox>
-                        <asp:TextBox ID="ScoreTextbox" placeholder="Enter Score Within the range (0-100)" TextMode="Number" required="required" step=".01" min="0" max="100" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="CommentTextbox" placeholder="Enter your comment here." TextMode="MultiLine" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="ScoreTextbox" placeholder="Enter Score Within the range (0-100)" runat="server"></asp:TextBox>
                     </div>
-                    <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_OnClick" OnClientClick="return confirm('Are you sure to submit?');" />
+                    <asp:Button ID="SubmitButton" runat="server" Text="Submit" ValidationGroup="ValidateGroup" OnClick="SubmitButton_OnClick" OnClientClick="return confirm('Are you sure to submit?');" />
                     <input id="Reset" type="reset" value="reset" />
                 </div>
             </div>

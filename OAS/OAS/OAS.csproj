@@ -181,6 +181,8 @@
     <Content Include="Views\Profile.aspx" />
     <Content Include="Views\Student\AnswerMCQ.aspx" />
     <Content Include="Views\Student\AnswerWritten.aspx" />
+    <Content Include="Views\Student\ReviewMCQAnswer.aspx" />
+    <Content Include="Views\Student\ReviewWrittenAnswer.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +386,20 @@
     </Compile>
     <Compile Include="Views\Student\AnswerWritten.aspx.designer.cs">
       <DependentUpon>AnswerWritten.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Student\ReviewMCQAnswer.aspx.cs">
+      <DependentUpon>ReviewMCQAnswer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Student\ReviewMCQAnswer.aspx.designer.cs">
+      <DependentUpon>ReviewMCQAnswer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Student\ReviewWrittenAnswer.aspx.cs">
+      <DependentUpon>ReviewWrittenAnswer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Student\ReviewWrittenAnswer.aspx.designer.cs">
+      <DependentUpon>ReviewWrittenAnswer.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

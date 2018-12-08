@@ -37,14 +37,16 @@ namespace OAS
                 byte[] IV = Convert.FromBase64String(IVStr);
                 // Decrypt the bytes to a string.
                 string roundtrip = AesCrypto.DecryptStringFromBytes_Aes(encrypted, key, IV);
+                Guid providerUserKey = Guid.Parse(roundtrip);
 
                 string selectSql = "Select * from [dbo].[Token] " +
-                        "where UserId = '" + roundtrip + "'";
+                        "where UserId = @UserId;";
 
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
                     SqlCommand sqlCommand = new SqlCommand(selectSql, con);
+                    sqlCommand.Parameters.AddWithValue("@UserId", providerUserKey);
                     SqlDataReader Token = sqlCommand.ExecuteReader();
                     Token.Read();
 
@@ -60,7 +62,6 @@ namespace OAS
                     con.Close();
                 }
 
-                Guid providerUserKey = Guid.Parse(roundtrip);
                 MembershipUser user = Membership.GetUser(providerUserKey);
 
                 user.ChangePassword(user.ResetPassword(), newPassword.Text);

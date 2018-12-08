@@ -210,13 +210,13 @@
                 background-position: 0% 50%
             }
         }
-        ul{
-            padding: 0;
+        #contentBody_Navigation_ValidationSummary ul{
+            padding: 0;text-align:left;max-width: 235px;
         }
-        li{
+        #contentBody_Navigation_ValidationSummary li{
             display:none;
         }
-        ul li:first-child{
+        #contentBody_Navigation_ValidationSummary ul li:first-child{
             list-style-type: none;
             display:block;
         }

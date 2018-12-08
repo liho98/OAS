@@ -224,28 +224,7 @@
         </div>
     </div>
     <!-- content end -->
-    <script>
-        var minutesLabel = document.getElementById("minutes");
-        var secondsLabel = document.getElementById("seconds");
-        var totalSeconds = <%= Convert.ToInt16(assignment[3]) * 60 %>;
-        setInterval(setTime, 1000);
-
-        function setTime() {
-            if (totalSeconds > 0) {
-                totalSeconds--;
-            }
-            secondsLabel.innerHTML = pad(totalSeconds % 60);
-            minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-        }
-
-        function pad(val) {
-            var valString = val + "";
-            if (valString.length < 2) {
-                return "0" + valString;
-            } else {
-                return valString;
-            }
-        }
-    </script>
+    <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
+    <asp:Timer ID="Timer" runat="server" OnTick="Timer_Tick"></asp:Timer>
 </asp:Content>
 

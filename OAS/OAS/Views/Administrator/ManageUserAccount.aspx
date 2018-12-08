@@ -136,8 +136,9 @@
             letter-spacing: 0.5px;
             display: inline-block;
             float: left;
-            margin-top: 25px;
-            max-width: 235px;
+            margin-top: 40px;
+            max-width: 205px;
+            text-align: justify;
         }
 
         input[type=submit], button {
@@ -238,7 +239,66 @@
         #spin {
             font-size:20px;
         }
+        .errorMsg {
+            position: absolute;
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-top: 38px;
+            max-width: 235px;
+        }
+            #contentBody_Navigation_CalendarUserControl_Literal{
+                all:initial!important;
+                cursor:pointer!important;
+                transform: translateY(-160%)!important;
+                float: right!important;
+            }
+        #contentBody_Navigation_CalendarUserControl_Calendar {
+            color: #fff;
+            padding: 60px 40px 80px 40px;
+            width: 100%;
+            height: ;
+            box-shadow: 0px 2px 6px rgba(2,2,2,0.2);
+            position: relative;
+            text-decoration: none !important;
+            font-family: 'Avenir', sans-serif;
+            background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+            background-size: 400% 400%;
+            animation: Gradient 15s ease infinite;
+            border: none;
+            font-size: 13px;
+            position: absolute;
+            z-index: 1;
+            transform: translateY(-100%);
+        }
 
+            #contentBody_Navigation_CalendarUserControl_Calendar tr td:first-child {
+                background-color: transparent !important;
+                font-size: 15px;
+                font-weight: 700;
+            }
+
+            #contentBody_Navigation_CalendarUserControl_Calendar tbody tr:first-child td {
+                padding: 10px;
+            }
+
+            #contentBody_Navigation_CalendarUserControl_Calendar a {
+                all:initial;
+                cursor:pointer;
+                color: #fff !important;
+                text-decoration: none;
+            }
+        #contentBody_Navigation_ValidationSummary ul{
+            padding: 0;
+        }
+        #contentBody_Navigation_ValidationSummary li{
+            display:none;
+        }
+        #contentBody_Navigation_ValidationSummary ul li:first-child{
+            list-style-type: none;
+            display:block;
+        }
     </style>
 </asp:Content>
 
@@ -283,12 +343,58 @@
                             <i class="material-icons" style="float:right;margin-top:5px;font-weight:500;font-size:25px;">arrow_back</i>
             </asp:LinkButton>
 
+            <asp:RequiredFieldValidator ID="firstNameRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="firstName"
+                ErrorMessage="Please fill the First Name field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="lastNameRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="lastName"
+                ErrorMessage="Please fill the Last Name field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="emailRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="email"
+                ErrorMessage="Please fill the Email field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="passwordRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="password"
+                ErrorMessage="Please fill the Password field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:RequiredFieldValidator ID="confirmPasswordRequiredValidator"
+                runat="server"
+                ControlToValidate="confirmPassword"
+                ErrorMessage="Please fill the confirm password field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
+            <asp:CompareValidator ID="confirmPasswordCompareValidator" runat="server" ControlToValidate="confirmPassword" ControlToCompare="password"
+                Display="Static" ForeColor="red" ErrorMessage="Confirm password must match password." style="display:none"
+                ValidationGroup="ValidateGroup" CssClass="errorMsg"></asp:CompareValidator>
+
+            <asp:RequiredFieldValidator ID="contactNoRequiredFieldValidator"
+                runat="server"
+                ControlToValidate="contactNo"
+                ErrorMessage="Please enter the Contact No. field." style="display:none"
+                ValidationGroup="ValidateGroup"
+                Display="Static" ForeColor="Red" CssClass="errorMsg" />
+
             <asp:TextBox ID="userID" runat="server" Enabled="false" Style="background-color: transparent; cursor: not-allowed"></asp:TextBox>
-            <asp:TextBox ID="firstName" runat="server" required="required" autofocus="autofocus" placeholder="First name" Style="width: 49%"></asp:TextBox>
-            <asp:TextBox ID="lastName" runat="server" required="required" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
-            <asp:TextBox ID="email" TextMode="Email" required="required" runat="server" placeholder="Email address"></asp:TextBox>
-            <asp:TextBox ID="password" runat="server" required="required" TextMode="Password" placeholder="New password"></asp:TextBox>
-            <asp:TextBox ID="confirmPassword" runat="server" required="required" TextMode="Password" placeholder="Confirm new password"></asp:TextBox>
+            <asp:TextBox ID="firstName" runat="server" autofocus="autofocus" placeholder="First name" Style="width: 49%"></asp:TextBox>
+            <asp:TextBox ID="lastName" runat="server" placeholder="Last name" Style="width: 49%; float: right"></asp:TextBox>
+            <asp:TextBox ID="email" TextMode="Email" runat="server" placeholder="Email address"></asp:TextBox>
+            <asp:TextBox ID="password" runat="server" TextMode="Password" placeholder="New password"></asp:TextBox>
+            <asp:TextBox ID="confirmPassword" runat="server" TextMode="Password" placeholder="Confirm new password"></asp:TextBox>
 
             <asp:DropDownList ID="RolesList" runat="server" AutoPostBack="true" OnSelectedIndexChanged="RolesList_OnSelectedChange" AppendDataBoundItems="true" required="required">
             </asp:DropDownList>
@@ -297,35 +403,29 @@
                 <asp:ListItem Selected="True">Male</asp:ListItem>
                 <asp:ListItem>Female</asp:ListItem>
             </asp:DropDownList>
-            <asp:TextBox ID="contactNo" runat="server" required="required" placeholder="Contact No."></asp:TextBox>
-            <asp:TextBox ID="dateOfBirth" runat="server" TextMode="Date" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;"></asp:TextBox>
-
-            <asp:DropDownList ID="ProgramCode" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+            <asp:TextBox ID="contactNo" runat="server" placeholder="Contact No."></asp:TextBox>
+            <%--asp:TextBox ID="dateOfBirth" runat="server" TextMode="Date" required="required" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;"></asp:TextBox--%>
+            <uc:Calendar runat="server" ID="CalendarUserControl" OnCalendarVisibilityChanged="CalendarUserControl_OnCalendarVisibilityChanged"/>
+            
+            <asp:DropDownList ID="ProgramCode" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6);margin: -5px; font-size: 13px;" runat="server">
                 <asp:ListItem Selected="True">RSF</asp:ListItem>
                 <asp:ListItem>RSD</asp:ListItem>
                 <asp:ListItem>REI</asp:ListItem>
                 <asp:ListItem>RIP</asp:ListItem>
             </asp:DropDownList>
 
-            <asp:DropDownList ID="position" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6); font-size: 13px;" runat="server">
+            <asp:DropDownList ID="position" Visible="false" CssClass="input" Style="color: rgba(0,0,0,0.6);margin: -5px; font-size: 13px;" runat="server">
                 <asp:ListItem Selected="True">Lecturer</asp:ListItem>
                 <asp:ListItem>Senior Lecturer</asp:ListItem>
                 <asp:ListItem>Principal Lecturer</asp:ListItem>
             </asp:DropDownList>
 
-            <asp:CompareValidator ID="PasswordConfirmCompareValidator" runat="server" ControlToValidate="confirmPassword" ControlToCompare="password"
-                Display="Static" ForeColor="red" ErrorMessage="Confirm password must match password."
-                ValidationGroup="pass" CssClass="errorMsg"></asp:CompareValidator>
-
             <asp:Label ID="statusMessage" runat="server" ForeColor="Red"></asp:Label>
-            <asp:RequiredFieldValidator ID="PasswordConfirmRequiredValidator"
-                runat="server"
-                ControlToValidate="confirmPassword"
-                ErrorMessage=""
-                ValidationGroup="pass"
-                Display="Dynamic" ForeColor="Red" CssClass="errorMsg" />
 
-            <asp:Button ID="UpdateButton" runat="server" ValidationGroup="pass" Text="Save Changes" Style="color: #fff!important; width: auto!important;" OnClick="UpdateAccountButton_Click" />
+            <asp:Button ID="UpdateButton" runat="server" ValidationGroup="ValidateGroup" Text="Save Changes" Style="color: #fff!important; width: auto!important;" OnClick="UpdateAccountButton_Click" />
+            
+            <asp:ValidationSummary ID="ValidationSummary" runat="server" Font-Size="Small" ForeColor="Red" ValidationGroup="ValidateGroup" 
+                DisplayMode="BulletList" ShowSummary="true" style="text-align:left;margin-top: 40px;"  />
 
         </div>
     </div>

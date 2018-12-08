@@ -114,7 +114,6 @@
             <div class="box-wrapper">
                 <div class="box" style="width: 100%; top: 40%; height: 85%">
 
-
                     <div style="float: right">
                         <label>
                             Question Level : 
@@ -126,6 +125,9 @@
                             <asp:ListItem>Insane</asp:ListItem>
                         </asp:DropDownList>
                         </label>
+                    </div>
+                    <div>
+                        Status : <asp:Label ID="MessageLabel" ForeColor="LightGreen" runat="server" Text=""></asp:Label>
                     </div>
 
                     <table style="width: 100%; height: 100%; table-layout: fixed">
@@ -161,7 +163,6 @@
                             <td></td>
                             <td>
                                 <br /><br /><br /><br />
-                                <asp:Label Style="float: left;" ID="MessageLabel" runat="server" Text=""></asp:Label>
                                 <asp:Button ID="SubmitButton" runat="server" OnClick="SubmitButton_OnClick" Text="Create Question" />
                             </td>
                         </tr>

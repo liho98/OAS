@@ -68,7 +68,7 @@ namespace OAS.Views.Lecturer
             tableCell.Text = "Student Programme";
             tableRow.Cells.Add(tableCell);
             tableCell = new TableCell();
-            tableCell.Text = "Score";
+            tableCell.Text = "Score (%)";
             tableRow.Cells.Add(tableCell);
             tableCell = new TableCell();
             tableCell.Text = "Status";
